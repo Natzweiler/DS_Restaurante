@@ -8,6 +8,8 @@ import dtos.ClienteDTO;
 import dtos.MesaDTO;
 import dtos.ReservacionDTO;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 import objetosnegocio.ClienteON;
 import objetosnegocio.MesaON;
 import objetosnegocio.ReservacionON;
@@ -18,12 +20,38 @@ import objetosnegocio.ReservacionON;
  */
 public class GestorReservacion {
     
-    
+    private List<MesaDTO> mesas;
     private MesaON mesaON = MesaON.getInstance();
     private ClienteON clienteON = ClienteON.getInstance();
     private ReservacionON reservacionON = ReservacionON.getInstance();
     
-    
+     public GestorReservacion() {
+        mesas = new ArrayList<>();
+        
+        mesas.add(new MesaDTO(1, 4, true));  
+        mesas.add(new MesaDTO(2, 4, true));  
+        mesas.add(new MesaDTO(3, 4, false)); 
+        mesas.add(new MesaDTO(4, 4, true)); 
+        mesas.add(new MesaDTO(5, 4, true)); 
+        mesas.add(new MesaDTO(6, 4, false)); 
+        mesas.add(new MesaDTO(7, 4, true)); 
+     }
+     public List<MesaDTO> obtenerMesas() {
+        return mesas;
+    }
+     public String reservarMesa(MesaDTO mesa) {
+        if (mesa.isDisponible()) {
+            mesa.setDisponible(false);  
+            return "La reserva ha sido exitosa.";
+        } else {
+            return "La mesa ya está ocupada.";
+        }
+    }
+
+     
+     
+     
+     
     public String registrarReservacion(MesaDTO mesa, ClienteDTO cliente, LocalDate fechaHora) {
       
         if (!mesaON.obtenerMesa(mesa.getNumeroMesa()).equals(null) && mesaON.obtenerMesa(mesa.getNumeroMesa()) != null) {
@@ -56,7 +84,7 @@ public class GestorReservacion {
     
   
     public String agregarMesa(int numeroMesa, int capacidadMesa) {
-        MesaDTO nuevaMesa = new MesaDTO(numeroMesa, capacidadMesa);
+        MesaDTO nuevaMesa = new MesaDTO(numeroMesa, capacidadMesa, true);
         if (mesaON.insertarMesa(nuevaMesa)) {
             return "Mesa agregada con éxito.";
         } else {

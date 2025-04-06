@@ -13,13 +13,26 @@ public class MesaDTO {
     private int numeroMesa;
     
     private int capacidadMesa;
+    
+    private boolean disponible;
 
     public MesaDTO() {
     }
 
-    public MesaDTO(int numeroMesa, int capacidadMesa) {
+    public MesaDTO(int numeroMesa, int capacidadMesa, boolean disponible) {
         this.numeroMesa = numeroMesa;
         this.capacidadMesa = capacidadMesa;
+        this.disponible = disponible;
+    }
+
+  
+
+    public boolean isDisponible() {
+        return disponible;
+    }
+
+    public void setDisponible(boolean disponible) {
+        this.disponible = disponible;
     }
 
     public int getNumeroMesa() {
