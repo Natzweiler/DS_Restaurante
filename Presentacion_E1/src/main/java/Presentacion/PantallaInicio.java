@@ -15,7 +15,6 @@ public class PantallaInicio extends javax.swing.JFrame {
      */
     public PantallaInicio() {
         initComponents();
-        
     }
 
     /**
@@ -75,6 +74,7 @@ public class PantallaInicio extends javax.swing.JFrame {
         MapadeMesas m = new MapadeMesas();
         m.setLocationRelativeTo(null);
         m.setVisible(true);
+        dispose();
         
     }//GEN-LAST:event_BotonIniciarActionPerformed
 
@@ -109,6 +109,8 @@ public class PantallaInicio extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new PantallaInicio().setVisible(true);
+                new PantallaInicio().setLocationRelativeTo(null);
+                
             }
         });
     }

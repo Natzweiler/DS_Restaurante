@@ -36,23 +36,16 @@ public class ReservacionON {
     return instancia;
     }
     
-    public boolean registrarReservacion (ReservacionDTO reservacion){
-        int mesaId = reservacion.getMesa().getNumeroMesa();
-    
-        if (mesasDisponibles.containsKey(reservacion.getMesa()) && mesasDisponibles.get(reservacion.getMesa())) {
-            
-            reservaciones.add(reservacion);
-            
-            mesasDisponibles.put(mesaId, Boolean.FALSE);
-            
-            System.out.println("Reservacion para: " + reservacion.getCliente().getNombre());
-            System.out.println("Correo: " + reservacion.getCliente().getCorreo());
-            System.out.println("Telefono: " + reservacion.getCliente().getTelefono());
-            return true;
+    public boolean registrarReservacion(ReservacionDTO reservacion) {
+        
+        for (ReservacionDTO r : reservaciones) {
+            if (r.getMesa().getNumeroMesa() == reservacion.getMesa().getNumeroMesa()
+                    && r.getFechaHora().equals(reservacion.getFechaHora())) {
+                return false; 
+            }
         }
-        return false;
-    }
-    
+        return reservaciones.add(reservacion);
+   }
     public List<Integer> obtenerMesasDisponibles() {
         
     List<Integer> mesasLibres = new ArrayList<>();

@@ -6,6 +6,7 @@ package controlReservacion;
 
 import dtos.ClienteDTO;
 import dtos.MesaDTO;
+import dtos.MeseroDTO;
 import dtos.ReservacionDTO;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -20,6 +21,16 @@ import objetosnegocio.ReservacionON;
  */
 public class GestorReservacion {
     
+    private static GestorReservacion instancia;
+    
+        public static synchronized GestorReservacion getInstance() {
+        if (instancia == null) {
+            instancia = new GestorReservacion();
+        }
+        return instancia;
+    }
+
+
     private List<MesaDTO> mesas;
     private MesaON mesaON = MesaON.getInstance();
     private ClienteON clienteON = ClienteON.getInstance();
@@ -35,6 +46,10 @@ public class GestorReservacion {
         mesas.add(new MesaDTO(5, 4, true)); 
         mesas.add(new MesaDTO(6, 4, false)); 
         mesas.add(new MesaDTO(7, 4, true)); 
+        
+         for (MesaDTO mesa : mesas) {
+             mesaON.insertarMesa(mesa);
+         }
      }
      public List<MesaDTO> obtenerMesas() {
         return mesas;
@@ -48,19 +63,17 @@ public class GestorReservacion {
         }
     }
 
-     
-     
-     
-     
-    public String registrarReservacion(MesaDTO mesa, ClienteDTO cliente, LocalDate fechaHora) {
-      
-        if (!mesaON.obtenerMesa(mesa.getNumeroMesa()).equals(null) && mesaON.obtenerMesa(mesa.getNumeroMesa()) != null) {
-            // Verificar si ya hay una reservación para esa mesa y fecha
+    public String registrarReservacion(MesaDTO mesa, String nombre, String telefono, String correo, LocalDate fechaHora, MeseroDTO mesero) {
+                MesaDTO mesaEnSistema = mesaON.obtenerMesa(mesa.getNumeroMesa());
+
+        if (mesaEnSistema != null) {
             if (reservacionON.MesaDisponibleDiaHora(mesa, fechaHora)) {
-                
-                ReservacionDTO reservacion = new ReservacionDTO(mesa, cliente, fechaHora);
+                ReservacionDTO reservacion = new ReservacionDTO(mesa, nombre, telefono, correo, fechaHora, mesero);
+
                 if (reservacionON.registrarReservacion(reservacion)) {
-                    return "Reservación exitosa para la mesa " + mesa.getNumeroMesa() + " con " + cliente.getNombre();
+                    
+                    mesaEnSistema.setDisponible(false);
+                    return "Reservación exitosa para la mesa: " + mesa.getNumeroMesa() + " Nombre Cliente: " + reservacion.getNombre() + "Correo: " + reservacion.getCorreo();
                 } else {
                     return "Error al registrar la reservación.";
                 }
@@ -91,5 +104,6 @@ public class GestorReservacion {
             return "La mesa ya existe.";
         }
     }
+
 }
 

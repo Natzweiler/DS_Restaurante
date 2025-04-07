@@ -14,18 +14,30 @@ public class ReservacionDTO {
     
     private MesaDTO mesa;
     
-    private ClienteDTO cliente;
+    private String nombre;
+    
+    private String telefono;
+    
+    private String correo;
     
     private LocalDate fechaHora;
+    
+    private MeseroDTO mesero;
+    
+    
 
     public ReservacionDTO() {
     }
 
-    public ReservacionDTO(MesaDTO mesa, ClienteDTO cliente, LocalDate fechaHora) {
+    public ReservacionDTO(MesaDTO mesa, String nombre, String telefono, String correo, LocalDate fechaHora, MeseroDTO mesero) {
         this.mesa = mesa;
-        this.cliente = cliente;
+        this.nombre = nombre;
+        this.telefono = telefono;
+        this.correo = correo;
         this.fechaHora = fechaHora;
+        this.mesero = mesero;
     }
+
 
     public MesaDTO getMesa() {
         return mesa;
@@ -35,13 +47,39 @@ public class ReservacionDTO {
         this.mesa = mesa;
     }
 
-    public ClienteDTO getCliente() {
-        return cliente;
+    public String getNombre() {
+        return nombre;
     }
 
-    public void setCliente(ClienteDTO cliente) {
-        this.cliente = cliente;
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
     }
+
+    public String getTelefono() {
+        return telefono;
+    }
+
+    public void setTelefono(String telefono) {
+        this.telefono = telefono;
+    }
+
+    public String getCorreo() {
+        return correo;
+    }
+
+    public void setCorreo(String correo) {
+        this.correo = correo;
+    }
+
+    public MeseroDTO getMesero() {
+        return mesero;
+    }
+
+    public void setMesero(MeseroDTO mesero) {
+        this.mesero = mesero;
+    }
+
+    
 
     public LocalDate getFechaHora() {
         return fechaHora;
@@ -53,8 +91,10 @@ public class ReservacionDTO {
 
     @Override
     public String toString() {
-        return "ReservacionDTO{" + "mesa=" + mesa + ", cliente=" + cliente + ", fechaHora=" + fechaHora + '}';
+        return "ReservacionDTO{" + "mesa=" + mesa + ", nombre=" + nombre + ", telefono=" + telefono + ", correo=" + correo + ", fechaHora=" + fechaHora + ", mesero=" + mesero + '}';
     }
+
+   
     
     
 }

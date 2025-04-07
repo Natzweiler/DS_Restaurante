@@ -18,7 +18,7 @@ import javax.swing.JOptionPane;
  * @author Gael
  */
 public class MapadeMesas extends javax.swing.JFrame {
-
+    private static MapadeMesas instancia;
    private GestorReservacion negocioReservacion;
    
    private MesaDTO mesaSeleccionada;
@@ -26,7 +26,12 @@ public class MapadeMesas extends javax.swing.JFrame {
    public MesaDTO getMesaSeleccionada() {
     return mesaSeleccionada;
 }
-
+    public static MapadeMesas getInstance() {
+        if (instancia == null) {
+            instancia = new MapadeMesas();
+        }
+        return instancia;
+    }
    
     
     /**
@@ -36,13 +41,22 @@ public class MapadeMesas extends javax.swing.JFrame {
         initComponents();
         negocioReservacion = new GestorReservacion();
         cargarMesasDisponibles();
+        
+    }
+    public void actualizarEstadoMesas(){
+    List<MesaDTO> mesas = GestorReservacion.getInstance().obtenerMesas();
+        configurarMesa(mesa1, mesas.get(0));
+        configurarMesa(mesa2, mesas.get(1));
+        configurarMesa(mesa3, mesas.get(2));
+        configurarMesa(mesa4, mesas.get(3));
+        configurarMesa(mesa5, mesas.get(4));
+        configurarMesa(mesa6, mesas.get(5));
+        configurarMesa(mesa7, mesas.get(6));
+
     }
     private void cargarMesasDisponibles() {
     List<MesaDTO> mesas = negocioReservacion.obtenerMesas();
-
         if (mesas != null) {
-            
-        
     configurarMesa(mesa1, mesas.get(0));
     configurarMesa(mesa2, mesas.get(1));
     configurarMesa(mesa3, mesas.get(2));
@@ -53,48 +67,34 @@ public class MapadeMesas extends javax.swing.JFrame {
    }
 }
     private void abrirRegistrarReservacion(MesaDTO mesa) {
-    
     RegistrarReservacion registrarReservacion = new RegistrarReservacion();
-
-    
     registrarReservacion.setMesaSeleccionada(mesa);
-
-    
     registrarReservacion.setLocationRelativeTo(null);
-    registrarReservacion.setVisible(true);
-
-    
+    registrarReservacion.setVisible(true); 
     this.dispose();
 }
         
-         private void configurarMesa(JButton mesaBtn, MesaDTO mesa) {
-        mesaBtn.setText("Mesa " + mesa.getNumeroMesa());
-        if (mesa.isDisponible()) {
-            mesaBtn.setBackground(Color.GREEN);  
-            mesaBtn.setEnabled(true);
-        } else {
-            mesaBtn.setBackground(Color.RED);  
-            mesaBtn.setEnabled(false);
+    private void configurarMesa(JButton mesaBtn, MesaDTO mesa) {
+     mesaBtn.setText("Mesa " + mesa.getNumeroMesa());
+     if (mesa.isDisponible()) {
+        mesaBtn.setBackground(Color.GREEN);  
+        mesaBtn.setEnabled(true);
+        }else{
+         mesaBtn.setBackground(Color.RED);  
+         mesaBtn.setEnabled(false);
         }
 
-        
         mesaBtn.addActionListener(new ActionListener() {
             @Override
-            public void actionPerformed(ActionEvent e) {
-                if (mesa.isDisponible()) {
-                    mesaSeleccionada = mesa;
-                    JOptionPane.showMessageDialog(MapadeMesas.this, "Mesa " + mesa.getNumeroMesa() + " seleccionada.");
-                    RegistrarReservacion registrarReservacion = new RegistrarReservacion();
-                
-                
-                     registrarReservacion.setMesaSeleccionada(mesa);
-                
-                
-                    registrarReservacion.setLocationRelativeTo(null); 
-                    registrarReservacion.setVisible(true);
-                
-                
-                    dispose();
+     public void actionPerformed(ActionEvent e) {
+        if (mesa.isDisponible()) {
+          mesaSeleccionada = mesa;
+          JOptionPane.showMessageDialog(MapadeMesas.this, "Mesa " + mesa.getNumeroMesa() + " seleccionada.");
+          RegistrarReservacion registrarReservacion = new RegistrarReservacion();
+          registrarReservacion.setMesaSeleccionada(mesa);
+          registrarReservacion.setLocationRelativeTo(null); 
+          registrarReservacion.setVisible(true);
+          dispose();
                 } else {
                     JOptionPane.showMessageDialog(MapadeMesas.this, "La mesa " + mesa.getNumeroMesa() + " está ocupada.");
                 }
