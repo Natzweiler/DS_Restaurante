@@ -71,9 +71,7 @@ public class PantallaInicio extends javax.swing.JFrame {
 
     private void BotonIniciarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotonIniciarActionPerformed
         // TODO add your handling code here:
-        MapadeMesas m = new MapadeMesas();
-        m.setLocationRelativeTo(null);
-        m.setVisible(true);
+        Coordinador.CoordinadorPantallas.getInstance().mostrarMapaMesas();
         dispose();
         
     }//GEN-LAST:event_BotonIniciarActionPerformed

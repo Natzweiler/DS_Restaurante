@@ -5,6 +5,8 @@
 package Coordinador;
 
 import Presentacion.MapadeMesas;
+import Presentacion.PantallaInicio;
+import Presentacion.RegistrarReservacion;
 
 /**
  *
@@ -30,6 +32,25 @@ public class CoordinadorPantallas {
     
     public MapadeMesas getMapaDeMesas() {
         return mapaDeMesas;
+    }
+    public void mostrarPantallaInicio(){
+    PantallaInicio p = new PantallaInicio();
+    p.setLocationRelativeTo(null);
+    p.setVisible(true);
+    }
+    
+    
+    public void mostrarMapaMesas(){
+    MapadeMesas m = new MapadeMesas();
+    m.setLocationRelativeTo(null);
+    m.setVisible(true);
+    
+    }
+    public void mostrarRegistroReservacion(){
+    RegistrarReservacion r = new RegistrarReservacion();
+    r.setLocationRelativeTo(null);
+    r.setVisible(true);
+    
     }
 }
 

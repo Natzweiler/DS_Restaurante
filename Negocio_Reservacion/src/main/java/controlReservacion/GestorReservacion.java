@@ -21,6 +21,7 @@ import objetosnegocio.ReservacionON;
  */
 public class GestorReservacion {
     
+    private ValidarReservacion validadorReservacion;
     private static GestorReservacion instancia;
     
         public static synchronized GestorReservacion getInstance() {
@@ -30,26 +31,15 @@ public class GestorReservacion {
         return instancia;
     }
 
-
+        
     private List<MesaDTO> mesas;
     private MesaON mesaON = MesaON.getInstance();
     private ClienteON clienteON = ClienteON.getInstance();
     private ReservacionON reservacionON = ReservacionON.getInstance();
     
      public GestorReservacion() {
-        mesas = new ArrayList<>();
-        
-        mesas.add(new MesaDTO(1, 4, true));  
-        mesas.add(new MesaDTO(2, 4, true));  
-        mesas.add(new MesaDTO(3, 4, false)); 
-        mesas.add(new MesaDTO(4, 4, true)); 
-        mesas.add(new MesaDTO(5, 4, true)); 
-        mesas.add(new MesaDTO(6, 4, false)); 
-        mesas.add(new MesaDTO(7, 4, true)); 
-        
-         for (MesaDTO mesa : mesas) {
-             mesaON.insertarMesa(mesa);
-         }
+        this.validadorReservacion = new ValidarReservacion();
+
      }
      public List<MesaDTO> obtenerMesas() {
         return mesas;

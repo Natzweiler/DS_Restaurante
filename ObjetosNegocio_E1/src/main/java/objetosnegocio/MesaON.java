@@ -5,7 +5,9 @@
 package objetosnegocio;
 
 import dtos.MesaDTO;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -37,6 +39,22 @@ public class MesaON {
             return true; 
         }
         return false; 
+    }
+     public List<MesaDTO> cargarMesas() {
+        List<MesaDTO> mesas = new ArrayList<>();
+        
+        mesas.add(new MesaDTO(1, 4, true));  
+        mesas.add(new MesaDTO(2, 4, true));  
+        mesas.add(new MesaDTO(3, 4, false)); 
+        mesas.add(new MesaDTO(4, 4, true)); 
+        mesas.add(new MesaDTO(5, 4, true)); 
+        mesas.add(new MesaDTO(6, 4, false)); 
+        mesas.add(new MesaDTO(7, 4, true)); 
+        
+        for (MesaDTO mesa : mesas) {
+            MesaON.getInstance().insertarMesa(mesa);
+        }
+        return mesas;
     }
 
     

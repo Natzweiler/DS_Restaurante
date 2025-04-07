@@ -47,13 +47,10 @@ public class ReservacionON {
         return reservaciones.add(reservacion);
    }
     public List<Integer> obtenerMesasDisponibles() {
-        
     List<Integer> mesasLibres = new ArrayList<>();
-    
     for (Map.Entry<Integer, Boolean> entry : mesasDisponibles.entrySet()) {
         
         if (entry.getValue()) {
-            
             mesasLibres.add(entry.getKey());
         }
     }

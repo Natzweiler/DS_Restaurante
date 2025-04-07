@@ -12,6 +12,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
+import objetosnegocio.MesaON;
 
 /**
  *
@@ -43,8 +44,10 @@ public class MapadeMesas extends javax.swing.JFrame {
         cargarMesasDisponibles();
         
     }
-    public void actualizarEstadoMesas(){
-    List<MesaDTO> mesas = GestorReservacion.getInstance().obtenerMesas();
+    public void actualizarEstadoMesas() {
+    List<MesaDTO> mesas = negocioReservacion.obtenerMesas();
+    if (mesas != null && mesas.size() > 0) {
+        
         configurarMesa(mesa1, mesas.get(0));
         configurarMesa(mesa2, mesas.get(1));
         configurarMesa(mesa3, mesas.get(2));
@@ -52,10 +55,11 @@ public class MapadeMesas extends javax.swing.JFrame {
         configurarMesa(mesa5, mesas.get(4));
         configurarMesa(mesa6, mesas.get(5));
         configurarMesa(mesa7, mesas.get(6));
-
     }
+}
+
     private void cargarMesasDisponibles() {
-    List<MesaDTO> mesas = negocioReservacion.obtenerMesas();
+    List<MesaDTO> mesas = MesaON.getInstance().cargarMesas();
         if (mesas != null) {
     configurarMesa(mesa1, mesas.get(0));
     configurarMesa(mesa2, mesas.get(1));
@@ -235,9 +239,7 @@ public class MapadeMesas extends javax.swing.JFrame {
 
     private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
         // TODO add your handling code here:
-        PantallaInicio p = new PantallaInicio();
-        p.setLocationRelativeTo(null);
-        p.setVisible(true);
+        Coordinador.CoordinadorPantallas.getInstance().mostrarPantallaInicio();
         this.dispose();
     }//GEN-LAST:event_btnRegresarActionPerformed
 

@@ -248,7 +248,18 @@ public class RegistrarReservacion extends javax.swing.JFrame {
         mesa.setDisponible(false);
         mapaDeMesas.actualizarEstadoMesas();
         mapaDeMesas.repaint();
-        JOptionPane.showMessageDialog(null, resultado);
+        
+        StringBuilder ticket = new StringBuilder();
+     ticket.append("-------- TICKET DE RESERVACIÓN --------\n")
+          .append("Nombre del cliente: ").append(nombre).append("\n")
+          .append("Teléfono: ").append(telefono).append("\n")
+          .append("Correo: ").append(correo).append("\n")
+          .append("Mesa: ").append(mesa.getNumeroMesa()).append("\n")
+          .append("Fecha de la reservación: ").append(fecha.toString()).append("\n")
+          .append("Mesero asignado: ").append(meseroSeleccionado.getNombre()).append("\n")
+          .append("-------------------------------------\n")
+          .append("¡Gracias por tu reservación!");
+        JOptionPane.showMessageDialog(this, ticket.toString(), "Confirmación de Reservación.",JOptionPane.INFORMATION_MESSAGE );
         this.dispose();
         mapaDeMesas.setVisible(true);
         mapaDeMesas.setLocationRelativeTo(null);
@@ -258,9 +269,7 @@ public class RegistrarReservacion extends javax.swing.JFrame {
 
     private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
         // TODO add your handling code here:
-        MapadeMesas m = new MapadeMesas();
-        m.setVisible(true);
-        m.setLocationRelativeTo(null);
+       Coordinador.CoordinadorPantallas.getInstance().mostrarMapaMesas();
         this.dispose();
     }//GEN-LAST:event_btnRegresarActionPerformed
 

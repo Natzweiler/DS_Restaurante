@@ -22,9 +22,7 @@ public class MeseroON {
         }
         return instancia;
     }
-
-    
-        
+   
    public List<MeseroDTO> obtenerMeseros() {
     List<MeseroDTO> meseros = new ArrayList<>();
     //datos simulados
