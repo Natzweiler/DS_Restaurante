@@ -72,6 +72,7 @@ public class RegistrarReservacion extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabelNumeroMesa = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -89,144 +90,116 @@ public class RegistrarReservacion extends javax.swing.JFrame {
         comboMes = new javax.swing.JComboBox<>();
         comboAño = new javax.swing.JComboBox<>();
         hora = new javax.swing.JLabel();
-        comboMesero1 = new javax.swing.JComboBox<>();
+        comboMesa = new javax.swing.JComboBox<>();
+        textoHora = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(51, 0, 255));
 
+        jPanel1.setBackground(new java.awt.Color(0, 0, 255));
+        jPanel1.setForeground(new java.awt.Color(0, 0, 204));
+        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel1.setFont(new java.awt.Font("Segoe UI Black", 0, 36)); // NOI18N
         jLabel1.setText("Reservacion de Mesa");
+        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 0, -1, -1));
 
+        jLabelNumeroMesa.setFont(new java.awt.Font("Segoe UI Black", 0, 18)); // NOI18N
         jLabelNumeroMesa.setText("Número de mesa:");
+        jPanel1.add(jLabelNumeroMesa, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 200, -1, -1));
 
+        jLabel3.setFont(new java.awt.Font("Segoe UI Black", 0, 18)); // NOI18N
         jLabel3.setText("Nombre:");
+        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 40, -1, -1));
 
+        fecha.setFont(new java.awt.Font("Segoe UI Black", 0, 18)); // NOI18N
         fecha.setText("Fecha:");
+        jPanel1.add(fecha, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 370, -1, -1));
 
+        jLabel5.setFont(new java.awt.Font("Segoe UI Black", 0, 18)); // NOI18N
         jLabel5.setText("Correo:");
+        jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 90, -1, -1));
 
+        jLabel6.setFont(new java.awt.Font("Segoe UI Black", 0, 18)); // NOI18N
         jLabel6.setText("Telefono:");
+        jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 140, -1, -1));
+        jPanel1.add(textoNombreCliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 70, 140, -1));
+        jPanel1.add(textCorreo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 120, 140, -1));
 
         textoTelefono.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 textoTelefonoActionPerformed(evt);
             }
         });
+        jPanel1.add(textoTelefono, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 170, 140, -1));
 
+        btnReservar.setFont(new java.awt.Font("Segoe UI Black", 0, 24)); // NOI18N
         btnReservar.setText("Reservar");
         btnReservar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnReservarActionPerformed(evt);
             }
         });
+        jPanel1.add(btnReservar, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 200, 170, 70));
 
+        btnRegresar.setFont(new java.awt.Font("Segoe UI Black", 0, 24)); // NOI18N
         btnRegresar.setText("Regresar");
         btnRegresar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnRegresarActionPerformed(evt);
             }
         });
+        jPanel1.add(btnRegresar, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 450, -1, -1));
 
         comboMesero.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 comboMeseroActionPerformed(evt);
             }
         });
+        jPanel1.add(comboMesero, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 340, -1, -1));
 
+        labelMesero.setFont(new java.awt.Font("Segoe UI Black", 0, 18)); // NOI18N
         labelMesero.setText("Mesero:");
+        jPanel1.add(labelMesero, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 310, -1, -1));
 
+        jPanel1.add(comboDia, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 400, -1, -1));
+
+        jPanel1.add(comboMes, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 400, -1, -1));
+
+        comboAño.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                comboAñoActionPerformed(evt);
+            }
+        });
+        jPanel1.add(comboAño, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 400, -1, -1));
+
+        hora.setFont(new java.awt.Font("Segoe UI Black", 0, 24)); // NOI18N
         hora.setText("Hora:");
+        jPanel1.add(hora, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 250, -1, 30));
+
+        comboMesa.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                comboMesaActionPerformed(evt);
+            }
+        });
+        jPanel1.add(comboMesa, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 230, -1, -1));
+
+        textoHora.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                textoHoraActionPerformed(evt);
+            }
+        });
+        jPanel1.add(textoHora, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 290, 130, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(230, 230, 230)
-                .addComponent(jLabel1)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(31, 31, 31)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(btnRegresar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnReservar)
-                        .addGap(54, 54, 54))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(labelMesero)
-                                .addGap(18, 18, 18)
-                                .addComponent(comboMesero, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(jLabel6)
-                                        .addComponent(jLabel5))
-                                    .addGap(18, 18, 18)
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                        .addComponent(textCorreo, javax.swing.GroupLayout.DEFAULT_SIZE, 291, Short.MAX_VALUE)
-                                        .addComponent(textoTelefono)))
-                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                    .addComponent(jLabel3)
-                                    .addGap(18, 18, 18)
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(comboMesero1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addGroup(layout.createSequentialGroup()
-                                                .addComponent(comboDia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addGap(26, 26, 26)
-                                                .addComponent(comboMes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addGap(27, 27, 27)
-                                                .addComponent(comboAño, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addGap(0, 24, Short.MAX_VALUE))
-                                            .addComponent(textoNombreCliente))))))
-                        .addContainerGap(254, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(hora)
-                            .addComponent(jLabelNumeroMesa)
-                            .addComponent(fecha))
-                        .addGap(0, 0, Short.MAX_VALUE))))
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 595, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel1)
-                .addGap(43, 43, 43)
-                .addComponent(jLabelNumeroMesa)
-                .addGap(26, 26, 26)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(labelMesero)
-                    .addComponent(comboMesero, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(hora)
-                    .addComponent(comboMesero1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 13, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(fecha)
-                    .addComponent(comboDia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(comboMes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(comboAño, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
-                    .addComponent(textoNombreCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(23, 23, 23)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel5)
-                    .addComponent(textCorreo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(26, 26, 26)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(textoTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel6))
-                .addGap(34, 34, 34)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnReservar)
-                    .addComponent(btnRegresar))
-                .addGap(27, 27, 27))
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 501, Short.MAX_VALUE)
         );
 
         pack();
@@ -290,6 +263,18 @@ public class RegistrarReservacion extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_comboMeseroActionPerformed
 
+    private void comboAñoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboAñoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_comboAñoActionPerformed
+
+    private void comboMesaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboMesaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_comboMesaActionPerformed
+
+    private void textoHoraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textoHoraActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_textoHoraActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -334,8 +319,8 @@ public class RegistrarReservacion extends javax.swing.JFrame {
     private javax.swing.JComboBox<Integer> comboAño;
     private javax.swing.JComboBox<Integer> comboDia;
     private javax.swing.JComboBox<String> comboMes;
+    private javax.swing.JComboBox<String> comboMesa;
     private javax.swing.JComboBox<String> comboMesero;
-    private javax.swing.JComboBox<String> comboMesero1;
     private javax.swing.JLabel fecha;
     private javax.swing.JLabel hora;
     private javax.swing.JLabel jLabel1;
@@ -343,8 +328,10 @@ public class RegistrarReservacion extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabelNumeroMesa;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel labelMesero;
     private javax.swing.JTextField textCorreo;
+    private javax.swing.JTextField textoHora;
     private javax.swing.JTextField textoNombreCliente;
     private javax.swing.JTextField textoTelefono;
     // End of variables declaration//GEN-END:variables

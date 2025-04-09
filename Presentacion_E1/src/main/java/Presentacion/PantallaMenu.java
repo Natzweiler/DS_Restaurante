@@ -29,37 +29,67 @@ public class PantallaMenu extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         BotonReservar = new javax.swing.JButton();
         BotonMapaMesas = new javax.swing.JButton();
+        btnRegistrarCliente = new javax.swing.JButton();
+        btnMeseros = new javax.swing.JButton();
+        btnCancelarReservacion = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel1.setFont(new java.awt.Font("Segoe UI Semibold", 0, 36)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Segoe UI Black", 0, 48)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel1.setText("Menu");
-        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 10, -1, -1));
+        jLabel1.setText("Bienvenido");
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 0, -1, -1));
 
-        BotonReservar.setFont(new java.awt.Font("Segoe UI Semibold", 0, 18)); // NOI18N
+        BotonReservar.setFont(new java.awt.Font("Segoe UI Black", 0, 18)); // NOI18N
         BotonReservar.setText("Reservar");
         BotonReservar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 BotonReservarActionPerformed(evt);
             }
         });
-        getContentPane().add(BotonReservar, new org.netbeans.lib.awtextra.AbsoluteConstraints(16, 74, -1, -1));
+        getContentPane().add(BotonReservar, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 160, 160, 60));
 
-        BotonMapaMesas.setFont(new java.awt.Font("Segoe UI Semibold", 0, 18)); // NOI18N
+        BotonMapaMesas.setFont(new java.awt.Font("Segoe UI Black", 0, 18)); // NOI18N
         BotonMapaMesas.setText("Mapa Mesas");
         BotonMapaMesas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 BotonMapaMesasActionPerformed(evt);
             }
         });
-        getContentPane().add(BotonMapaMesas, new org.netbeans.lib.awtextra.AbsoluteConstraints(17, 128, -1, -1));
+        getContentPane().add(BotonMapaMesas, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 80, 180, 70));
+
+        btnRegistrarCliente.setFont(new java.awt.Font("Segoe UI Black", 0, 18)); // NOI18N
+        btnRegistrarCliente.setText("Registrar Cliente");
+        btnRegistrarCliente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRegistrarClienteActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btnRegistrarCliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 230, 180, 60));
+
+        btnMeseros.setFont(new java.awt.Font("Segoe UI Black", 0, 18)); // NOI18N
+        btnMeseros.setText("Meseros");
+        btnMeseros.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnMeserosActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btnMeseros, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 300, 140, 60));
+
+        btnCancelarReservacion.setFont(new java.awt.Font("Segoe UI Black", 0, 18)); // NOI18N
+        btnCancelarReservacion.setText("Cancelar Reservacion");
+        btnCancelarReservacion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelarReservacionActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btnCancelarReservacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 370, 220, 60));
 
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagen/fondoResta.jpg"))); // NOI18N
         jLabel2.setText("jLabel2");
-        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 750, 530));
+        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 680, 490));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -75,6 +105,18 @@ public class PantallaMenu extends javax.swing.JFrame {
         Coordinador.CoordinadorPantallas.getInstance().mostrarMapaMesas();
         dispose();
     }//GEN-LAST:event_BotonMapaMesasActionPerformed
+
+    private void btnRegistrarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarClienteActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnRegistrarClienteActionPerformed
+
+    private void btnMeserosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMeserosActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnMeserosActionPerformed
+
+    private void btnCancelarReservacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarReservacionActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnCancelarReservacionActionPerformed
 
     /**
      * @param args the command line arguments
@@ -117,6 +159,9 @@ public class PantallaMenu extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton BotonMapaMesas;
     private javax.swing.JButton BotonReservar;
+    private javax.swing.JButton btnCancelarReservacion;
+    private javax.swing.JButton btnMeseros;
+    private javax.swing.JButton btnRegistrarCliente;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     // End of variables declaration//GEN-END:variables
