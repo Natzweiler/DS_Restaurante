@@ -29,11 +29,15 @@ public class PantallaMenu extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         BotonReservar = new javax.swing.JButton();
         BotonMapaMesas = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel1.setFont(new java.awt.Font("Segoe UI Light", 0, 24)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Segoe UI Semibold", 0, 36)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(0, 0, 0));
         jLabel1.setText("Menu");
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 10, -1, -1));
 
         BotonReservar.setFont(new java.awt.Font("Segoe UI Semibold", 0, 18)); // NOI18N
         BotonReservar.setText("Reservar");
@@ -42,6 +46,7 @@ public class PantallaMenu extends javax.swing.JFrame {
                 BotonReservarActionPerformed(evt);
             }
         });
+        getContentPane().add(BotonReservar, new org.netbeans.lib.awtextra.AbsoluteConstraints(16, 74, -1, -1));
 
         BotonMapaMesas.setFont(new java.awt.Font("Segoe UI Semibold", 0, 18)); // NOI18N
         BotonMapaMesas.setText("Mapa Mesas");
@@ -50,40 +55,11 @@ public class PantallaMenu extends javax.swing.JFrame {
                 BotonMapaMesasActionPerformed(evt);
             }
         });
+        getContentPane().add(BotonMapaMesas, new org.netbeans.lib.awtextra.AbsoluteConstraints(17, 128, -1, -1));
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(161, 161, 161)
-                        .addComponent(jLabel1))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(17, 17, 17)
-                        .addComponent(BotonMapaMesas)))
-                .addContainerGap(181, Short.MAX_VALUE))
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(layout.createSequentialGroup()
-                    .addGap(16, 16, 16)
-                    .addComponent(BotonReservar)
-                    .addContainerGap(283, Short.MAX_VALUE)))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 90, Short.MAX_VALUE)
-                .addComponent(BotonMapaMesas)
-                .addGap(140, 140, 140))
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(layout.createSequentialGroup()
-                    .addGap(74, 74, 74)
-                    .addComponent(BotonReservar)
-                    .addContainerGap(194, Short.MAX_VALUE)))
-        );
+        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagen/fondoResta.jpg"))); // NOI18N
+        jLabel2.setText("jLabel2");
+        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 750, 530));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -142,5 +118,6 @@ public class PantallaMenu extends javax.swing.JFrame {
     private javax.swing.JButton BotonMapaMesas;
     private javax.swing.JButton BotonReservar;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     // End of variables declaration//GEN-END:variables
 }

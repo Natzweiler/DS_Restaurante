@@ -92,6 +92,7 @@ public class RegistrarReservacion extends javax.swing.JFrame {
         comboMesero1 = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setBackground(new java.awt.Color(51, 0, 255));
 
         jLabel1.setText("Reservacion de Mesa");
 
