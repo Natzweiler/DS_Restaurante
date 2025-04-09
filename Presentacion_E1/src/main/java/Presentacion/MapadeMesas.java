@@ -127,9 +127,14 @@ public class MapadeMesas extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jPanel1.setLayout(new java.awt.GridLayout());
+        jPanel1.setLayout(new java.awt.GridLayout(1, 0));
 
         mesa1.setText("Mesa 1");
+        mesa1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mesa1ActionPerformed(evt);
+            }
+        });
 
         mesa2.setText("Mesa 2");
 
@@ -172,9 +177,8 @@ public class MapadeMesas extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(mesa1)
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addComponent(btnRegresar)
-                                .addGap(0, 0, Short.MAX_VALUE))))
+                            .addComponent(btnRegresar))
+                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addContainerGap(126, Short.MAX_VALUE)
                         .addComponent(mesa7)
@@ -242,6 +246,10 @@ public class MapadeMesas extends javax.swing.JFrame {
         Coordinador.CoordinadorPantallas.getInstance().mostrarPantallaInicio();
         this.dispose();
     }//GEN-LAST:event_btnRegresarActionPerformed
+
+    private void mesa1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mesa1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_mesa1ActionPerformed
 
     /**
      * @param args the command line arguments

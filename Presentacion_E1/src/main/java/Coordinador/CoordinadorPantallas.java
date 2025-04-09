@@ -6,6 +6,7 @@ package Coordinador;
 
 import Presentacion.MapadeMesas;
 import Presentacion.PantallaInicio;
+import Presentacion.PantallaMenu;
 import Presentacion.RegistrarReservacion;
 
 /**
@@ -51,6 +52,12 @@ public class CoordinadorPantallas {
     r.setLocationRelativeTo(null);
     r.setVisible(true);
     
+    }
+    
+    public void mostrarMenu(){
+    PantallaMenu a = new PantallaMenu();
+    a.setLocationRelativeTo(null);
+    a.setVisible(true);
     }
 }
 

@@ -8,12 +8,12 @@ package Presentacion;
  *
  * @author Gael
  */
-public class PantallaInicio extends javax.swing.JFrame {
+public class PantallaMenu extends javax.swing.JFrame {
 
     /**
      * Creates new form PantallaInicio
      */
-    public PantallaInicio() {
+    public PantallaMenu() {
         initComponents();
     }
 
@@ -27,18 +27,27 @@ public class PantallaInicio extends javax.swing.JFrame {
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
-        BotonIniciar = new javax.swing.JButton();
+        BotonReservar = new javax.swing.JButton();
+        BotonMapaMesas = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jLabel1.setFont(new java.awt.Font("Segoe UI Light", 0, 24)); // NOI18N
-        jLabel1.setText("Reservaciones");
+        jLabel1.setText("Menu");
 
-        BotonIniciar.setFont(new java.awt.Font("Segoe UI Semibold", 0, 18)); // NOI18N
-        BotonIniciar.setText("Iniciar");
-        BotonIniciar.addActionListener(new java.awt.event.ActionListener() {
+        BotonReservar.setFont(new java.awt.Font("Segoe UI Semibold", 0, 18)); // NOI18N
+        BotonReservar.setText("Reservar");
+        BotonReservar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                BotonIniciarActionPerformed(evt);
+                BotonReservarActionPerformed(evt);
+            }
+        });
+
+        BotonMapaMesas.setFont(new java.awt.Font("Segoe UI Semibold", 0, 18)); // NOI18N
+        BotonMapaMesas.setText("Mapa Mesas");
+        BotonMapaMesas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BotonMapaMesasActionPerformed(evt);
             }
         });
 
@@ -49,32 +58,47 @@ public class PantallaInicio extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(153, 153, 153)
-                        .addComponent(BotonIniciar))
+                        .addGap(161, 161, 161)
+                        .addComponent(jLabel1))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(126, 126, 126)
-                        .addComponent(jLabel1)))
-                .addContainerGap(134, Short.MAX_VALUE))
+                        .addGap(17, 17, 17)
+                        .addComponent(BotonMapaMesas)))
+                .addContainerGap(181, Short.MAX_VALUE))
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                    .addGap(16, 16, 16)
+                    .addComponent(BotonReservar)
+                    .addContainerGap(283, Short.MAX_VALUE)))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel1)
-                .addGap(91, 91, 91)
-                .addComponent(BotonIniciar)
-                .addContainerGap(139, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 90, Short.MAX_VALUE)
+                .addComponent(BotonMapaMesas)
+                .addGap(140, 140, 140))
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                    .addGap(74, 74, 74)
+                    .addComponent(BotonReservar)
+                    .addContainerGap(194, Short.MAX_VALUE)))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void BotonIniciarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotonIniciarActionPerformed
+    private void BotonReservarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotonReservarActionPerformed
         // TODO add your handling code here:
-        Coordinador.CoordinadorPantallas.getInstance().mostrarMenu();
+        Coordinador.CoordinadorPantallas.getInstance().mostrarMapaMesas();
         dispose();
-        
-    }//GEN-LAST:event_BotonIniciarActionPerformed
+    }//GEN-LAST:event_BotonReservarActionPerformed
+
+    private void BotonMapaMesasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotonMapaMesasActionPerformed
+        // TODO add your handling code here:
+        Coordinador.CoordinadorPantallas.getInstance().mostrarMapaMesas();
+        dispose();
+    }//GEN-LAST:event_BotonMapaMesasActionPerformed
 
     /**
      * @param args the command line arguments
@@ -93,28 +117,30 @@ public class PantallaInicio extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(PantallaInicio.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(PantallaMenu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(PantallaInicio.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(PantallaMenu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(PantallaInicio.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(PantallaMenu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(PantallaInicio.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(PantallaMenu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new PantallaInicio().setVisible(true);
-                new PantallaInicio().setLocationRelativeTo(null);
+                new PantallaMenu().setVisible(true);
+                new PantallaMenu().setLocationRelativeTo(null);
                 
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton BotonIniciar;
+    private javax.swing.JButton BotonMapaMesas;
+    private javax.swing.JButton BotonReservar;
     private javax.swing.JLabel jLabel1;
     // End of variables declaration//GEN-END:variables
 }
