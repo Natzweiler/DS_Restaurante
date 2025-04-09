@@ -10,6 +10,7 @@ import java.awt.Color;
 import java.util.List;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import objetosnegocio.MesaON;
@@ -45,30 +46,32 @@ public class MapadeMesas extends javax.swing.JFrame {
         
     }
     public void actualizarEstadoMesas() {
-    List<MesaDTO> mesas = negocioReservacion.obtenerMesas();
-    if (mesas != null && mesas.size() > 0) {
-        
-        configurarMesa(mesa1, mesas.get(0));
-        configurarMesa(mesa2, mesas.get(1));
-        configurarMesa(mesa3, mesas.get(2));
-        configurarMesa(mesa4, mesas.get(3));
-        configurarMesa(mesa5, mesas.get(4));
-        configurarMesa(mesa6, mesas.get(5));
-        configurarMesa(mesa7, mesas.get(6));
+    List<MesaDTO> mesas = new ArrayList<>(MesaON.getInstance().cargarMesas());
+    if (mesas != null && mesas.size() >= 7) {
+        configurarMesa(mesa1, MesaON.getInstance().obtenerMesa(1));
+        configurarMesa(mesa2, MesaON.getInstance().obtenerMesa(2));
+        configurarMesa(mesa3, MesaON.getInstance().obtenerMesa(3));
+        configurarMesa(mesa4, MesaON.getInstance().obtenerMesa(4));
+        configurarMesa(mesa5, MesaON.getInstance().obtenerMesa(5));
+        configurarMesa(mesa6, MesaON.getInstance().obtenerMesa(6));
+        configurarMesa(mesa7, MesaON.getInstance().obtenerMesa(7));
     }
 }
 
     private void cargarMesasDisponibles() {
-    List<MesaDTO> mesas = MesaON.getInstance().cargarMesas();
-        if (mesas != null) {
-    configurarMesa(mesa1, mesas.get(0));
-    configurarMesa(mesa2, mesas.get(1));
-    configurarMesa(mesa3, mesas.get(2));
-    configurarMesa(mesa4, mesas.get(3));
-    configurarMesa(mesa5, mesas.get(4));
-    configurarMesa(mesa6, mesas.get(5));
-    configurarMesa(mesa7, mesas.get(6));
-   }
+    List<MesaDTO> mesas = new ArrayList<>(MesaON.getInstance().cargarMesas());
+    if (mesas != null && mesas.size() >= 7) {
+        configurarMesa(mesa1, MesaON.getInstance().obtenerMesa(1));
+        configurarMesa(mesa2, MesaON.getInstance().obtenerMesa(2));
+        configurarMesa(mesa3, MesaON.getInstance().obtenerMesa(3));
+        configurarMesa(mesa4, MesaON.getInstance().obtenerMesa(4));
+        configurarMesa(mesa5, MesaON.getInstance().obtenerMesa(5));
+        configurarMesa(mesa6, MesaON.getInstance().obtenerMesa(6));
+        configurarMesa(mesa7, MesaON.getInstance().obtenerMesa(7));
+    }
+
+        
+        
 }
     private void abrirRegistrarReservacion(MesaDTO mesa) {
     RegistrarReservacion registrarReservacion = new RegistrarReservacion();
@@ -79,32 +82,33 @@ public class MapadeMesas extends javax.swing.JFrame {
 }
         
     private void configurarMesa(JButton mesaBtn, MesaDTO mesa) {
-     mesaBtn.setText("Mesa " + mesa.getNumeroMesa());
-     if (mesa.isDisponible()) {
+    mesaBtn.setText("Mesa " + mesa.getNumeroMesa());
+    if (mesa.isDisponible()) {
         mesaBtn.setBackground(Color.GREEN);  
         mesaBtn.setEnabled(true);
-        }else{
-         mesaBtn.setBackground(Color.RED);  
-         mesaBtn.setEnabled(false);
-        }
-
-        mesaBtn.addActionListener(new ActionListener() {
-            @Override
-     public void actionPerformed(ActionEvent e) {
-        if (mesa.isDisponible()) {
-          mesaSeleccionada = mesa;
-          JOptionPane.showMessageDialog(MapadeMesas.this, "Mesa " + mesa.getNumeroMesa() + " seleccionada.");
-          RegistrarReservacion registrarReservacion = new RegistrarReservacion();
-          registrarReservacion.setMesaSeleccionada(mesa);
-          registrarReservacion.setLocationRelativeTo(null); 
-          registrarReservacion.setVisible(true);
-          dispose();
-                } else {
-                    JOptionPane.showMessageDialog(MapadeMesas.this, "La mesa " + mesa.getNumeroMesa() + " está ocupada.");
-                }
-            }
-        });
+    } else {
+        mesaBtn.setBackground(Color.RED);  
+        mesaBtn.setEnabled(false);
     }
+
+    mesaBtn.addActionListener(new ActionListener() {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            MesaDTO mesaActualizada = MesaON.getInstance().obtenerMesa(mesa.getNumeroMesa()); // Obtener la referencia actualizada
+            if (mesaActualizada.isDisponible()) {
+                mesaSeleccionada = mesaActualizada;
+                JOptionPane.showMessageDialog(MapadeMesas.this, "Mesa " + mesaActualizada.getNumeroMesa() + " seleccionada.");
+                RegistrarReservacion registrarReservacion = new RegistrarReservacion();
+                registrarReservacion.setMesaSeleccionada(mesaActualizada);
+                registrarReservacion.setLocationRelativeTo(null); 
+                registrarReservacion.setVisible(true);
+                dispose();
+            } else {
+                JOptionPane.showMessageDialog(MapadeMesas.this, "La mesa " + mesaActualizada.getNumeroMesa() + " está ocupada.");
+            }
+        }
+    });
+}
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always

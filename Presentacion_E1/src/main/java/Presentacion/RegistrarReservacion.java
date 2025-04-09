@@ -88,6 +88,8 @@ public class RegistrarReservacion extends javax.swing.JFrame {
         comboDia = new javax.swing.JComboBox<>();
         comboMes = new javax.swing.JComboBox<>();
         comboAño = new javax.swing.JComboBox<>();
+        hora = new javax.swing.JLabel();
+        comboMesero1 = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -123,7 +125,15 @@ public class RegistrarReservacion extends javax.swing.JFrame {
             }
         });
 
+        comboMesero.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                comboMeseroActionPerformed(evt);
+            }
+        });
+
         labelMesero.setText("Mesero:");
+
+        hora.setText("Hora:");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -143,11 +153,6 @@ public class RegistrarReservacion extends javax.swing.JFrame {
                         .addGap(54, 54, 54))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabelNumeroMesa)
-                            .addComponent(fecha))
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(labelMesero)
                                 .addGap(18, 18, 18)
@@ -165,15 +170,23 @@ public class RegistrarReservacion extends javax.swing.JFrame {
                                     .addComponent(jLabel3)
                                     .addGap(18, 18, 18)
                                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addGroup(layout.createSequentialGroup()
-                                            .addComponent(comboDia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addGap(26, 26, 26)
-                                            .addComponent(comboMes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addGap(27, 27, 27)
-                                            .addComponent(comboAño, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addGap(0, 24, Short.MAX_VALUE))
-                                        .addComponent(textoNombreCliente)))))
-                        .addContainerGap(254, Short.MAX_VALUE))))
+                                        .addComponent(comboMesero1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addGroup(layout.createSequentialGroup()
+                                                .addComponent(comboDia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addGap(26, 26, 26)
+                                                .addComponent(comboMes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addGap(27, 27, 27)
+                                                .addComponent(comboAño, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addGap(0, 24, Short.MAX_VALUE))
+                                            .addComponent(textoNombreCliente))))))
+                        .addContainerGap(254, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(hora)
+                            .addComponent(jLabelNumeroMesa)
+                            .addComponent(fecha))
+                        .addGap(0, 0, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -182,37 +195,37 @@ public class RegistrarReservacion extends javax.swing.JFrame {
                 .addComponent(jLabel1)
                 .addGap(43, 43, 43)
                 .addComponent(jLabelNumeroMesa)
-                .addGap(50, 50, 50)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(0, 51, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(fecha)
-                            .addComponent(comboDia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(comboMes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(comboAño, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel3)
-                            .addComponent(textoNombreCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(23, 23, 23)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel5)
-                            .addComponent(textCorreo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(26, 26, 26)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(textoTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel6))
-                        .addGap(34, 34, 34)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(btnReservar)
-                            .addComponent(btnRegresar))
-                        .addGap(27, 27, 27))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(labelMesero)
-                            .addComponent(comboMesero, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                .addGap(26, 26, 26)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(labelMesero)
+                    .addComponent(comboMesero, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(hora)
+                    .addComponent(comboMesero1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 13, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(fecha)
+                    .addComponent(comboDia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(comboMes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(comboAño, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3)
+                    .addComponent(textoNombreCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(23, 23, 23)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel5)
+                    .addComponent(textCorreo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(26, 26, 26)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(textoTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel6))
+                .addGap(34, 34, 34)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnReservar)
+                    .addComponent(btnRegresar))
+                .addGap(27, 27, 27))
         );
 
         pack();
@@ -224,33 +237,33 @@ public class RegistrarReservacion extends javax.swing.JFrame {
 
     private void btnReservarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReservarActionPerformed
         // TODO add your handling code here
-        if (mesa ==null) {
-            JOptionPane.showMessageDialog(this, "No hay una mesa seleccionada.");
-            return;
-        }
-        
-        String nombre = textoNombreCliente.getText().trim();
-        String telefono = textoTelefono.getText().trim();
-        String correo = textCorreo.getText().trim();
-        int indice = comboMesero.getSelectedIndex();
-        if (indice < 0) {
-            JOptionPane.showMessageDialog(this, "Selecciona un mesero.");
-            return;
-        }
-        MeseroDTO meseroSeleccionado = listaMeseros.get(indice);
-        
-        int dia = (Integer) comboDia.getSelectedItem();
-        int mes = comboMes.getSelectedIndex() + 1;
-        int año = (Integer) comboAño.getSelectedItem();
-        LocalDate fecha = LocalDate.of(año, mes, dia);
-        
-        String resultado = GestorReservacion.getInstance().registrarReservacion(mesa, nombre, telefono, correo, fecha, meseroSeleccionado);
-        mesa.setDisponible(false);
-        mapaDeMesas.actualizarEstadoMesas();
-        mapaDeMesas.repaint();
-        
-        StringBuilder ticket = new StringBuilder();
-     ticket.append("-------- TICKET DE RESERVACIÓN --------\n")
+        if (mesa == null) {
+        JOptionPane.showMessageDialog(this, "No hay una mesa seleccionada.");
+        return;
+    }
+    
+    String nombre = textoNombreCliente.getText().trim();
+    String telefono = textoTelefono.getText().trim();
+    String correo = textCorreo.getText().trim();
+    int indice = comboMesero.getSelectedIndex();
+    if (indice < 0) {
+        JOptionPane.showMessageDialog(this, "Selecciona un mesero.");
+        return;
+    }
+    MeseroDTO meseroSeleccionado = listaMeseros.get(indice);
+    
+    int dia = (Integer) comboDia.getSelectedItem();
+    int mes = comboMes.getSelectedIndex() + 1;
+    int año = (Integer) comboAño.getSelectedItem();
+    LocalDate fecha = LocalDate.of(año, mes, dia);
+    
+    String resultado = GestorReservacion.getInstance().registrarReservacion(mesa, nombre, telefono, correo, fecha, meseroSeleccionado);
+    mesa.setDisponible(false);
+    mapaDeMesas.actualizarEstadoMesas();
+    mapaDeMesas.repaint();
+    
+    StringBuilder ticket = new StringBuilder();
+    ticket.append("-------- TICKET DE RESERVACIÓN --------\n")
           .append("Nombre del cliente: ").append(nombre).append("\n")
           .append("Teléfono: ").append(telefono).append("\n")
           .append("Correo: ").append(correo).append("\n")
@@ -259,11 +272,10 @@ public class RegistrarReservacion extends javax.swing.JFrame {
           .append("Mesero asignado: ").append(meseroSeleccionado.getNombre()).append("\n")
           .append("-------------------------------------\n")
           .append("¡Gracias por tu reservación!");
-        JOptionPane.showMessageDialog(this, ticket.toString(), "Confirmación de Reservación.",JOptionPane.INFORMATION_MESSAGE );
-        this.dispose();
-        mapaDeMesas.setVisible(true);
-        mapaDeMesas.setLocationRelativeTo(null);
-        
+    JOptionPane.showMessageDialog(this, ticket.toString(), "Confirmación de Reservación.", JOptionPane.INFORMATION_MESSAGE);
+    this.dispose();
+    mapaDeMesas.setVisible(true);
+    mapaDeMesas.setLocationRelativeTo(null);
         
     }//GEN-LAST:event_btnReservarActionPerformed
 
@@ -272,6 +284,10 @@ public class RegistrarReservacion extends javax.swing.JFrame {
        Coordinador.CoordinadorPantallas.getInstance().mostrarMapaMesas();
         this.dispose();
     }//GEN-LAST:event_btnRegresarActionPerformed
+
+    private void comboMeseroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboMeseroActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_comboMeseroActionPerformed
 
     /**
      * @param args the command line arguments
@@ -318,7 +334,9 @@ public class RegistrarReservacion extends javax.swing.JFrame {
     private javax.swing.JComboBox<Integer> comboDia;
     private javax.swing.JComboBox<String> comboMes;
     private javax.swing.JComboBox<String> comboMesero;
+    private javax.swing.JComboBox<String> comboMesero1;
     private javax.swing.JLabel fecha;
+    private javax.swing.JLabel hora;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel5;

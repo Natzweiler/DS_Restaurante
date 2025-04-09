@@ -34,28 +34,33 @@ public class MesaON {
 
     
     public boolean insertarMesa(MesaDTO nuevaMesa) {
-        if (!mesas.containsKey(nuevaMesa.getNumeroMesa())) { 
-            mesas.put(nuevaMesa.getNumeroMesa(), nuevaMesa);
-            return true; 
-        }
-        return false; 
+    if (!mesas.containsKey(nuevaMesa.getNumeroMesa())) { 
+        mesas.put(nuevaMesa.getNumeroMesa(), nuevaMesa);
+        return true; 
     }
+    return false; 
+}
      public List<MesaDTO> cargarMesas() {
-        List<MesaDTO> mesas = new ArrayList<>();
-        
-        mesas.add(new MesaDTO(1, 4, true));  
-        mesas.add(new MesaDTO(2, 4, true));  
-        mesas.add(new MesaDTO(3, 4, false)); 
-        mesas.add(new MesaDTO(4, 4, true)); 
-        mesas.add(new MesaDTO(5, 4, true)); 
-        mesas.add(new MesaDTO(6, 4, false)); 
-        mesas.add(new MesaDTO(7, 4, true)); 
-        
-        for (MesaDTO mesa : mesas) {
-            MesaON.getInstance().insertarMesa(mesa);
-        }
-        return mesas;
+    // Si el HashMap ya tiene mesas, devolverlas
+    if (!mesas.isEmpty()) {
+        return new ArrayList<>(mesas.values());
     }
+    
+    // Si no, inicializar con las mesas predefinidas
+    List<MesaDTO> listaMesas = new ArrayList<>();
+    listaMesas.add(new MesaDTO(1, 4, true));  
+    listaMesas.add(new MesaDTO(2, 4, true));  
+    listaMesas.add(new MesaDTO(3, 4, false)); 
+    listaMesas.add(new MesaDTO(4, 4, true)); 
+    listaMesas.add(new MesaDTO(5, 4, true)); 
+    listaMesas.add(new MesaDTO(6, 4, false)); 
+    listaMesas.add(new MesaDTO(7, 4, true)); 
+    
+    for (MesaDTO mesa : listaMesas) {
+        insertarMesa(mesa);
+    }
+    return listaMesas;
+}
 
     
     public MesaDTO obtenerMesa(int numeroMesa) {
