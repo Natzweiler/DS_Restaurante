@@ -17,11 +17,11 @@ import java.util.Map;
  * @author Gael
  */
 public class ReservacionON {
-    
+
     private static ReservacionON instancia;
-    
+
     private List<ReservacionDTO> reservaciones;
-    
+
     private Map<Integer, Boolean> mesasDisponibles;
 
     private ReservacionON() {
@@ -29,39 +29,40 @@ public class ReservacionON {
         mesasDisponibles = new HashMap<>();
     }
 
-    public static  synchronized ReservacionON getInstance(){
+    public static synchronized ReservacionON getInstance() {
         if (instancia == null) {
             instancia = new ReservacionON();
         }
-    return instancia;
+        return instancia;
     }
-    
+
     public boolean registrarReservacion(ReservacionDTO reservacion) {
-        
         for (ReservacionDTO r : reservaciones) {
             if (r.getMesa().getNumeroMesa() == reservacion.getMesa().getNumeroMesa()
-                    && r.getFechaHora().equals(reservacion.getFechaHora())) {
-                return false; 
+                    && r.getFecha().equals(reservacion.getFecha())
+                    && r.getHora().equals(reservacion.getHora())) {
+                return false; // Ya hay una reservación en esa mesa para esa fecha y hora
             }
         }
         return reservaciones.add(reservacion);
-   }
-    public List<Integer> obtenerMesasDisponibles() {
-    List<Integer> mesasLibres = new ArrayList<>();
-    for (Map.Entry<Integer, Boolean> entry : mesasDisponibles.entrySet()) {
-        
-        if (entry.getValue()) {
-            mesasLibres.add(entry.getKey());
-        }
     }
-    return mesasLibres;
-}
-     public boolean MesaDisponibleDiaHora(MesaDTO mesa, LocalDate fechaHora) {
-       
+
+    public List<Integer> obtenerMesasDisponibles() {
+        List<Integer> mesasLibres = new ArrayList<>();
+        for (Map.Entry<Integer, Boolean> entry : mesasDisponibles.entrySet()) {
+
+            if (entry.getValue()) {
+                mesasLibres.add(entry.getKey());
+            }
+        }
+        return mesasLibres;
+    }
+
+    public boolean MesaDisponibleDiaHora(MesaDTO mesa, LocalDate fecha, java.time.LocalTime hora) {
         for (ReservacionDTO r : reservaciones) {
-            
-            if (r.getMesa().getNumeroMesa() == mesa.getNumeroMesa() && r.getFechaHora().equals(fechaHora)) {
-             
+            if (r.getMesa().getNumeroMesa() == mesa.getNumeroMesa()
+                    && r.getFecha().equals(fecha)
+                    && r.getHora().equals(hora)) {
                 return false;
             }
         }

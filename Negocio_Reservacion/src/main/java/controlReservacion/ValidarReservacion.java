@@ -7,6 +7,7 @@ package controlReservacion;
 import dtos.MesaDTO;
 import dtos.MeseroDTO;
 import java.time.LocalDate;
+import java.time.LocalTime;
 
 /**
  *
@@ -15,19 +16,18 @@ import java.time.LocalDate;
 public class ValidarReservacion implements IValidadorReservacion {
 
     @Override
-    public String registrarReservacion(MesaDTO mesa, String nombre, String telefono, String correo, LocalDate fecha, MeseroDTO mesero) {
-        
-        if (mesa.isDisponible() == false) {
-            System.out.println("Error: La mesa no esta disponible.");
-            
+    public String registrarReservacion(MesaDTO mesa, String nombre, String telefono, String correo, LocalDate fecha, MeseroDTO mesero, LocalTime hora) {
+        if (!mesa.isDisponible()) {
+            System.out.println("Error: La mesa no está disponible.");
         }
+
         if (mesero == null) {
             System.out.println("Necesita escoger un mesero.");
-            
         }
+
         mesa.setDisponible(false);
-        return "Reservacion exitosa para " + nombre + "en la mesa" + mesa.getNumeroMesa() + "con el mesero" + mesero.getNombre();
-        
+        return "Reservación exitosa para " + nombre + " en la mesa " + mesa.getNumeroMesa()
+                + " con el mesero " + mesero.getNombre() + " el día " + fecha + " a las " + hora;
     }
-    
+
 }

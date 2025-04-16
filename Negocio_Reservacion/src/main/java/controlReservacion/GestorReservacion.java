@@ -9,6 +9,7 @@ import dtos.MesaDTO;
 import dtos.MeseroDTO;
 import dtos.ReservacionDTO;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 import objetosnegocio.ClienteON;
@@ -53,12 +54,12 @@ public class GestorReservacion {
         }
     }
 
-    public String registrarReservacion(MesaDTO mesa, String nombre, String telefono, String correo, LocalDate fechaHora, MeseroDTO mesero) {
+    public String registrarReservacion(MesaDTO mesa, String nombre, String telefono, String correo, LocalDate fecha, MeseroDTO mesero, LocalTime hora) {
                 MesaDTO mesaEnSistema = mesaON.obtenerMesa(mesa.getNumeroMesa());
 
         if (mesaEnSistema != null) {
-            if (reservacionON.MesaDisponibleDiaHora(mesa, fechaHora)) {
-                ReservacionDTO reservacion = new ReservacionDTO(mesa, nombre, telefono, correo, fechaHora, mesero);
+            if (reservacionON.MesaDisponibleDiaHora(mesa, fecha)) {
+                ReservacionDTO reservacion = new ReservacionDTO(mesa, nombre, telefono, correo, fecha, mesero, hora);
 
                 if (reservacionON.registrarReservacion(reservacion)) {
                     

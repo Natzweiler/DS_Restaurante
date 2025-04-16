@@ -5,6 +5,7 @@
 package dtos;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 
 /**
  *
@@ -20,24 +21,25 @@ public class ReservacionDTO {
     
     private String correo;
     
-    private LocalDate fechaHora;
+    private LocalDate fecha;
     
     private MeseroDTO mesero;
     
+    private LocalTime hora;
     
 
     public ReservacionDTO() {
     }
 
-    public ReservacionDTO(MesaDTO mesa, String nombre, String telefono, String correo, LocalDate fechaHora, MeseroDTO mesero) {
+    public ReservacionDTO(MesaDTO mesa, String nombre, String telefono, String correo, LocalDate fecha, MeseroDTO mesero, LocalTime hora) {
         this.mesa = mesa;
         this.nombre = nombre;
         this.telefono = telefono;
         this.correo = correo;
-        this.fechaHora = fechaHora;
+        this.fecha = fecha;
         this.mesero = mesero;
+        this.hora = hora;
     }
-
 
     public MesaDTO getMesa() {
         return mesa;
@@ -71,6 +73,14 @@ public class ReservacionDTO {
         this.correo = correo;
     }
 
+    public LocalDate getFecha() {
+        return fecha;
+    }
+
+    public void setFecha(LocalDate fecha) {
+        this.fecha = fecha;
+    }
+
     public MeseroDTO getMesero() {
         return mesero;
     }
@@ -79,22 +89,18 @@ public class ReservacionDTO {
         this.mesero = mesero;
     }
 
-    
-
-    public LocalDate getFechaHora() {
-        return fechaHora;
+    public LocalTime getHora() {
+        return hora;
     }
 
-    public void setFechaHora(LocalDate fechaHora) {
-        this.fechaHora = fechaHora;
+    public void setHora(LocalTime hora) {
+        this.hora = hora;
     }
 
     @Override
     public String toString() {
-        return "ReservacionDTO{" + "mesa=" + mesa + ", nombre=" + nombre + ", telefono=" + telefono + ", correo=" + correo + ", fechaHora=" + fechaHora + ", mesero=" + mesero + '}';
+        return "ReservacionDTO{" + "mesa=" + mesa + ", nombre=" + nombre + ", telefono=" + telefono + ", correo=" + correo + ", fecha=" + fecha + ", mesero=" + mesero + ", hora=" + hora + '}';
     }
-
-   
     
     
 }

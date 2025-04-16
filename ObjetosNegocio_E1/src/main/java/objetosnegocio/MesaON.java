@@ -50,10 +50,10 @@ public class MesaON {
     List<MesaDTO> listaMesas = new ArrayList<>();
     listaMesas.add(new MesaDTO(1, 4, true));  
     listaMesas.add(new MesaDTO(2, 4, true));  
-    listaMesas.add(new MesaDTO(3, 4, false)); 
+    listaMesas.add(new MesaDTO(3, 4, true)); 
     listaMesas.add(new MesaDTO(4, 4, true)); 
     listaMesas.add(new MesaDTO(5, 4, true)); 
-    listaMesas.add(new MesaDTO(6, 4, false)); 
+    listaMesas.add(new MesaDTO(6, 4, true)); 
     listaMesas.add(new MesaDTO(7, 4, true)); 
     
     for (MesaDTO mesa : listaMesas) {

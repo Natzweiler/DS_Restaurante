@@ -7,6 +7,7 @@ package controlReservacion;
 import dtos.MesaDTO;
 import dtos.MeseroDTO;
 import java.time.LocalDate;
+import java.time.LocalTime;
 
 /**
  *
@@ -14,5 +15,5 @@ import java.time.LocalDate;
  */
 public interface IValidadorReservacion {
     
-    public String registrarReservacion(MesaDTO mesa, String nombre, String telefono, String correo, LocalDate fecha, MeseroDTO mesero);
+    public String registrarReservacion(MesaDTO mesa, String nombre, String telefono, String correo, LocalDate fecha, MeseroDTO mesero, LocalTime hora);
 }
