@@ -128,9 +128,9 @@ public class MapadeMesas extends javax.swing.JFrame {
             
             
             LocalDate fechaSeleccionada = LocalDate.of(año, mes, dia);
-            LocalTime hora = LocalTime.of(horaSeleccionada, 0); // Minutos en 0
+            LocalTime hora = LocalTime.of(horaSeleccionada, 0); 
 
-            // 📌 Ahora sí, creas y llenas la pantalla
+            
             RegistrarReservacion registrarReservacion = new RegistrarReservacion();
             registrarReservacion.setMesaSeleccionada(mesaActualizada);
             registrarReservacion.setFechaHoraSeleccionada(fechaSeleccionada, hora); 

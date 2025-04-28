@@ -37,14 +37,7 @@ public class RegistrarReservacion extends javax.swing.JFrame {
     public static MapadeMesas mapaDeMesas;
     private LocalDate fechaSeleccionada;
     private LocalTime horaSeleccionada;
-    private String emailFrom = "restaurantedisoftware@gmail.com";
-    private String password = "bjxk3801";
-    private String mailTo;
-    private String subject;
-    private String conent;
-    private Authenticator auth;
-    private Properties propierties;
-    //private File[] adjuntos;
+   
     
     
         public void setMesaSeleccionada(MesaDTO mesa) {
@@ -85,7 +78,7 @@ public class RegistrarReservacion extends javax.swing.JFrame {
     final String usuario = "restaurantedisoftware@gmail.com"; 
     final String contrasena = "sotg wpan zyhs bvpj"; 
 
-    // Configuración del servidor SMTP
+    
     Properties propiedades = new Properties();
     propiedades.put("mail.smtp.host", host);
     propiedades.put("mail.smtp.port", "587");
@@ -106,7 +99,7 @@ public class RegistrarReservacion extends javax.swing.JFrame {
         mensaje.addRecipient(Message.RecipientType.TO, new InternetAddress(correo)); 
         mensaje.setSubject("Confirmación de Reservación");
         
-        // Cuerpo del correo (Ticket de confirmación)
+        
         String cuerpo = "-------- TICKET DE RESERVACIÓN --------\n"
                         + "Nombre del cliente: " + nombre + "\n"
                         + "Teléfono: " + telefono + "\n"
