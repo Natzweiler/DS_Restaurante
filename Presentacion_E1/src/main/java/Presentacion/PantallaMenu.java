@@ -125,6 +125,8 @@ public class PantallaMenu extends javax.swing.JFrame {
 
     private void btnGestionarMeserosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGestionarMeserosActionPerformed
         // TODO add your handling code here:
+        Coordinador.CoordinadorPantallas.getInstance().mostrarGestionMeseros();
+        dispose();
     }//GEN-LAST:event_btnGestionarMeserosActionPerformed
 
     private void btnReportesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReportesActionPerformed

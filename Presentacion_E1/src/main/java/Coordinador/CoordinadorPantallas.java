@@ -5,6 +5,8 @@
 package Coordinador;
 
 import Presentacion.MapadeMesas;
+import Presentacion.PantallaAgregarMesero;
+import Presentacion.PantallaGestionMeseros;
 import Presentacion.PantallaMenu;
 import Presentacion.RegistrarReservacion;
 
@@ -50,6 +52,21 @@ public class CoordinadorPantallas {
     PantallaMenu a = new PantallaMenu();
     a.setLocationRelativeTo(null);
     a.setVisible(true);
+    }
+    
+    //crud de meseros
+    public void mostrarGestionMeseros(){
+    PantallaGestionMeseros g = new PantallaGestionMeseros();
+    g.setLocationRelativeTo(null);
+    g.setVisible(true);
+    
+    }
+    
+    public void mostrarAgregarMesero(){
+    PantallaAgregarMesero ag = new PantallaAgregarMesero();
+    ag.setLocationRelativeTo(null);
+    ag.setVisible(true);
+    
     }
 }
 
