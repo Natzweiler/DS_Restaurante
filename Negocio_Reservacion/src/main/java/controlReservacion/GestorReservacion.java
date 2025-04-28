@@ -58,7 +58,7 @@ public class GestorReservacion {
                 MesaDTO mesaEnSistema = mesaON.obtenerMesa(mesa.getNumeroMesa());
 
         if (mesaEnSistema != null) {
-            if (reservacionON.MesaDisponibleDiaHora(mesa, fecha)) {
+            if (reservacionON.MesaDisponibleDiaHora(mesa, fecha, hora)) {
                 ReservacionDTO reservacion = new ReservacionDTO(mesa, nombre, telefono, correo, fecha, mesero, hora);
 
                 if (reservacionON.registrarReservacion(reservacion)) {

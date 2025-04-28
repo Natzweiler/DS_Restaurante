@@ -10,10 +10,13 @@ import java.awt.Color;
 import java.util.List;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import objetosnegocio.MesaON;
+import objetosnegocio.ReservacionON;
 
 /**
  *
@@ -43,8 +46,14 @@ public class MapadeMesas extends javax.swing.JFrame {
         initComponents();
         negocioReservacion = new GestorReservacion();
         cargarMesasDisponibles();
-        
-    }
+        for (int i = 2; i <= 31; i++) {
+            cbDia.addItem(String.valueOf(i));
+        }
+        for (int hora = 9; hora <= 21; hora++) {
+            String horaFormateada = String.format("%02d:00", hora);
+            cbHora.addItem(horaFormateada);
+        }
+  }
     public void actualizarEstadoMesas() {
     List<MesaDTO> mesas = new ArrayList<>(MesaON.getInstance().cargarMesas());
     if (mesas != null && mesas.size() >= 7) {
@@ -57,7 +66,16 @@ public class MapadeMesas extends javax.swing.JFrame {
         configurarMesa(mesa7, MesaON.getInstance().obtenerMesa(7));
     }
 }
-
+    public void mostrarMesasDisponibles(LocalDate fecha, LocalTime hora){
+    List<MesaDTO> todasMesas = new ArrayList<>(MesaON.getInstance().cargarMesas());
+    ReservacionON reservacionON = ReservacionON.getInstance();
+        for (MesaDTO mesa : todasMesas) {
+            boolean disponible = reservacionON.MesaDisponibleDiaHora(mesa, fecha, hora);
+            mesa.setDisponible(disponible);
+        }
+        actualizarEstadoMesas();
+        cargarMesasDisponibles();
+    }
     private void cargarMesasDisponibles() {
     List<MesaDTO> mesas = new ArrayList<>(MesaON.getInstance().cargarMesas());
     if (mesas != null && mesas.size() >= 7) {
@@ -92,22 +110,39 @@ public class MapadeMesas extends javax.swing.JFrame {
     }
 
     mesaBtn.addActionListener(new ActionListener() {
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            MesaDTO mesaActualizada = MesaON.getInstance().obtenerMesa(mesa.getNumeroMesa()); // Obtener la referencia actualizada
-            if (mesaActualizada.isDisponible()) {
-                mesaSeleccionada = mesaActualizada;
-                JOptionPane.showMessageDialog(MapadeMesas.this, "Mesa " + mesaActualizada.getNumeroMesa() + " seleccionada.");
-                RegistrarReservacion registrarReservacion = new RegistrarReservacion();
-                registrarReservacion.setMesaSeleccionada(mesaActualizada);
-                registrarReservacion.setLocationRelativeTo(null); 
-                registrarReservacion.setVisible(true);
-                dispose();
-            } else {
-                JOptionPane.showMessageDialog(MapadeMesas.this, "La mesa " + mesaActualizada.getNumeroMesa() + " está ocupada.");
-            }
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        MesaDTO mesaActualizada = MesaON.getInstance().obtenerMesa(mesa.getNumeroMesa()); 
+        if (mesaActualizada.isDisponible()) {
+            mesaSeleccionada = mesaActualizada;
+            JOptionPane.showMessageDialog(MapadeMesas.this, "Mesa " + mesaActualizada.getNumeroMesa() + " seleccionada.");
+            
+            
+            int dia = Integer.parseInt(cbDia.getSelectedItem().toString());
+            int mes = cbMes.getSelectedIndex() + 1; 
+            int año = Integer.parseInt(cbAño.getSelectedItem().toString());
+            
+            String horaSeleccionadasrt = cbHora.getSelectedItem().toString();
+            String horaNum = horaSeleccionadasrt.split(":")[0];
+            int horaSeleccionada = Integer.parseInt(horaNum);
+            
+            
+            LocalDate fechaSeleccionada = LocalDate.of(año, mes, dia);
+            LocalTime hora = LocalTime.of(horaSeleccionada, 0); // Minutos en 0
+
+            // 📌 Ahora sí, creas y llenas la pantalla
+            RegistrarReservacion registrarReservacion = new RegistrarReservacion();
+            registrarReservacion.setMesaSeleccionada(mesaActualizada);
+            registrarReservacion.setFechaHoraSeleccionada(fechaSeleccionada, hora); 
+            registrarReservacion.setLocationRelativeTo(null); 
+            registrarReservacion.setVisible(true);
+            dispose();
+        } else {
+            JOptionPane.showMessageDialog(MapadeMesas.this, "La mesa " + mesaActualizada.getNumeroMesa() + " está ocupada.");
         }
-    });
+    }
+});
+
 }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -120,37 +155,99 @@ public class MapadeMesas extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
-        mesa1 = new javax.swing.JButton();
         mesa2 = new javax.swing.JButton();
+        cbHora = new javax.swing.JComboBox<>();
         mesa3 = new javax.swing.JButton();
+        cbDia = new javax.swing.JComboBox<>();
+        cbMes = new javax.swing.JComboBox<>();
+        cbAño = new javax.swing.JComboBox<>();
+        btnBuscar = new javax.swing.JButton();
+        btnRegresar = new javax.swing.JButton();
         mesa4 = new javax.swing.JButton();
         mesa5 = new javax.swing.JButton();
         mesa6 = new javax.swing.JButton();
         mesa7 = new javax.swing.JButton();
-        btnRegresar = new javax.swing.JButton();
+        mesa1 = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jPanel1.setLayout(new java.awt.GridLayout(1, 0));
 
-        mesa1.setText("Mesa 1");
-        mesa1.addActionListener(new java.awt.event.ActionListener() {
+        mesa2.setText("Mesa 2");
+
+        cbHora.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "08:00" }));
+        cbHora.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                mesa1ActionPerformed(evt);
+                cbHoraActionPerformed(evt);
             }
         });
 
-        mesa2.setText("Mesa 2");
-
         mesa3.setText("Mesa 3");
 
-        mesa4.setText("Mesa 4");
+        cbDia.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1" }));
+        cbDia.setToolTipText("Mes");
 
-        mesa5.setText("Mesa 5");
+        cbMes.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "ENERO", "FEBRERO", "MARZO", "ABRIL", "MAYO", "JUNIO", "JULIO", "AGOSTO", "SEPTIEMBRE", "OCTUBRE", "NOVIEMBRE", "DICIEMBRE" }));
 
-        mesa6.setText("Mesa 6");
+        cbAño.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "2025", "2026" }));
+        cbAño.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbAñoActionPerformed(evt);
+            }
+        });
 
-        mesa7.setText("Mesa 7");
+        btnBuscar.setText("Buscar");
+        btnBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscarActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                        .addComponent(mesa2)
+                        .addGap(282, 282, 282))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                        .addComponent(mesa3)
+                        .addGap(39, 39, 39))))
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(cbHora, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(cbDia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(44, 44, 44)
+                        .addComponent(cbMes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(50, 50, 50)
+                        .addComponent(cbAño, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(41, 41, 41)
+                        .addComponent(btnBuscar)))
+                .addGap(0, 81, Short.MAX_VALUE))
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(46, 46, 46)
+                .addComponent(cbHora, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(53, 53, 53)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(cbDia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cbMes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cbAño, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnBuscar))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 107, Short.MAX_VALUE)
+                .addComponent(mesa2)
+                .addGap(3, 3, 3)
+                .addComponent(mesa3)
+                .addContainerGap())
+        );
 
         btnRegresar.setBackground(new java.awt.Color(204, 255, 204));
         btnRegresar.setText("Regresar");
@@ -160,86 +257,97 @@ public class MapadeMesas extends javax.swing.JFrame {
             }
         });
 
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(152, 152, 152)
-                        .addComponent(mesa2))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(39, 39, 39)
-                        .addComponent(mesa4)
-                        .addGap(107, 107, 107)
-                        .addComponent(mesa5)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(mesa1)
-                            .addComponent(btnRegresar))
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addContainerGap(126, Short.MAX_VALUE)
-                        .addComponent(mesa7)
-                        .addGap(121, 121, 121)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(mesa6)
-                            .addComponent(mesa3))))
-                .addGap(29, 29, 29))
-        );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(21, 21, 21)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(mesa1)
-                    .addComponent(mesa3))
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(mesa2)
-                                .addGap(68, 68, 68)
-                                .addComponent(mesa4))
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addGap(91, 91, 91)
-                                .addComponent(mesa5)))
-                        .addGap(9, 9, 9)
-                        .addComponent(mesa6)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 73, Short.MAX_VALUE)
-                        .addComponent(btnRegresar)
-                        .addContainerGap())
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(mesa7)
-                        .addGap(93, 93, 93))))
-        );
+        mesa4.setText("Mesa 4");
+
+        mesa5.setText("Mesa 5");
+
+        mesa6.setText("Mesa 6");
+
+        mesa7.setText("Mesa 7");
+
+        mesa1.setText("Mesa 1");
+        mesa1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mesa1ActionPerformed(evt);
+            }
+        });
+
+        jLabel1.setText("Seleccione la hora:");
+
+        jLabel2.setText("Seleccione la fecha:");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(56, 56, 56)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(34, 34, 34)
+                        .addComponent(jLabel1)
+                        .addGap(11, 11, 11))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)))
                 .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+                .addGap(84, 84, 84))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(mesa7)
+                .addGap(275, 275, 275))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(89, 89, 89)
+                .addComponent(mesa4)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(mesa6)
+                .addGap(122, 122, 122))
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addComponent(btnRegresar))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(56, 56, 56)
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(65, 65, 65)
+                        .addComponent(mesa1))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(237, 237, 237)
+                        .addComponent(mesa5)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(33, 33, 33))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(48, 48, 48)
+                        .addComponent(jLabel1)
+                        .addGap(61, 61, 61)
+                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(mesa1)
+                        .addGap(21, 21, 21)))
+                .addComponent(mesa7)
+                .addGap(20, 20, 20)
+                .addComponent(mesa5)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 33, Short.MAX_VALUE)
+                        .addComponent(mesa4)
+                        .addGap(64, 64, 64))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(14, 14, 14)
+                        .addComponent(mesa6)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addComponent(btnRegresar)
+                .addGap(26, 26, 26))
         );
 
         pack();
@@ -247,13 +355,38 @@ public class MapadeMesas extends javax.swing.JFrame {
 
     private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
         // TODO add your handling code here:
-        Coordinador.CoordinadorPantallas.getInstance().mostrarPantallaInicio();
+        Coordinador.CoordinadorPantallas.getInstance().mostrarMenu();
         this.dispose();
     }//GEN-LAST:event_btnRegresarActionPerformed
 
     private void mesa1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mesa1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_mesa1ActionPerformed
+
+    private void cbHoraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbHoraActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cbHoraActionPerformed
+
+    private void cbAñoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbAñoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cbAñoActionPerformed
+
+    private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
+        // TODO add your handling code here:
+        int dia = Integer.parseInt(cbDia.getSelectedItem().toString());
+        int mes = cbMes.getSelectedIndex()+1;
+        int año = Integer.parseInt(cbAño.getSelectedItem().toString());
+        String horaSeleccionada = (String) cbHora.getSelectedItem();
+        
+        if (horaSeleccionada == null) {
+            JOptionPane.showMessageDialog(this, "Selecciona una hora.");
+            return;
+        }
+        LocalDate fecha = LocalDate.of(año, mes, dia);
+        LocalTime hora = LocalTime.parse(horaSeleccionada);
+        mostrarMesasDisponibles(fecha, hora);
+        
+    }//GEN-LAST:event_btnBuscarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -291,7 +424,14 @@ public class MapadeMesas extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnBuscar;
     private javax.swing.JButton btnRegresar;
+    private javax.swing.JComboBox<String> cbAño;
+    private javax.swing.JComboBox<String> cbDia;
+    private javax.swing.JComboBox<String> cbHora;
+    private javax.swing.JComboBox<String> cbMes;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JButton mesa1;

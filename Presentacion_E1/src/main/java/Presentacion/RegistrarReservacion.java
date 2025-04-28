@@ -8,7 +8,17 @@ import controlReservacion.GestorReservacion;
 import dtos.MesaDTO;
 import dtos.MeseroDTO;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
+import java.util.Properties;
+import javax.mail.Authenticator;
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.Session;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
+import javax.mail.PasswordAuthentication;
+import javax.mail.Transport;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 import objetosnegocio.MeseroON;
@@ -25,13 +35,30 @@ public class RegistrarReservacion extends javax.swing.JFrame {
     private MesaDTO mesa;
     private List<MeseroDTO> listaMeseros;
     public static MapadeMesas mapaDeMesas;
+    private LocalDate fechaSeleccionada;
+    private LocalTime horaSeleccionada;
+    private String emailFrom = "restaurantedisoftware@gmail.com";
+    private String password = "bjxk3801";
+    private String mailTo;
+    private String subject;
+    private String conent;
+    private Authenticator auth;
+    private Properties propierties;
+    //private File[] adjuntos;
     
-   
     
         public void setMesaSeleccionada(MesaDTO mesa) {
         this.mesa = mesa;
         mostrarDetallesMesa();
     }
+        public void setFechaHoraSeleccionada (LocalDate fecha, LocalTime hora){
+        this.fechaSeleccionada = fecha;
+        this.horaSeleccionada = hora;
+        labelFechaSeleccionada.setText("Fecha seleccionada: " +  fecha.toString());
+        labelHoraSeleccionada.setText("Hora seleccionada: " + hora.toString());
+        
+        
+        }
         private void mostrarDetallesMesa() {
             if (mesa != null) {
                 jLabelNumeroMesa.setText("Mesa " + mesa.getNumeroMesa());
@@ -42,24 +69,63 @@ public class RegistrarReservacion extends javax.swing.JFrame {
     public RegistrarReservacion() {
         initComponents();
         cargarMeseros();
-        cargarFecha();
         mapaDeMesas = Coordinador.CoordinadorPantallas.getInstance().getMapaDeMesas();
           
     }
-    private void cargarFecha(){
-        for (int i = 1; i < 31; i++) comboDia.addItem(i); {
-            comboMes.setModel(new DefaultComboBoxModel<>(new String[]{"ENERO", "FEBRERO", "MARZO", "ABRIL", "MAYO", "JUNIO", "JULIO", "AGOSTO", "SEPTIEMBRE", "OCTUBRE", "NOVIEMBRE", "DICIEMBRE"}));
-        }
-    
-        for (int i = LocalDate.now().getYear(); i <= LocalDate.now().getYear()+1; i++) comboAño.addItem(i); {
-            
-        }
-    }
+
     private void cargarMeseros() {
         listaMeseros = MeseroON.getInstance().obtenerMeseros();
   
     for (MeseroDTO mesero : listaMeseros) {
         comboMesero.addItem(mesero.getNombre()); 
+    }
+}
+ public void enviarCorreoConfirmacion(String nombre, String correo, String telefono, int mesa, String fecha, String mesero) {
+    String host = "smtp.gmail.com"; 
+    final String usuario = "restaurantedisoftware@gmail.com"; 
+    final String contrasena = "sotg wpan zyhs bvpj"; 
+
+    // Configuración del servidor SMTP
+    Properties propiedades = new Properties();
+    propiedades.put("mail.smtp.host", host);
+    propiedades.put("mail.smtp.port", "587");
+    propiedades.put("mail.smtp.auth", "true");
+    propiedades.put("mail.smtp.starttls.enable", "true"); 
+
+    
+    Session session = Session.getInstance(propiedades, new Authenticator() {
+        protected PasswordAuthentication getPasswordAuthentication() {
+            return new PasswordAuthentication(usuario, contrasena);
+        }
+    });
+
+    try {
+        
+        MimeMessage mensaje = new MimeMessage(session);
+        mensaje.setFrom(new InternetAddress(usuario));
+        mensaje.addRecipient(Message.RecipientType.TO, new InternetAddress(correo)); 
+        mensaje.setSubject("Confirmación de Reservación");
+        
+        // Cuerpo del correo (Ticket de confirmación)
+        String cuerpo = "-------- TICKET DE RESERVACIÓN --------\n"
+                        + "Nombre del cliente: " + nombre + "\n"
+                        + "Teléfono: " + telefono + "\n"
+                        + "Correo: " + correo + "\n"
+                        + "Mesa: " + mesa + "\n"
+                        + "Fecha de la reservación: " + fecha + "\n"
+                        + "Mesero asignado: " + mesero + "\n"
+                        + "-------------------------------------\n"
+                        + "¡Gracias por tu reservación!";
+        
+        mensaje.setText(cuerpo);
+
+       
+        Transport.send(mensaje);
+
+        System.out.println("Correo enviado correctamente.");
+
+    } catch (MessagingException e) {
+        e.printStackTrace();
     }
 }
 
@@ -75,7 +141,6 @@ public class RegistrarReservacion extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabelNumeroMesa = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        fecha = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         textoNombreCliente = new javax.swing.JTextField();
@@ -85,11 +150,8 @@ public class RegistrarReservacion extends javax.swing.JFrame {
         btnRegresar = new javax.swing.JButton();
         comboMesero = new javax.swing.JComboBox<>();
         labelMesero = new javax.swing.JLabel();
-        comboDia = new javax.swing.JComboBox<>();
-        comboMes = new javax.swing.JComboBox<>();
-        comboAño = new javax.swing.JComboBox<>();
-        hora = new javax.swing.JLabel();
-        comboMesero1 = new javax.swing.JComboBox<>();
+        labelFechaSeleccionada = new javax.swing.JLabel();
+        labelHoraSeleccionada = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -97,9 +159,7 @@ public class RegistrarReservacion extends javax.swing.JFrame {
 
         jLabelNumeroMesa.setText("Número de mesa:");
 
-        jLabel3.setText("Nombre:");
-
-        fecha.setText("Fecha:");
+        jLabel3.setText("Nombre cliente:");
 
         jLabel5.setText("Correo:");
 
@@ -133,94 +193,91 @@ public class RegistrarReservacion extends javax.swing.JFrame {
 
         labelMesero.setText("Mesero:");
 
-        hora.setText("Hora:");
+        labelFechaSeleccionada.setText("jLabel2");
+
+        labelHoraSeleccionada.setText("jLabel2");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(230, 230, 230)
-                .addComponent(jLabel1)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(31, 31, 31)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(btnRegresar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnReservar)
-                        .addGap(54, 54, 54))
+                        .addGap(230, 230, 230)
+                        .addComponent(jLabel1))
                     .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabelNumeroMesa)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(labelMesero)
+                                .addGap(32, 32, 32)
+                                .addComponent(btnRegresar)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(btnReservar)
+                                .addGap(54, 54, 54))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel6)
+                                    .addComponent(jLabel5))
                                 .addGap(18, 18, 18)
-                                .addComponent(comboMesero, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(jLabel6)
-                                        .addComponent(jLabel5))
-                                    .addGap(18, 18, 18)
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                        .addComponent(textCorreo, javax.swing.GroupLayout.DEFAULT_SIZE, 291, Short.MAX_VALUE)
-                                        .addComponent(textoTelefono)))
-                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                    .addComponent(jLabel3)
-                                    .addGap(18, 18, 18)
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(comboMesero1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addGroup(layout.createSequentialGroup()
-                                                .addComponent(comboDia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addGap(26, 26, 26)
-                                                .addComponent(comboMes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addGap(27, 27, 27)
-                                                .addComponent(comboAño, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addGap(0, 24, Short.MAX_VALUE))
-                                            .addComponent(textoNombreCliente))))))
-                        .addContainerGap(254, Short.MAX_VALUE))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(textCorreo, javax.swing.GroupLayout.PREFERRED_SIZE, 309, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(textoTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, 278, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(labelMesero)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(comboMesero, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(0, 0, Short.MAX_VALUE))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jLabel3)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(textoNombreCliente, javax.swing.GroupLayout.DEFAULT_SIZE, 267, Short.MAX_VALUE)))
+                                .addGap(130, 130, 130)
+                                .addComponent(labelFechaSeleccionada))))
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(hora)
-                            .addComponent(jLabelNumeroMesa)
-                            .addComponent(fecha))
-                        .addGap(0, 0, Short.MAX_VALUE))))
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(labelHoraSeleccionada)))
+                .addGap(106, 106, 106))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel1)
-                .addGap(43, 43, 43)
+                .addGap(41, 41, 41)
                 .addComponent(jLabelNumeroMesa)
-                .addGap(26, 26, 26)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(28, 28, 28)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(labelMesero, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(comboMesero, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(9, 9, 9)
+                        .addComponent(labelHoraSeleccionada)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(labelFechaSeleccionada)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 83, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(labelMesero)
-                    .addComponent(comboMesero, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(hora)
-                    .addComponent(comboMesero1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 13, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(fecha)
-                    .addComponent(comboDia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(comboMes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(comboAño, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
-                    .addComponent(textoNombreCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(textoNombreCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel3))
                 .addGap(23, 23, 23)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
                     .addComponent(textCorreo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(26, 26, 26)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(textoTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel6))
+                    .addComponent(jLabel6)
+                    .addComponent(textoTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(34, 34, 34)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnReservar)
@@ -252,12 +309,6 @@ public class RegistrarReservacion extends javax.swing.JFrame {
     }
     MeseroDTO meseroSeleccionado = listaMeseros.get(indice);
     
-    int dia = (Integer) comboDia.getSelectedItem();
-    int mes = comboMes.getSelectedIndex() + 1;
-    int año = (Integer) comboAño.getSelectedItem();
-    LocalDate fecha = LocalDate.of(año, mes, dia);
-    
-    String resultado = GestorReservacion.getInstance().registrarReservacion(mesa, nombre, telefono, correo, fecha, meseroSeleccionado);
     mesa.setDisponible(false);
     mapaDeMesas.actualizarEstadoMesas();
     mapaDeMesas.repaint();
@@ -268,11 +319,12 @@ public class RegistrarReservacion extends javax.swing.JFrame {
           .append("Teléfono: ").append(telefono).append("\n")
           .append("Correo: ").append(correo).append("\n")
           .append("Mesa: ").append(mesa.getNumeroMesa()).append("\n")
-          .append("Fecha de la reservación: ").append(fecha.toString()).append("\n")
           .append("Mesero asignado: ").append(meseroSeleccionado.getNombre()).append("\n")
           .append("-------------------------------------\n")
           .append("¡Gracias por tu reservación!");
-    JOptionPane.showMessageDialog(this, ticket.toString(), "Confirmación de Reservación.", JOptionPane.INFORMATION_MESSAGE);
+    JOptionPane.showMessageDialog(this, ticket.toString(), "Se envío el ticket de confirmación a su correo.", JOptionPane.INFORMATION_MESSAGE);
+       
+        enviarCorreoConfirmacion(nombre, correo, telefono, mesa.getNumeroMesa(), fechaSeleccionada.toString(), meseroSeleccionado.getNombre());
     this.dispose();
     mapaDeMesas.setVisible(true);
     mapaDeMesas.setLocationRelativeTo(null);
@@ -330,18 +382,14 @@ public class RegistrarReservacion extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnRegresar;
     private javax.swing.JButton btnReservar;
-    private javax.swing.JComboBox<Integer> comboAño;
-    private javax.swing.JComboBox<Integer> comboDia;
-    private javax.swing.JComboBox<String> comboMes;
     private javax.swing.JComboBox<String> comboMesero;
-    private javax.swing.JComboBox<String> comboMesero1;
-    private javax.swing.JLabel fecha;
-    private javax.swing.JLabel hora;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabelNumeroMesa;
+    private javax.swing.JLabel labelFechaSeleccionada;
+    private javax.swing.JLabel labelHoraSeleccionada;
     private javax.swing.JLabel labelMesero;
     private javax.swing.JTextField textCorreo;
     private javax.swing.JTextField textoNombreCliente;

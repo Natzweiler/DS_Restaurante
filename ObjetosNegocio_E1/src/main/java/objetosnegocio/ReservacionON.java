@@ -41,7 +41,7 @@ public class ReservacionON {
             if (r.getMesa().getNumeroMesa() == reservacion.getMesa().getNumeroMesa()
                     && r.getFecha().equals(reservacion.getFecha())
                     && r.getHora().equals(reservacion.getHora())) {
-                return false; // Ya hay una reservación en esa mesa para esa fecha y hora
+                return false;
             }
         }
         return reservaciones.add(reservacion);

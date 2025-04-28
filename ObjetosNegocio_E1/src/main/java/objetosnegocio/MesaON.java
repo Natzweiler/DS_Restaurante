@@ -46,6 +46,10 @@ public class MesaON {
         return new ArrayList<>(mesas.values());
     }
     
+    
+    
+    
+    
     // Si no, inicializar con las mesas predefinidas
     List<MesaDTO> listaMesas = new ArrayList<>();
     listaMesas.add(new MesaDTO(1, 4, true));  

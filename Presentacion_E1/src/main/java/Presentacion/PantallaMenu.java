@@ -29,6 +29,8 @@ public class PantallaMenu extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         BotonReservar = new javax.swing.JButton();
         BotonMapaMesas = new javax.swing.JButton();
+        btnGestionarMeseros = new javax.swing.JButton();
+        btnReportes = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -51,6 +53,22 @@ public class PantallaMenu extends javax.swing.JFrame {
             }
         });
 
+        btnGestionarMeseros.setFont(new java.awt.Font("Segoe UI Semibold", 0, 18)); // NOI18N
+        btnGestionarMeseros.setText("Gestionar meseros");
+        btnGestionarMeseros.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGestionarMeserosActionPerformed(evt);
+            }
+        });
+
+        btnReportes.setFont(new java.awt.Font("Segoe UI Semibold", 0, 18)); // NOI18N
+        btnReportes.setText("Generar reportes");
+        btnReportes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnReportesActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -61,28 +79,33 @@ public class PantallaMenu extends javax.swing.JFrame {
                         .addGap(161, 161, 161)
                         .addComponent(jLabel1))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(17, 17, 17)
-                        .addComponent(BotonMapaMesas)))
-                .addContainerGap(181, Short.MAX_VALUE))
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(layout.createSequentialGroup()
-                    .addGap(16, 16, 16)
-                    .addComponent(BotonReservar)
-                    .addContainerGap(283, Short.MAX_VALUE)))
+                        .addGap(137, 137, 137)
+                        .addComponent(BotonReservar))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(124, 124, 124)
+                        .addComponent(BotonMapaMesas))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(106, 106, 106)
+                        .addComponent(btnGestionarMeseros))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(106, 106, 106)
+                        .addComponent(btnReportes)))
+                .addContainerGap(108, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 90, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(BotonReservar)
+                .addGap(18, 18, 18)
                 .addComponent(BotonMapaMesas)
-                .addGap(140, 140, 140))
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(layout.createSequentialGroup()
-                    .addGap(74, 74, 74)
-                    .addComponent(BotonReservar)
-                    .addContainerGap(194, Short.MAX_VALUE)))
+                .addGap(18, 18, 18)
+                .addComponent(btnGestionarMeseros)
+                .addGap(18, 18, 18)
+                .addComponent(btnReportes)
+                .addContainerGap(68, Short.MAX_VALUE))
         );
 
         pack();
@@ -99,6 +122,14 @@ public class PantallaMenu extends javax.swing.JFrame {
         Coordinador.CoordinadorPantallas.getInstance().mostrarMapaMesas();
         dispose();
     }//GEN-LAST:event_BotonMapaMesasActionPerformed
+
+    private void btnGestionarMeserosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGestionarMeserosActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnGestionarMeserosActionPerformed
+
+    private void btnReportesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReportesActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnReportesActionPerformed
 
     /**
      * @param args the command line arguments
@@ -141,6 +172,8 @@ public class PantallaMenu extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton BotonMapaMesas;
     private javax.swing.JButton BotonReservar;
+    private javax.swing.JButton btnGestionarMeseros;
+    private javax.swing.JButton btnReportes;
     private javax.swing.JLabel jLabel1;
     // End of variables declaration//GEN-END:variables
 }
