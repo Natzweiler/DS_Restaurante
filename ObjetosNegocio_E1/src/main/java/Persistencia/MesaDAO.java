@@ -9,6 +9,8 @@ import conexion.Conexion;
 import exception.PersistenciaException;
 import interfaces.IMesaDAO;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
+import javax.persistence.TypedQuery;
 
 /**
  *
@@ -29,20 +31,21 @@ public class MesaDAO implements IMesaDAO{
         return instance;
     }
     public Mesa obtenerMesaPorNumeroMesa(Integer numeroMesa) throws PersistenciaException {
-        EntityManager em = Conexion.crearConexion();
-        try {
-            
-            Mesa mesa = em.find(Mesa.class, numeroMesa);
+    EntityManager em = Conexion.crearConexion();
+    try {
+        TypedQuery<Mesa> query = em.createQuery(
+            "SELECT m FROM Mesa m WHERE m.numeroMesa = :numero", Mesa.class);
+        query.setParameter("numero", numeroMesa);
+        Mesa mesa = query.getSingleResult();
 
-            if (mesa == null) {
-                throw new PersistenciaException("No se encontró la mesa con número: " + numeroMesa);
-            }
-
-            return mesa;
-        } catch (Exception e) {
-            throw new PersistenciaException("Error al recuperar la mesa con número: " + numeroMesa, e);
-        } finally {
-            em.close();
-        }
+        return mesa;
+    } catch (NoResultException e) {
+        throw new PersistenciaException("No se encontró la mesa con número: " + numeroMesa);
+    } catch (Exception e) {
+        throw new PersistenciaException("Error al recuperar la mesa con número: " + numeroMesa, e);
+    } finally {
+        em.close();
     }
 }
+}
+
