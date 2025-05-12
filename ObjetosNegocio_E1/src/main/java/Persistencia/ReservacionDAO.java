@@ -15,6 +15,18 @@ import javax.persistence.EntityManager;
  * @author Gael
  */
 public class ReservacionDAO implements IReservacionDAO {
+   private static ReservacionDAO instance;
+
+    private ReservacionDAO() {
+      
+    }
+
+    public static ReservacionDAO getInstanceDAO() {
+        if (instance == null) {
+            instance = new ReservacionDAO();
+        }
+        return instance;
+    }
 
     public Reservacion registrarReservacion(Reservacion reservacion) throws PersistenciaException {
     EntityManager em = Conexion.crearConexion();

@@ -4,15 +4,14 @@
  */
 package Interfaces;
 
-import Entidades.Reservacion;
-import dtos.ReservacionDTO;
+import dtos.MesaDTO;
 import negocio.exception.NegocioException;
 
 /**
  *
  * @author Gael
  */
-public interface IReservacionBO {
-    
-    public ReservacionDTO registrarReservacion(ReservacionDTO dto) throws NegocioException ;
+public interface IMesaBO {
+    MesaDTO obtenerMesaPorNumeroMesa(Integer numeroMesa) throws NegocioException;
 }
+

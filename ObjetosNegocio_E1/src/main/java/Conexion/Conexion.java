@@ -24,9 +24,6 @@ public class Conexion {
     de fábrica. En otras palabras, no necesitas implementar un Singleton manualmente porque el propio EMF se comporta 
     de manera similar.
     
-    
-
-
      */
     // Vamos a manejarlo asi por lo pronto:
     
@@ -47,5 +44,4 @@ public class Conexion {
     }
 
     // Recuerden, no siempre la mejor solucion es la primera que se nos ocurre o lo ultimo que aprendemos, siempre hay que adaptarnos a buscar las "mejores opciones"
-    // Sin embargo, es un gusto que siempre lleguen con ideas nuevas(:
 }

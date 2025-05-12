@@ -9,10 +9,18 @@ package dtos;
  * @author Gael
  */
 public class MeseroDTO {
-    
+    private Integer id;
     private String nombre;
 
     public MeseroDTO() {
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public MeseroDTO(String nombre) {

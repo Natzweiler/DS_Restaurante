@@ -13,22 +13,26 @@ import dtos.MeseroDTO;
  */
 public class MeseroMapper {
 
-    // Método para mapear de entidad Mesero a DTO
-    public static MeseroDTO toDTO(Mesero mesero) {
-        MeseroDTO dto = new MeseroDTO();
-        
-        dto.setNombre(mesero.getNombre());
-        
-        return dto;
+    
+    public static Mesero toEntity(MeseroDTO meseroDTO) {
+        if (meseroDTO == null) {
+            return null;
+        }
+        Mesero mesero = new Mesero();
+        mesero.setId(meseroDTO.getId());  
+        mesero.setNombre(meseroDTO.getNombre());
+        return mesero;
     }
 
     
-    public static Mesero toEntity(MeseroDTO dto) {
-        Mesero mesero = new Mesero();
-        
-        mesero.setNombre(dto.getNombre());
-        
-        return mesero;
+    public static MeseroDTO toDTO(Mesero mesero) {
+        if (mesero == null) {
+            return null;
+        }
+        MeseroDTO meseroDTO = new MeseroDTO();
+        meseroDTO.setId(mesero.getId());  
+        meseroDTO.setNombre(mesero.getNombre());
+        return meseroDTO;
     }
 }
 

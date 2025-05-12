@@ -23,8 +23,8 @@ public class Mesa {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @Column(name = "numero_mesa", nullable = false, unique = true)
-    private int numeroMesa;
+    @Column(name = "numeroMesa", nullable = false, unique = true)
+    private Integer numeroMesa;
 
     @Column(name = "capacidad", nullable = false)
     private int capacidadMesa;
@@ -32,7 +32,7 @@ public class Mesa {
     @Column(name = "disponible", nullable = false)
     private boolean disponible;
 
-    // --- Getters y Setters ---
+   
 
     public int getId() {
         return id;
@@ -68,7 +68,7 @@ public class Mesa {
 
     @Override
     public String toString() {
-        return "Mesa " + numeroMesa + " (Capacidad: " + capacidad + ")";
+        return "Mesa{" + "id=" + id + ", numeroMesa=" + numeroMesa + ", capacidadMesa=" + capacidadMesa + ", disponible=" + disponible + '}';
     }
-}
 
+}
