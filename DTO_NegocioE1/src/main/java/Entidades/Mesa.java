@@ -27,7 +27,7 @@ public class Mesa {
     private int numeroMesa;
 
     @Column(name = "capacidad", nullable = false)
-    private int capacidad;
+    private int capacidadMesa;
 
     @Column(name = "disponible", nullable = false)
     private boolean disponible;
@@ -50,12 +50,12 @@ public class Mesa {
         this.numeroMesa = numeroMesa;
     }
 
-    public int getCapacidad() {
-        return capacidad;
+    public int getCapacidadMesa() {
+        return capacidadMesa;
     }
 
-    public void setCapacidad(int capacidad) {
-        this.capacidad = capacidad;
+    public void setCapacidadMesa(int capacidad) {
+        this.capacidadMesa = capacidad;
     }
 
     public boolean isDisponible() {

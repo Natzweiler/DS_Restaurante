@@ -27,7 +27,7 @@ public class Reservacion {
     @JoinColumn(name = "mesa_id", nullable = false)
     private Mesa mesa;
     
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "cliente_id", nullable = false)
     private Cliente cliente;
 

@@ -11,36 +11,39 @@ import java.time.LocalTime;
  *
  * @author Gael
  */
+import java.time.LocalDate;
+import java.time.LocalTime;
+
 public class ReservacionDTO {
     
     private MesaDTO mesa;
     
-    private String nombre;
+    private ClienteDTO cliente;  
     
-    private String telefono;
-    
-    private String correo;
+    private String correo;   
     
     private LocalDate fecha;
     
-    private MeseroDTO mesero;
+    private MeseroDTO mesero;  
     
     private LocalTime hora;
-    
 
+    
     public ReservacionDTO() {
     }
 
-    public ReservacionDTO(MesaDTO mesa, String nombre, String telefono, String correo, LocalDate fecha, MeseroDTO mesero, LocalTime hora) {
+    // Constructor con todos los atributos
+
+    public ReservacionDTO(MesaDTO mesa, ClienteDTO cliente, String correo, LocalDate fecha, MeseroDTO mesero, LocalTime hora) {
         this.mesa = mesa;
-        this.nombre = nombre;
-        this.telefono = telefono;
+        this.cliente = cliente;
         this.correo = correo;
         this.fecha = fecha;
         this.mesero = mesero;
         this.hora = hora;
     }
-
+ 
+   
     public MesaDTO getMesa() {
         return mesa;
     }
@@ -49,20 +52,12 @@ public class ReservacionDTO {
         this.mesa = mesa;
     }
 
-    public String getNombre() {
-        return nombre;
+    public ClienteDTO getCliente() {  
+        return cliente;
     }
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
-
-    public String getTelefono() {
-        return telefono;
-    }
-
-    public void setTelefono(String telefono) {
-        this.telefono = telefono;
+    public void setCliente(ClienteDTO cliente) {
+        this.cliente = cliente;
     }
 
     public String getCorreo() {
@@ -99,8 +94,7 @@ public class ReservacionDTO {
 
     @Override
     public String toString() {
-        return "ReservacionDTO{" + "mesa=" + mesa + ", nombre=" + nombre + ", telefono=" + telefono + ", correo=" + correo + ", fecha=" + fecha + ", mesero=" + mesero + ", hora=" + hora + '}';
+        return "ReservacionDTO{" + "mesa=" + mesa + ", cliente=" + cliente + ", correo=" + correo + ", fecha=" + fecha + ", mesero=" + mesero + ", hora=" + hora + '}';
     }
-    
-    
+
 }

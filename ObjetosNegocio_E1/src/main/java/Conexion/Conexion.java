@@ -31,7 +31,7 @@ public class Conexion {
     // Vamos a manejarlo asi por lo pronto:
     
     //EntityManagerFactory se crea solo una vez y se reutiliza en toda la aplicación
-    private static final EntityManagerFactory emf = Persistence.createEntityManagerFactory("conexionPU");
+    private static final EntityManagerFactory emf = Persistence.createEntityManagerFactory("ConexionRestaurante");
 
     //Se obtiene un nuevo EntityManager en cada llamada a getEntityManager(), pero sin recrear la fábrica.
     public static EntityManager crearConexion() {

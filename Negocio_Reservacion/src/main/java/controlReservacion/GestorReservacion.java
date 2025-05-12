@@ -54,7 +54,7 @@ public class GestorReservacion {
         }
     }
 
-    public String registrarReservacion(MesaDTO mesa, String nombre, String telefono, String correo, LocalDate fecha, MeseroDTO mesero, LocalTime hora) {
+   /* public String registrarReservacion(MesaDTO mesa, String nombre, String telefono, String correo, LocalDate fecha, MeseroDTO mesero, LocalTime hora) {
                 MesaDTO mesaEnSistema = mesaON.obtenerMesa(mesa.getNumeroMesa());
 
         if (mesaEnSistema != null) {
@@ -75,7 +75,7 @@ public class GestorReservacion {
             return "La mesa no existe.";
         }
     }
-    
+    */
     
     public String registrarCliente(String nombre, String correo, String telefono) {
         ClienteDTO nuevoCliente = new ClienteDTO(nombre, correo, telefono);
