@@ -15,35 +15,35 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 
 public class ReservacionDTO {
-    
+
     private MesaDTO mesa;
-    
-    private ClienteDTO cliente;  
-    
-    private String correo;   
-    
+
+    private ClienteDTO cliente;
+
+    private String correo;
+
     private LocalDate fecha;
-    
-    private MeseroDTO mesero;  
-    
+
+    private MeseroDTO mesero;
+
     private LocalTime hora;
 
-    
+    private int id;
+
     public ReservacionDTO() {
     }
 
     // Constructor con todos los atributos
-
-    public ReservacionDTO(MesaDTO mesa, ClienteDTO cliente, String correo, LocalDate fecha, MeseroDTO mesero, LocalTime hora) {
+    public ReservacionDTO(int id, MesaDTO mesa, ClienteDTO cliente, String correo, LocalDate fecha, MeseroDTO mesero, LocalTime hora) {
         this.mesa = mesa;
         this.cliente = cliente;
         this.correo = correo;
         this.fecha = fecha;
         this.mesero = mesero;
         this.hora = hora;
+        this.id = id;
     }
- 
-   
+
     public MesaDTO getMesa() {
         return mesa;
     }
@@ -52,7 +52,7 @@ public class ReservacionDTO {
         this.mesa = mesa;
     }
 
-    public ClienteDTO getCliente() {  
+    public ClienteDTO getCliente() {
         return cliente;
     }
 
@@ -92,9 +92,21 @@ public class ReservacionDTO {
         this.hora = hora;
     }
 
-    @Override
-    public String toString() {
-        return "ReservacionDTO{" + "mesa=" + mesa + ", cliente=" + cliente + ", correo=" + correo + ", fecha=" + fecha + ", mesero=" + mesero + ", hora=" + hora + '}';
+    public int getId() {
+        return id;
     }
 
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    @Override
+    public String toString() {
+        return String.format("#%d — Mesa %s — %s %s",
+            id,
+            mesa.getNumeroMesa(),
+            fecha.toString(),
+            hora.toString()
+        );
+    }
 }

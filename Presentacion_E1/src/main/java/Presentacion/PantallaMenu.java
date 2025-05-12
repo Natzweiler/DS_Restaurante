@@ -4,6 +4,8 @@
  */
 package Presentacion;
 
+import Coordinador.CoordinadorPantallas;
+
 /**
  *
  * @author Gael
@@ -31,6 +33,7 @@ public class PantallaMenu extends javax.swing.JFrame {
         BotonMapaMesas = new javax.swing.JButton();
         btnGestionarMeseros = new javax.swing.JButton();
         btnReportes = new javax.swing.JButton();
+        btnCancelarReservacion = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -69,6 +72,14 @@ public class PantallaMenu extends javax.swing.JFrame {
             }
         });
 
+        btnCancelarReservacion.setFont(new java.awt.Font("Segoe UI Semibold", 0, 18)); // NOI18N
+        btnCancelarReservacion.setText("Cancelar Reservación");
+        btnCancelarReservacion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelarReservacionActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -83,10 +94,11 @@ public class PantallaMenu extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addComponent(btnReportes, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(btnGestionarMeseros, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(BotonReservar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(BotonMapaMesas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
-                .addContainerGap(200, Short.MAX_VALUE))
+                            .addComponent(BotonReservar, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(BotonMapaMesas, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(49, 49, 49)
+                        .addComponent(btnCancelarReservacion, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addGap(14, 14, 14))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -94,7 +106,9 @@ public class PantallaMenu extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(BotonReservar)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(BotonReservar)
+                    .addComponent(btnCancelarReservacion))
                 .addGap(37, 37, 37)
                 .addComponent(BotonMapaMesas)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 47, Short.MAX_VALUE)
@@ -128,6 +142,11 @@ public class PantallaMenu extends javax.swing.JFrame {
     private void btnReportesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReportesActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnReportesActionPerformed
+
+    private void btnCancelarReservacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarReservacionActionPerformed
+          Coordinador.CoordinadorPantallas.getInstance()
+        .mostrarCancelarReservacion();
+    }//GEN-LAST:event_btnCancelarReservacionActionPerformed
 
     /**
      * @param args the command line arguments
@@ -170,6 +189,7 @@ public class PantallaMenu extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton BotonMapaMesas;
     private javax.swing.JButton BotonReservar;
+    private javax.swing.JButton btnCancelarReservacion;
     private javax.swing.JButton btnGestionarMeseros;
     private javax.swing.JButton btnReportes;
     private javax.swing.JLabel jLabel1;

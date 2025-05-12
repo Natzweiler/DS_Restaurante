@@ -14,8 +14,11 @@ import Persistencia.MesaDAO;
 import Persistencia.MeseroDAO;
 import Persistencia.ReservacionDAO;
 import dtos.ReservacionDTO;
+import exception.PersistenciaException;
 import interfaces.IMeseroDAO;
 import interfaces.IReservacionDAO;
+import java.util.List;
+import java.util.stream.Collectors;
 import negocio.exception.NegocioException;
 
 /**
@@ -70,4 +73,23 @@ public class ReservacionBO implements IReservacionBO {
         throw new NegocioException("Ocurrió un error al registrar la reservación: " + e.getMessage(), e);
     }
 }
+    @Override
+    public boolean cancelarReservacion(int id) throws NegocioException {
+        try {
+            return reservacionDAO.cancelarReservacion(id);
+        } catch (PersistenciaException pe) {
+            throw new NegocioException("No se pudo cancelar la reservación: " + pe.getMessage(), pe);
+        }
+    }
+    @Override
+    public List<ReservacionDTO> listarReservaciones() throws NegocioException {
+        try {
+            return reservacionDAO.listarReservaciones()
+                                  .stream()
+                                  .map(ReservacionMapper::toDTO)
+                                  .collect(Collectors.toList());
+        } catch (PersistenciaException pe) {
+            throw new NegocioException("Error al listar reservaciones: " + pe.getMessage(), pe);
+        }
+    }
 }
