@@ -155,8 +155,6 @@ public class MapadeMesas extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
-        mesa2 = new javax.swing.JButton();
-        mesa3 = new javax.swing.JButton();
         btnRegresar = new javax.swing.JButton();
         mesa4 = new javax.swing.JButton();
         mesa5 = new javax.swing.JButton();
@@ -171,38 +169,28 @@ public class MapadeMesas extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         cbAño = new javax.swing.JComboBox<>();
         btnBuscar = new javax.swing.JButton();
+        mesa2 = new javax.swing.JButton();
+        mesa3 = new javax.swing.JButton();
+        labelFondoMesa = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel1.setLayout(new java.awt.GridLayout(1, 0));
-
-        mesa2.setText("Mesa 2");
-
-        mesa3.setText("Mesa 3");
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(56, 379, -1, -1));
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap(16, Short.MAX_VALUE)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                        .addComponent(mesa2)
-                        .addGap(282, 282, 282))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                        .addComponent(mesa3)
-                        .addGap(39, 39, 39))))
+            .addGap(0, 360, Short.MAX_VALUE)
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap(218, Short.MAX_VALUE)
-                .addComponent(mesa2)
-                .addGap(3, 3, 3)
-                .addComponent(mesa3)
-                .addContainerGap())
+            .addGap(0, 180, Short.MAX_VALUE)
         );
+
+        getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, -20, 360, 180));
 
         btnRegresar.setBackground(new java.awt.Color(204, 255, 204));
         btnRegresar.setText("Regresar");
@@ -211,14 +199,19 @@ public class MapadeMesas extends javax.swing.JFrame {
                 btnRegresarActionPerformed(evt);
             }
         });
+        getContentPane().add(btnRegresar, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 720, -1, -1));
 
         mesa4.setText("Mesa 4");
+        getContentPane().add(mesa4, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 470, -1, -1));
 
         mesa5.setText("Mesa 5");
+        getContentPane().add(mesa5, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 470, -1, -1));
 
         mesa6.setText("Mesa 6");
+        getContentPane().add(mesa6, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 470, -1, -1));
 
         mesa7.setText("Mesa 7");
+        getContentPane().add(mesa7, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 570, -1, -1));
 
         mesa1.setText("Mesa 1");
         mesa1.addActionListener(new java.awt.event.ActionListener() {
@@ -226,10 +219,13 @@ public class MapadeMesas extends javax.swing.JFrame {
                 mesa1ActionPerformed(evt);
             }
         });
+        getContentPane().add(mesa1, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 410, -1, -1));
 
         jLabel1.setText("Seleccione la hora:");
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(18, 106, -1, -1));
 
         jLabel2.setText("Seleccione la fecha:");
+        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(18, 147, -1, -1));
 
         cbHora.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "08:00" }));
         cbHora.addActionListener(new java.awt.event.ActionListener() {
@@ -237,14 +233,18 @@ public class MapadeMesas extends javax.swing.JFrame {
                 cbHoraActionPerformed(evt);
             }
         });
+        getContentPane().add(cbHora, new org.netbeans.lib.awtextra.AbsoluteConstraints(134, 103, -1, -1));
 
         cbDia.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1" }));
         cbDia.setToolTipText("Mes");
+        getContentPane().add(cbDia, new org.netbeans.lib.awtextra.AbsoluteConstraints(139, 144, -1, -1));
 
         cbMes.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "ENERO", "FEBRERO", "MARZO", "ABRIL", "MAYO", "JUNIO", "JULIO", "AGOSTO", "SEPTIEMBRE", "OCTUBRE", "NOVIEMBRE", "DICIEMBRE" }));
+        getContentPane().add(cbMes, new org.netbeans.lib.awtextra.AbsoluteConstraints(223, 144, -1, -1));
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         jLabel3.setText("Mapa de Mesas");
+        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(284, 53, -1, -1));
 
         cbAño.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "2025", "2026" }));
         cbAño.addActionListener(new java.awt.event.ActionListener() {
@@ -252,6 +252,7 @@ public class MapadeMesas extends javax.swing.JFrame {
                 cbAñoActionPerformed(evt);
             }
         });
+        getContentPane().add(cbAño, new org.netbeans.lib.awtextra.AbsoluteConstraints(334, 144, -1, -1));
 
         btnBuscar.setText("Buscar");
         btnBuscar.addActionListener(new java.awt.event.ActionListener() {
@@ -259,103 +260,16 @@ public class MapadeMesas extends javax.swing.JFrame {
                 btnBuscarActionPerformed(evt);
             }
         });
+        getContentPane().add(btnBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(18, 192, -1, -1));
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(mesa7)
-                .addGap(275, 275, 275))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(89, 89, 89)
-                .addComponent(mesa4)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(mesa6)
-                .addGap(122, 122, 122))
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(56, 56, 56)
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(65, 65, 65)
-                        .addComponent(mesa1))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(284, 284, 284)
-                        .addComponent(jLabel3)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel1)
-                                .addGap(18, 18, 18)
-                                .addComponent(cbHora, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(btnRegresar)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel2)
-                                .addGap(18, 18, 18)
-                                .addComponent(cbDia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(cbMes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(cbAño, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(btnBuscar)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(237, 237, 237)
-                        .addComponent(mesa5)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jLabel3)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(48, 48, 48))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(103, 103, 103)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel1)
-                            .addComponent(cbHora, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(19, 19, 19)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(cbDia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(cbMes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(cbAño, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addComponent(mesa1)
-                                .addGap(21, 21, 21))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(26, 26, 26)
-                                .addComponent(btnBuscar)
-                                .addGap(164, 164, 164)
-                                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(33, 33, 33)))))
-                .addComponent(mesa7)
-                .addGap(20, 20, 20)
-                .addComponent(mesa5)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(mesa4)
-                        .addGap(64, 64, 64))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(14, 14, 14)
-                        .addComponent(mesa6)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addComponent(btnRegresar)
-                .addGap(26, 26, 26))
-        );
+        mesa2.setText("Mesa 2");
+        getContentPane().add(mesa2, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 340, 70, -1));
+
+        mesa3.setText("Mesa 3");
+        getContentPane().add(mesa3, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 340, -1, -1));
+
+        labelFondoMesa.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/fondoMapaMesas.png"))); // NOI18N
+        getContentPane().add(labelFondoMesa, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 230, -1, -1));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -442,6 +356,7 @@ public class MapadeMesas extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JLabel labelFondoMesa;
     private javax.swing.JButton mesa1;
     private javax.swing.JButton mesa2;
     private javax.swing.JButton mesa3;
