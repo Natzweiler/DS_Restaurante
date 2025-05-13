@@ -4,6 +4,12 @@
  */
 package Presentacion;
 
+import Entidades.Reservacion;
+import Persistencia.ReservacionDAO;
+import exception.PersistenciaException;
+import java.util.List;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author eduar
@@ -15,7 +21,31 @@ public class HistorialReservaciones extends javax.swing.JFrame {
      */
     public HistorialReservaciones() {
         initComponents();
+        cargarTabla();
     }
+    
+    private void cargarTabla() {
+    try {
+        ReservacionDAO dao = ReservacionDAO.getInstanceDAO(); // Obtener instancia del DAO
+        List<Reservacion> reservaciones = dao.listarReservaciones(); // Obtener reservaciones desde JPA
+        
+        DefaultTableModel modelo = (DefaultTableModel) tblHistorial.getModel();
+        modelo.setRowCount(0); // Limpiar tabla antes de agregar datos
+
+        for (Reservacion r : reservaciones) {
+            modelo.addRow(new Object[]{
+                r.getId(),
+                r.getFecha(),
+                r.getHora(),
+                r.getCliente().getId(),
+                r.getMesa().getId(),
+                r.getMesero().getId()
+            });
+        }
+    } catch (PersistenciaException e) {
+        e.printStackTrace(); // Manejo de errores
+    }
+}
 
     /**
      * This method is called from within the constructor to initialize the form.
