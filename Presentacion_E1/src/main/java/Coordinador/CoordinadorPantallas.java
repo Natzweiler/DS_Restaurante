@@ -1,14 +1,16 @@
 package Coordinador;
 
 import Presentacion.MapadeMesas;
-import Presentacion.PantallaAgregarMesero;
+import Presentacion.PantallaEliminarMesero;
 import Presentacion.PantallaGestionMeseros;
 import Presentacion.PantallaMenu;
 import Presentacion.RegistrarReservacion;
 import Presentacion.PantallaCancelarReservacion;
 import BO.ReservacionBO;
+import GestionMeseros.PantallaRegistrarMesero;
 import Persistencia.ReservacionDAO;
 import Interfaces.IReservacionBO;
+import Presentacion.PantallaModificarMesero;
 
 public class CoordinadorPantallas {
     private static CoordinadorPantallas instancia;
@@ -62,9 +64,21 @@ public class CoordinadorPantallas {
     }
 
     public void mostrarAgregarMesero() {
-        PantallaAgregarMesero ag = new PantallaAgregarMesero();
-        ag.setLocationRelativeTo(null);
-        ag.setVisible(true);
+        PantallaRegistrarMesero rm = new PantallaRegistrarMesero();
+        rm.setLocationRelativeTo(null);
+        rm.setVisible(true);
+    }
+    public void mostrarEliminarMesero(){
+        PantallaEliminarMesero em = new PantallaEliminarMesero();
+        em.setLocationRelativeTo(null);
+        em.setVisible(true);
+    
+    }
+    public void mostrarModificarMesero(){
+        PantallaModificarMesero m = new PantallaModificarMesero();
+        m.setLocationRelativeTo(null);
+        m.setVisible(true);
+    
     }
 
     public void mostrarCancelarReservacion() {
@@ -74,4 +88,5 @@ public class CoordinadorPantallas {
         pcr.setLocationRelativeTo(null);
         pcr.setVisible(true);
     }
+    
 }

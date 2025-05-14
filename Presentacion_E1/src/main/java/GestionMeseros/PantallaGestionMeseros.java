@@ -74,8 +74,18 @@ public class PantallaGestionMeseros extends javax.swing.JFrame {
         });
 
         btnModificar.setText("Modificar");
+        btnModificar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnModificarActionPerformed(evt);
+            }
+        });
 
         btnEliminar.setText("Eliminar");
+        btnEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEliminarActionPerformed(evt);
+            }
+        });
 
         jScrollPane1.setViewportView(listadeMeseros);
 
@@ -137,6 +147,18 @@ public class PantallaGestionMeseros extends javax.swing.JFrame {
         Coordinador.CoordinadorPantallas.getInstance().mostrarAgregarMesero();
         dispose();
     }//GEN-LAST:event_btnAgregarActionPerformed
+
+    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
+        // TODO add your handling code here:
+        Coordinador.CoordinadorPantallas.getInstance().mostrarEliminarMesero();
+        dispose();
+    }//GEN-LAST:event_btnEliminarActionPerformed
+
+    private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
+        // TODO add your handling code here:
+        Coordinador.CoordinadorPantallas.getInstance().mostrarModificarMesero();
+        dispose();
+    }//GEN-LAST:event_btnModificarActionPerformed
 
     /**
      * @param args the command line arguments

@@ -28,6 +28,7 @@ public class Mesero {
 
     @Column(name = "nombre", nullable = false, length = 100)
     private String nombre;
+    //faltan agregar mas atribtos, telefono y fecha y tambien un campo para indicar si el mesero esta activo
 
     
 
