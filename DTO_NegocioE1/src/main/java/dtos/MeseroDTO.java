@@ -4,13 +4,23 @@
  */
 package dtos;
 
+import java.time.LocalDate;
+import javax.persistence.Column;
+
 /**
  *
  * @author Gael
  */
 public class MeseroDTO {
     private Integer id;
+    
     private String nombre;
+    
+    private String telefono;
+
+    private LocalDate fechaNacimiento;
+    
+    private String direccion;
 
     public MeseroDTO() {
     }
@@ -35,10 +45,39 @@ public class MeseroDTO {
         this.nombre = nombre;
     }
 
+    public String getTelefono() {
+        return telefono;
+    }
+
+    public String getDireccion() {
+        return direccion;
+    }
+
+    public void setDireccion(String direccion) {
+        this.direccion = direccion;
+    }
+
+    public void setTelefono(String telefono) {
+        this.telefono = telefono;
+    }
+
+    public LocalDate getFechaNacimiento() {
+        return fechaNacimiento;
+    }
+
+    public void setFechaNacimiento(LocalDate fechaNacimiento) {
+        this.fechaNacimiento = fechaNacimiento;
+    }
+
     @Override
     public String toString() {
-        return "MeseroDTO{" + "nombre=" + nombre + '}';
+        return "MeseroDTO{" + "id=" + id + ", nombre=" + nombre + ", telefono=" + telefono + ", fechaNacimiento=" + fechaNacimiento + ", direccion=" + direccion + '}';
     }
+
+    
+
+
+ 
     
     
 }

@@ -78,7 +78,7 @@ public class ReporteReservaciones extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        titulo.setText("Reporte de clientes frecuentes");
+        titulo.setText("Reporte de Clientes");
 
         nombreLabel.setText("Nombre:");
 

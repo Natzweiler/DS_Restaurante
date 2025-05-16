@@ -88,7 +88,7 @@
   <SubComponents>
     <Component class="javax.swing.JLabel" name="titulo">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Reporte de clientes frecuentes"/>
+        <Property name="text" type="java.lang.String" value="Reporte de Clientes"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="nombreLabel">

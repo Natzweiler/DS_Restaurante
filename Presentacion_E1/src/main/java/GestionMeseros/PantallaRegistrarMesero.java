@@ -4,6 +4,16 @@
  */
 package GestionMeseros;
 
+import BO.MeseroBO;
+import Interfaces.IMeseroBO;
+import Persistencia.MeseroDAO;
+import dtos.MeseroDTO;
+import interfaces.IMeseroDAO;
+import java.time.DateTimeException;
+import java.time.LocalDate;
+import javax.swing.JOptionPane;
+import negocio.exception.NegocioException;
+
 /**
  *
  * @author Gael
@@ -15,6 +25,18 @@ public class PantallaRegistrarMesero extends javax.swing.JFrame {
      */
     public PantallaRegistrarMesero() {
         initComponents();
+        String[] meses = {
+        "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio",
+        "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"
+    };
+        for (int d = 1; d <= 31; d++) comboDia.addItem(String.valueOf(d));
+
+
+        for (String mes : meses) {comboMes.addItem(mes);}
+
+
+        for (int y = 1950; y <= 2010; y++) comboAño.addItem(String.valueOf(y));
+
     }
 
     /**
@@ -35,6 +57,13 @@ public class PantallaRegistrarMesero extends javax.swing.JFrame {
         btnRegistrar = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         txtTelefono = new javax.swing.JTextField();
+        jLabel3 = new javax.swing.JLabel();
+        comboDia = new javax.swing.JComboBox<>();
+        comboMes = new javax.swing.JComboBox<>();
+        comboAño = new javax.swing.JComboBox<>();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -53,6 +82,11 @@ public class PantallaRegistrarMesero extends javax.swing.JFrame {
         });
 
         btnRegistrar.setText("Registrar");
+        btnRegistrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRegistrarActionPerformed(evt);
+            }
+        });
 
         jLabel2.setText("Telefono:");
 
@@ -62,6 +96,14 @@ public class PantallaRegistrarMesero extends javax.swing.JFrame {
             }
         });
 
+        jLabel3.setText("Fecha de nacimiento:");
+
+        jLabel4.setText("Día");
+
+        jLabel5.setText("Mes");
+
+        jLabel6.setText("Año");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -70,29 +112,49 @@ public class PantallaRegistrarMesero extends javax.swing.JFrame {
                 .addGap(24, 24, 24)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(btnRegresar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 196, Short.MAX_VALUE)
-                        .addComponent(btnRegistrar))
+                        .addComponent(jLabel3)
+                        .addGap(37, 37, 37)
+                        .addComponent(jLabel4)
+                        .addGap(82, 82, 82)
+                        .addComponent(jLabel5)
+                        .addGap(89, 89, 89)
+                        .addComponent(jLabel6)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel1)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(txtDireccion))
+                                .addComponent(btnRegresar)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 305, Short.MAX_VALUE)
+                                .addComponent(btnRegistrar))
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(labelNombre)
-                                .addGap(18, 18, 18)
-                                .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 273, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel2)
-                                .addGap(18, 18, 18)
-                                .addComponent(txtTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, 271, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addGap(51, 51, 51))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(labelRegistrar)
-                .addGap(120, 120, 120))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jLabel1)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(txtDireccion))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(labelNombre)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 273, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jLabel2)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(txtTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, 271, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGap(0, 0, Short.MAX_VALUE)))
+                        .addGap(51, 51, 51))))
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(135, 135, 135)
+                        .addComponent(labelRegistrar))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(162, 162, 162)
+                        .addComponent(comboDia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(27, 27, 27)
+                        .addComponent(comboMes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(34, 34, 34)
+                        .addComponent(comboAño, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -111,7 +173,18 @@ public class PantallaRegistrarMesero extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(txtTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 57, Short.MAX_VALUE)
+                .addGap(36, 36, 36)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3)
+                    .addComponent(jLabel4)
+                    .addComponent(jLabel5)
+                    .addComponent(jLabel6))
+                .addGap(8, 8, 8)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(comboDia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(comboMes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(comboAño, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 129, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnRegresar)
                     .addComponent(btnRegistrar))
@@ -130,6 +203,53 @@ public class PantallaRegistrarMesero extends javax.swing.JFrame {
     private void txtTelefonoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTelefonoActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtTelefonoActionPerformed
+
+    private void btnRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarActionPerformed
+        // TODO add your handling code here:
+        try {
+        if (txtNombre.getText().isEmpty() || txtTelefono.getText().isEmpty() || txtDireccion.getText().isEmpty()) {
+             JOptionPane.showMessageDialog(this, "Por favor llena todos los campos.");
+             return;
+        }    
+       
+        String nombre = txtNombre.getText().trim();
+        String telefono = txtTelefono.getText().trim();
+        String direccion = txtDireccion.getText().trim();
+        
+        if (comboDia.getSelectedItem() == null || comboMes.getSelectedItem() == null || comboAño.getSelectedItem() == null) {
+                JOptionPane.showMessageDialog(this, "Por favor selecciona una fecha completa.");
+                return;
+        }
+        int dia = Integer.parseInt(comboDia.getSelectedItem().toString());
+        int mes = comboMes.getSelectedIndex()+1;
+        int año = Integer.parseInt(comboAño.getSelectedItem().toString());
+        
+        LocalDate fechaNacimiento = LocalDate.of(año, mes, dia);
+           
+        MeseroDTO dto = new MeseroDTO();
+        dto.setNombre(nombre);
+        dto.setTelefono(telefono);
+        dto.setDireccion(direccion);
+        dto.setFechaNacimiento(fechaNacimiento);
+        IMeseroDAO meseroDAO = MeseroDAO.getInstanceDAO();
+        IMeseroBO meseroBO = new MeseroBO(meseroDAO);
+        
+        MeseroDTO registrado = meseroBO.registrarMesero(dto);
+        JOptionPane.showMessageDialog(this, "Mesero registrado con éxito: " + registrado.getNombre());
+        
+        txtNombre.setText("");
+        txtTelefono.setText("");
+        txtDireccion.setText("");
+        comboDia.setSelectedIndex(0);
+        comboMes.setSelectedIndex(0);
+        comboAño.setSelectedIndex(0);
+         } catch (NegocioException ne) {
+             JOptionPane.showMessageDialog(this, "Error: " + ne.getMessage());
+        }catch(DateTimeException ex){
+            JOptionPane.showMessageDialog(this, "La fecha seleccionada no es válida.");
+            return;
+        }
+    }//GEN-LAST:event_btnRegistrarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -169,8 +289,15 @@ public class PantallaRegistrarMesero extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnRegistrar;
     private javax.swing.JButton btnRegresar;
+    private javax.swing.JComboBox<String> comboAño;
+    private javax.swing.JComboBox<String> comboDia;
+    private javax.swing.JComboBox<String> comboMes;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel labelNombre;
     private javax.swing.JLabel labelRegistrar;
     private javax.swing.JTextField txtDireccion;

@@ -24,10 +24,15 @@ import javax.persistence.EntityManager;
 public class MainReservacionPersistencia {
     public static void main(String[] args) throws PersistenciaException {
         MeseroDAO meseroDAO = MeseroDAO.getInstanceDAO();
-        MesaDAO mesaDAO = MesaDAO.getInstanceDAO();
-        Mesa mesa1 = mesaDAO.obtenerMesaPorNumeroMesa(1);
-        Mesero mesero1 = meseroDAO.obtenerMeseroPorId(1);
-        System.out.println("Mesero:" +mesero1.getNombre() + mesa1.getNumeroMesa() + mesa1.getCapacidadMesa());
+        Mesero mesero1 = new Mesero();
+        mesero1.setNombre("Julio Urias");
+        mesero1.setEstado(true);
+        mesero1.setTelefono("6441929196");
+        mesero1.setFechaNacimiento(LocalDate.of(1990, 3, 15));
+        meseroDAO.registrarMesero(mesero1);
+        System.out.println("Mesero Registrado Con Exito." + mesero1.getNombre());
+        
+        
     }
 }
 

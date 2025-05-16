@@ -5,6 +5,7 @@
 package Entidades;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -28,15 +29,25 @@ public class Mesero {
 
     @Column(name = "nombre", nullable = false, length = 100)
     private String nombre;
+    
+    @Column (name = "telefono", nullable = false, length = 15)
+    private String telefono;
+    
+    @Column (name = "fechaNacimiento", nullable = false)
+    private LocalDate fechaNacimiento;
+    
+    @Column (name = "estado", nullable = false)
+    private boolean estado;
     //faltan agregar mas atribtos, telefono y fecha y tambien un campo para indicar si el mesero esta activo
 
-    
+    public Mesero() {
+    }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -48,9 +59,36 @@ public class Mesero {
         this.nombre = nombre;
     }
 
+    public LocalDate getFechaNacimiento() {
+        return fechaNacimiento;
+    }
+
+    public void setFechaNacimiento(LocalDate fechaNacimiento) {
+        this.fechaNacimiento = fechaNacimiento;
+    }
+    
+
+    public String getTelefono() {
+        return telefono;
+    }
+
+    public void setTelefono(String telefono) {
+        this.telefono = telefono;
+    }
+
+    public boolean isEstado() {
+        return estado;
+    }
+
+    public void setEstado(boolean estado) {
+        this.estado = estado;
+    }
+    
+
     @Override
     public String toString() {
-        return nombre;
+        return "Mesero{" + "id=" + id + ", nombre=" + nombre + ", telefono=" + telefono + ", fechaNacimiento=" + fechaNacimiento + '}';
     }
-}
+    
 
+}
