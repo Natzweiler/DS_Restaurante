@@ -1,7 +1,7 @@
 package Coordinador;
 
 import Presentacion.MapadeMesas;
-import Presentacion.PantallaEliminarMesero;
+import Presentacion.PantallaDeshabilitarHabilitarMesero;
 import Presentacion.PantallaGestionMeseros;
 import Presentacion.PantallaMenu;
 import Presentacion.RegistrarReservacion;
@@ -69,7 +69,7 @@ public class CoordinadorPantallas {
         rm.setVisible(true);
     }
     public void mostrarEliminarMesero(){
-        PantallaEliminarMesero em = new PantallaEliminarMesero();
+        PantallaDeshabilitarHabilitarMesero em = new PantallaDeshabilitarHabilitarMesero();
         em.setLocationRelativeTo(null);
         em.setVisible(true);
     

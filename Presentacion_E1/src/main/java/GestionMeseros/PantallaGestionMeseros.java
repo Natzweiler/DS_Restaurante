@@ -12,6 +12,8 @@ import interfaces.IMeseroDAO;
 import java.util.List;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import negocio.exception.NegocioException;
 import objetosnegocio.MeseroON;
 
@@ -36,9 +38,9 @@ public class PantallaGestionMeseros extends javax.swing.JFrame {
         
         listaMeseros = meseroBO.obtenerMeserosActivos();  
 
-        DefaultListModel<String> modelo = new DefaultListModel<>();
+        DefaultListModel<MeseroDTO> modelo = new DefaultListModel<>();
         for (MeseroDTO mesero : listaMeseros) {
-            modelo.addElement(mesero.getNombre());
+            modelo.addElement(mesero);
         }
 
         listadeMeseros.setModel(modelo);
@@ -49,8 +51,8 @@ public class PantallaGestionMeseros extends javax.swing.JFrame {
             "Error", JOptionPane.ERROR_MESSAGE);
     }
 }
-  
-    
+  //llevar al mesero seleccionaod a la siguiente pestaña
+   
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -83,7 +85,7 @@ public class PantallaGestionMeseros extends javax.swing.JFrame {
             }
         });
 
-        btnAgregar.setText("Agregar");
+        btnAgregar.setText("Registrar");
         btnAgregar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnAgregarActionPerformed(evt);
@@ -104,6 +106,11 @@ public class PantallaGestionMeseros extends javax.swing.JFrame {
             }
         });
 
+        listadeMeseros.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
+            public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
+                listadeMeserosValueChanged(evt);
+            }
+        });
         jScrollPane1.setViewportView(listadeMeseros);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -127,7 +134,7 @@ public class PantallaGestionMeseros extends javax.swing.JFrame {
                         .addComponent(btnModificar)
                         .addGap(40, 40, 40)
                         .addComponent(btnEliminar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 40, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 36, Short.MAX_VALUE)
                         .addComponent(btnAgregar)
                         .addGap(35, 35, 35))))
         );
@@ -169,15 +176,30 @@ public class PantallaGestionMeseros extends javax.swing.JFrame {
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
         // TODO add your handling code here:
+
         Coordinador.CoordinadorPantallas.getInstance().mostrarEliminarMesero();
         dispose();
     }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
         // TODO add your handling code here:
-        Coordinador.CoordinadorPantallas.getInstance().mostrarModificarMesero();
-        dispose();
+        MeseroDTO meseroSeleccionado = listadeMeseros.getSelectedValue();
+        if (meseroSeleccionado == null) {
+            JOptionPane.showMessageDialog(this, "Selecciona un mesero de la lista para modificarlo.");
+            return;
+        }
+       
+        PantallaModificarMesero pm = new PantallaModificarMesero();
+        pm.setMesero(meseroSeleccionado);
+        pm.setLocationRelativeTo(null);
+        pm.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_btnModificarActionPerformed
+
+    private void listadeMeserosValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_listadeMeserosValueChanged
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_listadeMeserosValueChanged
 
     /**
      * @param args the command line arguments
@@ -222,6 +244,6 @@ public class PantallaGestionMeseros extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JList<String> listadeMeseros;
+    private javax.swing.JList<MeseroDTO> listadeMeseros;
     // End of variables declaration//GEN-END:variables
 }

@@ -43,7 +43,7 @@
                       <Component id="btnModificar" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="40" max="-2" attributes="0"/>
                       <Component id="btnEliminar" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace pref="40" max="32767" attributes="0"/>
+                      <EmptySpace pref="36" max="32767" attributes="0"/>
                       <Component id="btnAgregar" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="35" max="-2" attributes="0"/>
                   </Group>
@@ -102,7 +102,7 @@
     </Component>
     <Component class="javax.swing.JButton" name="btnAgregar">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Agregar"/>
+        <Property name="text" type="java.lang.String" value="Registrar"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnAgregarActionPerformed"/>
@@ -137,8 +137,11 @@
               <StringArray count="0"/>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="valueChanged" listener="javax.swing.event.ListSelectionListener" parameters="javax.swing.event.ListSelectionEvent" handler="listadeMeserosValueChanged"/>
+          </Events>
           <AuxValues>
-            <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
+            <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;MeseroDTO&gt;"/>
           </AuxValues>
         </Component>
       </SubComponents>

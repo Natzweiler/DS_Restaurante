@@ -21,6 +21,8 @@ public class MeseroDTO {
     private LocalDate fechaNacimiento;
     
     private String direccion;
+    
+    private boolean estado;
 
     public MeseroDTO() {
     }
@@ -65,13 +67,25 @@ public class MeseroDTO {
         return fechaNacimiento;
     }
 
+    public boolean isEstado() {
+        return estado;
+    }
+
+    public void setEstado(boolean estado) {
+        this.estado = estado;
+    }
+    //metodo para la presentacion de habilitar y deshabilitar 
+    public String getNombreConEstado() {
+    return nombre + " - " + (estado ? "Activo" : "Inactivo");
+}
+
     public void setFechaNacimiento(LocalDate fechaNacimiento) {
         this.fechaNacimiento = fechaNacimiento;
     }
 
     @Override
     public String toString() {
-        return "MeseroDTO{" + "id=" + id + ", nombre=" + nombre + ", telefono=" + telefono + ", fechaNacimiento=" + fechaNacimiento + ", direccion=" + direccion + '}';
+        return nombre;
     }
 
     

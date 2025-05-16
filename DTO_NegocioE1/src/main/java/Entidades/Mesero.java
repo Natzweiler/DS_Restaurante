@@ -33,6 +33,9 @@ public class Mesero {
     @Column (name = "telefono", nullable = false, length = 15)
     private String telefono;
     
+    @Column (name = "direccion", nullable = false)
+    private String direccion;
+    
     @Column (name = "fechaNacimiento", nullable = false)
     private LocalDate fechaNacimiento;
     
@@ -76,6 +79,14 @@ public class Mesero {
         this.telefono = telefono;
     }
 
+    public String getDireccion() {
+        return direccion;
+    }
+
+    public void setDireccion(String direccion) {
+        this.direccion = direccion;
+    }
+
     public boolean isEstado() {
         return estado;
     }
@@ -83,12 +94,17 @@ public class Mesero {
     public void setEstado(boolean estado) {
         this.estado = estado;
     }
-    
-
+    //metodo para deshabilitar y habilitar
+    public String getNombreConEstado() {
+    return nombre + " - " + (estado ? "Activo" : "Inactivo");
+}
     @Override
     public String toString() {
-        return "Mesero{" + "id=" + id + ", nombre=" + nombre + ", telefono=" + telefono + ", fechaNacimiento=" + fechaNacimiento + '}';
+        return "Mesero{" + "id=" + id + ", nombre=" + nombre + ", telefono=" + telefono + ", direccion=" + direccion + ", fechaNacimiento=" + fechaNacimiento + ", estado=" + estado + '}';
     }
+    
+
+    
     
 
 }

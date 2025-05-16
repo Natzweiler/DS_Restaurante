@@ -21,7 +21,8 @@ public class MeseroMapper {
         mesero.setNombre(dto.getNombre());
         mesero.setTelefono(dto.getTelefono());
         mesero.setFechaNacimiento(dto.getFechaNacimiento());
-        mesero.setEstado(true); // estado activo por default
+        mesero.setDireccion(dto.getDireccion());
+        mesero.setEstado(dto.isEstado()); // estado activo por default
         return mesero;
     }
 
@@ -33,6 +34,8 @@ public class MeseroMapper {
         dto.setNombre(mesero.getNombre());
         dto.setTelefono(mesero.getTelefono());
         dto.setFechaNacimiento(mesero.getFechaNacimiento());
+        dto.setDireccion(mesero.getDireccion());
+        dto.setEstado(mesero.isEstado());
         // No necesitas setEstado porque no lo manejas en DTO
         return dto;
     }
