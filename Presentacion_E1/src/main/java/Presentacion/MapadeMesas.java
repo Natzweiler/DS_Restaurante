@@ -4,8 +4,16 @@
  */
 package Presentacion;
 
+import BO.MesaBO;
+import BO.ReservacionBO;
+import Interfaces.IMesaBO;
+import Interfaces.IReservacionBO;
+import Persistencia.MesaDAO;
+import Persistencia.ReservacionDAO;
 import controlReservacion.GestorReservacion;
 import dtos.MesaDTO;
+import interfaces.IMesaDAO;
+import interfaces.IReservacionDAO;
 import java.awt.Color;
 import java.util.List;
 import java.awt.event.ActionEvent;
@@ -13,6 +21,8 @@ import java.awt.event.ActionListener;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import objetosnegocio.MesaON;
@@ -25,7 +35,8 @@ import objetosnegocio.ReservacionON;
 public class MapadeMesas extends javax.swing.JFrame {
     private static MapadeMesas instancia;
    private GestorReservacion negocioReservacion;
-   
+   private Map<JButton, MesaDTO> mapaBotonesMesas = new HashMap<>();
+
    private MesaDTO mesaSeleccionada;
    
    public MesaDTO getMesaSeleccionada() {
@@ -45,7 +56,7 @@ public class MapadeMesas extends javax.swing.JFrame {
     public MapadeMesas() {
         initComponents();
         negocioReservacion = new GestorReservacion();
-        cargarMesasDisponibles();
+        cargarMesasDisponiblesBD();
         for (int i = 2; i <= 31; i++) {
             cbDia.addItem(String.valueOf(i));
         }
@@ -54,7 +65,8 @@ public class MapadeMesas extends javax.swing.JFrame {
             cbHora.addItem(horaFormateada);
         }
   }
-    public void actualizarEstadoMesas() {
+/*
+    public void actualizarseEstadoMesas() {
     List<MesaDTO> mesas = new ArrayList<>(MesaON.getInstance().cargarMesas());
     if (mesas != null && mesas.size() >= 7) {
         configurarMesa(mesa1, MesaON.getInstance().obtenerMesa(1));
@@ -73,9 +85,106 @@ public class MapadeMesas extends javax.swing.JFrame {
             boolean disponible = reservacionON.MesaDisponibleDiaHora(mesa, fecha, hora);
             mesa.setDisponible(disponible);
         }
-        actualizarEstadoMesas();
+        actualizarseEstadoMesas();
         cargarMesasDisponibles();
+    }*/
+    //BD
+    private void cargarMesasDisponiblesBD() {
+    try {
+        
+        IMesaBO mesaBO = new MesaBO();
+        List<MesaDTO> mesas = mesaBO.obtenerTodasLasMesas();
+
+        
+        JButton[] botones = {mesa1, mesa2, mesa3, mesa4, mesa5, mesa6, mesa7};
+
+        mapaBotonesMesas.clear(); 
+
+        for (int i = 0; i < botones.length && i < mesas.size(); i++) {
+            JButton boton = botones[i];
+            MesaDTO mesa = mesas.get(i);
+            mapaBotonesMesas.put(boton, mesa);
+            configurarMesaBD(boton, mesa);
+        }
+
+    } catch (Exception e) {
+        JOptionPane.showMessageDialog(this, "Error al cargar las mesas: " + e.getMessage());
     }
+}
+    //BD
+    public void mostrarMesasDisponiblesBD(LocalDate fecha, LocalTime hora){
+    try {
+        IMesaBO mesaBO = new MesaBO();
+        IReservacionDAO dao = ReservacionDAO.getInstanceDAO();
+        IReservacionBO reservacionBO = new ReservacionBO(dao);
+
+        List<MesaDTO> mesas = mesaBO.obtenerTodasLasMesas();
+
+        for (MesaDTO mesa : mesas) {
+            boolean disponible = reservacionBO.estadoMesaDisponible(mesa.getNumeroMesa(), fecha, hora);
+            mesa.setDisponible(disponible);
+        }
+
+        cargarMesasDisponiblesBD(); 
+    } catch (Exception e) {
+        JOptionPane.showMessageDialog(this, "Error: " + e.getMessage());
+    }
+}
+    //BD
+    private void configurarMesaBD(JButton mesaBtn, MesaDTO mesa) {
+    mesaBtn.setText("Mesa " + mesa.getNumeroMesa());
+
+    if (mesa.isDisponible()) {
+        mesaBtn.setBackground(Color.GREEN);
+        mesaBtn.setEnabled(true);
+    } else {
+        mesaBtn.setBackground(Color.RED);
+        mesaBtn.setEnabled(false);
+    }
+
+    for (ActionListener al : mesaBtn.getActionListeners()) {
+        mesaBtn.removeActionListener(al); // evitar duplicados
+    }
+
+    mesaBtn.addActionListener(e -> {
+        try {
+            int dia = Integer.parseInt(cbDia.getSelectedItem().toString());
+            int mesNum = cbMes.getSelectedIndex() + 1;
+            int año = Integer.parseInt(cbAño.getSelectedItem().toString());
+            String horaStr = cbHora.getSelectedItem().toString();
+            int horaNum = Integer.parseInt(horaStr.split(":")[0]);
+
+            LocalDate fechaSeleccionada = LocalDate.of(año, mesNum, dia);
+            LocalTime hora = LocalTime.of(horaNum, 0);
+
+            // Rechecar disponibilidad en BD antes de continuar
+            IReservacionDAO reservacionDAO = ReservacionDAO.getInstanceDAO();
+            IReservacionBO reservacionBO = new ReservacionBO(reservacionDAO);
+
+            boolean disponible = reservacionBO.estadoMesaDisponible(mesa.getNumeroMesa(), fechaSeleccionada, hora);
+
+            if (disponible) {
+                mesaSeleccionada = mesa;
+
+                RegistrarReservacion registrar = new RegistrarReservacion();
+                registrar.setMesaSeleccionada(mesa);
+                registrar.setFechaHoraSeleccionada(fechaSeleccionada, hora);
+                registrar.setLocationRelativeTo(null);
+                registrar.setVisible(true);
+                dispose();
+            } else {
+                JOptionPane.showMessageDialog(this, "La mesa " + mesa.getNumeroMesa() + " ya está ocupada.");
+                mesaBtn.setBackground(Color.RED);
+                mesaBtn.setEnabled(false);
+            }
+
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, "Error al verificar disponibilidad: " + ex.getMessage());
+        }
+    });
+}
+
+/*
     private void cargarMesasDisponibles() {
     List<MesaDTO> mesas = new ArrayList<>(MesaON.getInstance().cargarMesas());
     if (mesas != null && mesas.size() >= 7) {
@@ -90,15 +199,7 @@ public class MapadeMesas extends javax.swing.JFrame {
 
         
         
-}
-    private void abrirRegistrarReservacion(MesaDTO mesa) {
-    RegistrarReservacion registrarReservacion = new RegistrarReservacion();
-    registrarReservacion.setMesaSeleccionada(mesa);
-    registrarReservacion.setLocationRelativeTo(null);
-    registrarReservacion.setVisible(true); 
-    this.dispose();
-}
-        
+}     
     private void configurarMesa(JButton mesaBtn, MesaDTO mesa) {
     mesaBtn.setText("Mesa " + mesa.getNumeroMesa());
     if (mesa.isDisponible()) {
@@ -294,7 +395,7 @@ public class MapadeMesas extends javax.swing.JFrame {
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
         // TODO add your handling code here:
-        int dia = Integer.parseInt(cbDia.getSelectedItem().toString());
+       /* int dia = Integer.parseInt(cbDia.getSelectedItem().toString());
         int mes = cbMes.getSelectedIndex()+1;
         int año = Integer.parseInt(cbAño.getSelectedItem().toString());
         String horaSeleccionada = (String) cbHora.getSelectedItem();
@@ -306,7 +407,7 @@ public class MapadeMesas extends javax.swing.JFrame {
         LocalDate fecha = LocalDate.of(año, mes, dia);
         LocalTime hora = LocalTime.parse(horaSeleccionada);
         mostrarMesasDisponibles(fecha, hora);
-        
+        */
     }//GEN-LAST:event_btnBuscarActionPerformed
 
     /**

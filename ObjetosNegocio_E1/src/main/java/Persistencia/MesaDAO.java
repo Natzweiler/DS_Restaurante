@@ -8,6 +8,7 @@ import Entidades.Mesa;
 import conexion.Conexion;
 import exception.PersistenciaException;
 import interfaces.IMesaDAO;
+import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.TypedQuery;
@@ -46,6 +47,34 @@ public class MesaDAO implements IMesaDAO{
     } finally {
         em.close();
     }
+   
 }
+    //insert masivo de mesas para las pruebas en la presentacion final y no tener que harcodear ahi mismo todo
+    public Mesa registrarMesa(Mesa mesa) throws PersistenciaException {
+    EntityManager em = Conexion.crearConexion();
+    try {
+        em.getTransaction().begin();
+        em.persist(mesa);
+        em.getTransaction().commit();
+        return mesa;
+    } catch (Exception e) {
+        if (em.getTransaction().isActive()) em.getTransaction().rollback();
+        throw new PersistenciaException("Error al registrar la mesa", e);
+    } finally {
+        em.close();
+    }
+}
+    public List<Mesa> obtenerTodasLasMesas() throws PersistenciaException {
+    EntityManager em = Conexion.crearConexion();
+    try {
+        TypedQuery<Mesa> query = em.createQuery("SELECT m FROM Mesa m", Mesa.class);
+        return query.getResultList();
+    } catch (Exception e) {
+        throw new PersistenciaException("Error al obtener todas las mesas", e);
+    } finally {
+        em.close();
+    }
+}
+
 }
 

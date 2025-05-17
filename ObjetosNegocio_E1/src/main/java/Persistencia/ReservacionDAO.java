@@ -1,9 +1,12 @@
 package Persistencia;
 
+import Entidades.Mesa;
 import Entidades.Reservacion;
 import conexion.Conexion;
 import exception.PersistenciaException;
 import interfaces.IReservacionDAO;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
@@ -68,4 +71,22 @@ public class ReservacionDAO implements IReservacionDAO {
             em.close();
         }
     }
+    public boolean estadoMesaDisponible(Mesa mesa, LocalDate fecha, LocalTime hora) throws PersistenciaException {
+    EntityManager em = Conexion.crearConexion();
+    try {
+        String jpql = "SELECT COUNT(r) FROM Reservacion r WHERE r.mesa = :mesa AND r.fecha = :fecha AND r.hora = :hora";
+        Long count = em.createQuery(jpql, Long.class)
+            .setParameter("mesa", mesa)
+            .setParameter("fecha", fecha)
+            .setParameter("hora", hora)
+            .getSingleResult();
+        return count == 0;
+    } catch (Exception e) {
+            throw new PersistenciaException("Error al listar reservaciones", e);
+        } finally {
+            em.close();
+        }
+    
+}
+
 }

@@ -17,6 +17,8 @@ import dtos.ReservacionDTO;
 import exception.PersistenciaException;
 import interfaces.IMeseroDAO;
 import interfaces.IReservacionDAO;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 import java.util.stream.Collectors;
 import negocio.exception.NegocioException;
@@ -92,4 +94,21 @@ public class ReservacionBO implements IReservacionBO {
             throw new NegocioException("Error al listar reservaciones: " + pe.getMessage(), pe);
         }
     }
+    public boolean estadoMesaDisponible(Integer numeroMesa, LocalDate fecha, LocalTime hora) throws NegocioException {
+    try {
+        // Recuperar la mesa desde la base de datos
+        MesaDAO mesaDAO = MesaDAO.getInstanceDAO();
+        Mesa mesa = mesaDAO.obtenerMesaPorNumeroMesa(numeroMesa);
+        if (mesa == null) {
+            throw new NegocioException("La mesa con número " + numeroMesa + " no existe.");
+        }
+
+        
+        return reservacionDAO.estadoMesaDisponible(mesa, fecha, hora);
+        
+    } catch (PersistenciaException e) {
+        throw new NegocioException("Error al verificar disponibilidad de la mesa: " + e.getMessage(), e);
+    }
+}
+
 }

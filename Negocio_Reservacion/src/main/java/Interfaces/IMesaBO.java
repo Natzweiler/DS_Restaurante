@@ -5,6 +5,7 @@
 package Interfaces;
 
 import dtos.MesaDTO;
+import java.util.List;
 import negocio.exception.NegocioException;
 
 /**
@@ -13,5 +14,9 @@ import negocio.exception.NegocioException;
  */
 public interface IMesaBO {
     MesaDTO obtenerMesaPorNumeroMesa(Integer numeroMesa) throws NegocioException;
+    public int generarMesasIniciales() throws NegocioException;
+    public List<MesaDTO> obtenerTodasLasMesas() throws NegocioException;
+
+
 }
 

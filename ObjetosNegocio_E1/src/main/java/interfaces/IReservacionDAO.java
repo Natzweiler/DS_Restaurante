@@ -4,8 +4,11 @@
  */
 package interfaces;
 
+import Entidades.Mesa;
 import Entidades.Reservacion;
 import exception.PersistenciaException;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 
 /**
@@ -18,4 +21,6 @@ public interface IReservacionDAO {
     public Reservacion registrarReservacion(Reservacion reservacion) throws PersistenciaException;
     boolean cancelarReservacion(int id) throws PersistenciaException; //Para cancelar
      List<Reservacion> listarReservaciones() throws PersistenciaException;//para listar todas o activas
+    public boolean estadoMesaDisponible(Mesa mesa, LocalDate fecha, LocalTime hora) throws PersistenciaException;
+
 }

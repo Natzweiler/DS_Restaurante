@@ -4,7 +4,13 @@
  */
 package Presentacion;
 
+import BO.MesaBO;
 import Coordinador.CoordinadorPantallas;
+import Interfaces.IMesaBO;
+import Persistencia.MesaDAO;
+import interfaces.IMesaDAO;
+import javax.swing.JOptionPane;
+import negocio.exception.NegocioException;
 
 /**
  *
@@ -34,6 +40,7 @@ public class PantallaMenu extends javax.swing.JFrame {
         btnGestionarMeseros = new javax.swing.JButton();
         btnReportes = new javax.swing.JButton();
         btnCancelarReservacion = new javax.swing.JButton();
+        btnGenerarMesas = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -80,25 +87,35 @@ public class PantallaMenu extends javax.swing.JFrame {
             }
         });
 
+        btnGenerarMesas.setText("Insertar Mesas");
+        btnGenerarMesas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGenerarMesasActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(221, 221, 221)
-                        .addComponent(jLabel1))
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(btnReportes, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btnGestionarMeseros, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(BotonReservar, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(BotonMapaMesas, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(49, 49, 49)
-                        .addComponent(btnCancelarReservacion, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addGap(221, 221, 221)
+                .addComponent(jLabel1)
                 .addGap(14, 14, 14))
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(btnReportes, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnGestionarMeseros, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(BotonReservar, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(BotonMapaMesas, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(49, 49, 49)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnCancelarReservacion, javax.swing.GroupLayout.DEFAULT_SIZE, 218, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(btnGenerarMesas)
+                        .addGap(38, 38, 38))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -114,7 +131,9 @@ public class PantallaMenu extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 47, Short.MAX_VALUE)
                 .addComponent(btnGestionarMeseros)
                 .addGap(39, 39, 39)
-                .addComponent(btnReportes)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnReportes)
+                    .addComponent(btnGenerarMesas))
                 .addGap(25, 25, 25))
         );
 
@@ -149,6 +168,19 @@ public class PantallaMenu extends javax.swing.JFrame {
           Coordinador.CoordinadorPantallas.getInstance()
         .mostrarCancelarReservacion();
     }//GEN-LAST:event_btnCancelarReservacionActionPerformed
+
+    private void btnGenerarMesasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGenerarMesasActionPerformed
+        // TODO add your handling code here:
+         try {
+        
+        IMesaBO mesaBO = new MesaBO();
+        int mesasGeneradas = mesaBO.generarMesasIniciales();
+        JOptionPane.showMessageDialog(this, mesasGeneradas + " mesas generadas con éxito.");
+    } catch (NegocioException e) {
+        JOptionPane.showMessageDialog(this, "Error al generar mesas: " + e.getMessage());
+    }
+
+    }//GEN-LAST:event_btnGenerarMesasActionPerformed
 
     /**
      * @param args the command line arguments
@@ -192,6 +224,7 @@ public class PantallaMenu extends javax.swing.JFrame {
     private javax.swing.JButton BotonMapaMesas;
     private javax.swing.JButton BotonReservar;
     private javax.swing.JButton btnCancelarReservacion;
+    private javax.swing.JButton btnGenerarMesas;
     private javax.swing.JButton btnGestionarMeseros;
     private javax.swing.JButton btnReportes;
     private javax.swing.JLabel jLabel1;

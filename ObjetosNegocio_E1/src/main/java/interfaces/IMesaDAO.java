@@ -6,6 +6,7 @@ package interfaces;
 
 import Entidades.Mesa;
 import exception.PersistenciaException;
+import java.util.List;
 
 /**
  *
@@ -13,5 +14,9 @@ import exception.PersistenciaException;
  */
 public interface IMesaDAO {
         public Mesa obtenerMesaPorNumeroMesa(Integer numeroMesa) throws PersistenciaException ;
+        public Mesa registrarMesa(Mesa mesa) throws PersistenciaException ;
+        public List<Mesa> obtenerTodasLasMesas() throws PersistenciaException;
+
+
 
 }

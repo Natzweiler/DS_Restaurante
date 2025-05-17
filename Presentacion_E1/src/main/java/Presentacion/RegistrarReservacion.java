@@ -266,7 +266,7 @@ public class RegistrarReservacion extends javax.swing.JFrame {
                     .addComponent(jLabel6)
                     .addComponent(textoTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnReservar)
                     .addComponent(btnRegresar))
                 .addContainerGap(58, Short.MAX_VALUE))
@@ -297,7 +297,7 @@ public class RegistrarReservacion extends javax.swing.JFrame {
     MeseroDTO meseroSeleccionado = listaMeseros.get(indice);
     
     mesa.setDisponible(false);
-    mapaDeMesas.actualizarEstadoMesas();
+    
     mapaDeMesas.repaint();
     
     StringBuilder ticket = new StringBuilder();
