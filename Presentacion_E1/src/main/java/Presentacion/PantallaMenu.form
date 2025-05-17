@@ -31,10 +31,10 @@
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                  <Component id="btnReportes" alignment="0" max="32767" attributes="0"/>
+                  <Component id="btnGestionarReportes" alignment="0" max="32767" attributes="0"/>
                   <Component id="btnGestionarMeseros" max="32767" attributes="0"/>
-                  <Component id="BotonReservar" alignment="0" max="32767" attributes="0"/>
-                  <Component id="BotonMapaMesas" alignment="0" max="32767" attributes="0"/>
+                  <Component id="btnReservar" alignment="0" max="32767" attributes="0"/>
+                  <Component id="btnMapaMesas" alignment="0" max="32767" attributes="0"/>
               </Group>
               <EmptySpace min="-2" pref="49" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
@@ -55,16 +55,16 @@
               <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="BotonReservar" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="btnReservar" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="btnCancelarReservacion" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace min="-2" pref="37" max="-2" attributes="0"/>
-              <Component id="BotonMapaMesas" min="-2" max="-2" attributes="0"/>
+              <Component id="btnMapaMesas" min="-2" max="-2" attributes="0"/>
               <EmptySpace pref="47" max="32767" attributes="0"/>
               <Component id="btnGestionarMeseros" min="-2" max="-2" attributes="0"/>
               <EmptySpace min="-2" pref="39" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="btnReportes" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="btnGestionarReportes" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="btnGenerarMesas" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace min="-2" pref="25" max="-2" attributes="0"/>
@@ -81,7 +81,7 @@
         <Property name="text" type="java.lang.String" value="Menu"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JButton" name="BotonReservar">
+    <Component class="javax.swing.JButton" name="btnReservar">
       <Properties>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
           <Font name="Segoe UI Semibold" size="18" style="0"/>
@@ -89,10 +89,10 @@
         <Property name="text" type="java.lang.String" value="Registrar reservaci&#xf3;n"/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="BotonReservarActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnReservarActionPerformed"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JButton" name="BotonMapaMesas">
+    <Component class="javax.swing.JButton" name="btnMapaMesas">
       <Properties>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
           <Font name="Segoe UI Semibold" size="18" style="0"/>
@@ -100,7 +100,7 @@
         <Property name="text" type="java.lang.String" value="Mapa Mesas"/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="BotonMapaMesasActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnMapaMesasActionPerformed"/>
       </Events>
     </Component>
     <Component class="javax.swing.JButton" name="btnGestionarMeseros">
@@ -114,7 +114,7 @@
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnGestionarMeserosActionPerformed"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JButton" name="btnReportes">
+    <Component class="javax.swing.JButton" name="btnGestionarReportes">
       <Properties>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
           <Font name="Segoe UI Semibold" size="18" style="0"/>
@@ -122,7 +122,7 @@
         <Property name="text" type="java.lang.String" value="Generar reportes"/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnReportesActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnGestionarReportesActionPerformed"/>
       </Events>
     </Component>
     <Component class="javax.swing.JButton" name="btnCancelarReservacion">

@@ -13,11 +13,16 @@ import GestionMeseros.PantallaRegistrarMesero;
 import Persistencia.ReservacionDAO;
 import Interfaces.IReservacionBO;
 import Presentacion.PantallaModificarMesero;
+import Roles.MenuRolesRestaurante;
 
 public class CoordinadorPantallas {
     private static CoordinadorPantallas instancia;
     private IReservacionBO controlReservacion;
     private MapadeMesas mapaDeMesas;
+   private MenuRolesRestaurante menuRoles;
+   private String rolSeleccionado;
+
+
 
     private CoordinadorPantallas() {
         mapaDeMesas = new MapadeMesas();
@@ -30,7 +35,44 @@ public class CoordinadorPantallas {
         }
         return instancia;
     }
+        public void mostrarMenuRoles() {
+        menuRoles = null;
+        resetRolSeleccionado();
+        if (menuRoles == null) {
+            menuRoles = new MenuRolesRestaurante();
+        }
+        menuRoles.setVisible(true);
+    }
+       public void resetRolSeleccionado() {
+        this.rolSeleccionado = null;
+    }
 
+    public MenuRolesRestaurante getMenuRoles() {
+        return menuRoles;
+    }
+
+    public void setMenuRoles(MenuRolesRestaurante menuRoles) {
+        this.menuRoles = menuRoles;
+    }
+
+    public String getRolSeleccionado() {
+        return rolSeleccionado;
+    }
+
+    public void setRolSeleccionado(String rolSeleccionado) {
+        this.rolSeleccionado = rolSeleccionado;
+    }
+        
+    public static CoordinadorPantallas getInstancia() {
+        return instancia;
+    }
+
+    public static void setInstancia(CoordinadorPantallas instancia) {
+        CoordinadorPantallas.instancia = instancia;
+    }
+
+    
+    
     // — Getter para la BO
     public IReservacionBO getControlReservacion() {
         return controlReservacion;

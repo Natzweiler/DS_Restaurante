@@ -17,12 +17,33 @@ import negocio.exception.NegocioException;
  * @author Gael
  */
 public class PantallaMenu extends javax.swing.JFrame {
-
+    private CoordinadorPantallas ca;
     /**
      * Creates new form PantallaInicio
      */
     public PantallaMenu() {
         initComponents();
+        this.ca = CoordinadorPantallas.getInstance();
+        this.setLocationRelativeTo(null);
+        habilitarBotones();
+    }
+        public void habilitarBotones(){
+        String rol = ca.getRolSeleccionado();
+        if (rol.equalsIgnoreCase("Mesero")) {
+            btnReservar.setEnabled(true);
+            btnMapaMesas.setEnabled(true);
+            btnCancelarReservacion.setEnabled(true);
+            btnGenerarMesas.setEnabled(false);
+            btnGestionarMeseros.setEnabled(false);
+            btnGestionarReportes.setEnabled(false);
+        } else if (rol.equalsIgnoreCase("Administrador")) {
+            btnReservar.setEnabled(true);
+            btnMapaMesas.setEnabled(true);
+            btnCancelarReservacion.setEnabled(true);
+            btnGenerarMesas.setEnabled(true);
+            btnGestionarMeseros.setEnabled(true);
+            btnGestionarReportes.setEnabled(true);
+        }
     }
 
     /**
@@ -35,10 +56,10 @@ public class PantallaMenu extends javax.swing.JFrame {
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
-        BotonReservar = new javax.swing.JButton();
-        BotonMapaMesas = new javax.swing.JButton();
+        btnReservar = new javax.swing.JButton();
+        btnMapaMesas = new javax.swing.JButton();
         btnGestionarMeseros = new javax.swing.JButton();
-        btnReportes = new javax.swing.JButton();
+        btnGestionarReportes = new javax.swing.JButton();
         btnCancelarReservacion = new javax.swing.JButton();
         btnGenerarMesas = new javax.swing.JButton();
 
@@ -47,19 +68,19 @@ public class PantallaMenu extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Segoe UI Light", 0, 24)); // NOI18N
         jLabel1.setText("Menu");
 
-        BotonReservar.setFont(new java.awt.Font("Segoe UI Semibold", 0, 18)); // NOI18N
-        BotonReservar.setText("Registrar reservación");
-        BotonReservar.addActionListener(new java.awt.event.ActionListener() {
+        btnReservar.setFont(new java.awt.Font("Segoe UI Semibold", 0, 18)); // NOI18N
+        btnReservar.setText("Registrar reservación");
+        btnReservar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                BotonReservarActionPerformed(evt);
+                btnReservarActionPerformed(evt);
             }
         });
 
-        BotonMapaMesas.setFont(new java.awt.Font("Segoe UI Semibold", 0, 18)); // NOI18N
-        BotonMapaMesas.setText("Mapa Mesas");
-        BotonMapaMesas.addActionListener(new java.awt.event.ActionListener() {
+        btnMapaMesas.setFont(new java.awt.Font("Segoe UI Semibold", 0, 18)); // NOI18N
+        btnMapaMesas.setText("Mapa Mesas");
+        btnMapaMesas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                BotonMapaMesasActionPerformed(evt);
+                btnMapaMesasActionPerformed(evt);
             }
         });
 
@@ -71,11 +92,11 @@ public class PantallaMenu extends javax.swing.JFrame {
             }
         });
 
-        btnReportes.setFont(new java.awt.Font("Segoe UI Semibold", 0, 18)); // NOI18N
-        btnReportes.setText("Generar reportes");
-        btnReportes.addActionListener(new java.awt.event.ActionListener() {
+        btnGestionarReportes.setFont(new java.awt.Font("Segoe UI Semibold", 0, 18)); // NOI18N
+        btnGestionarReportes.setText("Generar reportes");
+        btnGestionarReportes.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnReportesActionPerformed(evt);
+                btnGestionarReportesActionPerformed(evt);
             }
         });
 
@@ -105,10 +126,10 @@ public class PantallaMenu extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(btnReportes, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnGestionarReportes, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnGestionarMeseros, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(BotonReservar, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(BotonMapaMesas, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(btnReservar, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnMapaMesas, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(49, 49, 49)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnCancelarReservacion, javax.swing.GroupLayout.DEFAULT_SIZE, 218, Short.MAX_VALUE)
@@ -124,15 +145,15 @@ public class PantallaMenu extends javax.swing.JFrame {
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(BotonReservar)
+                    .addComponent(btnReservar)
                     .addComponent(btnCancelarReservacion))
                 .addGap(37, 37, 37)
-                .addComponent(BotonMapaMesas)
+                .addComponent(btnMapaMesas)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 47, Short.MAX_VALUE)
                 .addComponent(btnGestionarMeseros)
                 .addGap(39, 39, 39)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnReportes)
+                    .addComponent(btnGestionarReportes)
                     .addComponent(btnGenerarMesas))
                 .addGap(25, 25, 25))
         );
@@ -140,17 +161,17 @@ public class PantallaMenu extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void BotonReservarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotonReservarActionPerformed
+    private void btnReservarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReservarActionPerformed
         // TODO add your handling code here:
         Coordinador.CoordinadorPantallas.getInstance().mostrarMapaMesas();
         dispose();
-    }//GEN-LAST:event_BotonReservarActionPerformed
+    }//GEN-LAST:event_btnReservarActionPerformed
 
-    private void BotonMapaMesasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotonMapaMesasActionPerformed
+    private void btnMapaMesasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMapaMesasActionPerformed
         // TODO add your handling code here:
         Coordinador.CoordinadorPantallas.getInstance().mostrarMapaMesas();
         dispose();
-    }//GEN-LAST:event_BotonMapaMesasActionPerformed
+    }//GEN-LAST:event_btnMapaMesasActionPerformed
 
     private void btnGestionarMeserosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGestionarMeserosActionPerformed
         // TODO add your handling code here:
@@ -158,11 +179,11 @@ public class PantallaMenu extends javax.swing.JFrame {
         dispose();
     }//GEN-LAST:event_btnGestionarMeserosActionPerformed
 
-    private void btnReportesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReportesActionPerformed
+    private void btnGestionarReportesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGestionarReportesActionPerformed
         // TODO add your handling code here:
         CoordinadorPantallas.getInstance().mostrarMenuReportes();
         dispose();
-    }//GEN-LAST:event_btnReportesActionPerformed
+    }//GEN-LAST:event_btnGestionarReportesActionPerformed
 
     private void btnCancelarReservacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarReservacionActionPerformed
           Coordinador.CoordinadorPantallas.getInstance()
@@ -221,12 +242,12 @@ public class PantallaMenu extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton BotonMapaMesas;
-    private javax.swing.JButton BotonReservar;
     private javax.swing.JButton btnCancelarReservacion;
     private javax.swing.JButton btnGenerarMesas;
     private javax.swing.JButton btnGestionarMeseros;
-    private javax.swing.JButton btnReportes;
+    private javax.swing.JButton btnGestionarReportes;
+    private javax.swing.JButton btnMapaMesas;
+    private javax.swing.JButton btnReservar;
     private javax.swing.JLabel jLabel1;
     // End of variables declaration//GEN-END:variables
 }
