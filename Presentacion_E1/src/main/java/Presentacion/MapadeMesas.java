@@ -123,9 +123,19 @@ public class MapadeMesas extends javax.swing.JFrame {
         for (MesaDTO mesa : mesas) {
             boolean disponible = reservacionBO.estadoMesaDisponible(mesa.getNumeroMesa(), fecha, hora);
             mesa.setDisponible(disponible);
+            
+        }
+                if (mesas.size() >= 7) {
+            configurarMesaBD(mesa1, mesas.get(0));
+            configurarMesaBD(mesa2, mesas.get(1));
+            configurarMesaBD(mesa3, mesas.get(2));
+            configurarMesaBD(mesa4, mesas.get(3));
+            configurarMesaBD(mesa5, mesas.get(4));
+            configurarMesaBD(mesa6, mesas.get(5));
+            configurarMesaBD(mesa7, mesas.get(6));
         }
 
-        cargarMesasDisponiblesBD(); 
+        
     } catch (Exception e) {
         JOptionPane.showMessageDialog(this, "Error: " + e.getMessage());
     }
@@ -143,7 +153,7 @@ public class MapadeMesas extends javax.swing.JFrame {
     }
 
     for (ActionListener al : mesaBtn.getActionListeners()) {
-        mesaBtn.removeActionListener(al); // evitar duplicados
+        mesaBtn.removeActionListener(al); 
     }
 
     mesaBtn.addActionListener(e -> {
@@ -157,7 +167,7 @@ public class MapadeMesas extends javax.swing.JFrame {
             LocalDate fechaSeleccionada = LocalDate.of(año, mesNum, dia);
             LocalTime hora = LocalTime.of(horaNum, 0);
 
-            // Rechecar disponibilidad en BD antes de continuar
+            
             IReservacionDAO reservacionDAO = ReservacionDAO.getInstanceDAO();
             IReservacionBO reservacionBO = new ReservacionBO(reservacionDAO);
 
@@ -395,7 +405,7 @@ public class MapadeMesas extends javax.swing.JFrame {
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
         // TODO add your handling code here:
-       /* int dia = Integer.parseInt(cbDia.getSelectedItem().toString());
+       int dia = Integer.parseInt(cbDia.getSelectedItem().toString());
         int mes = cbMes.getSelectedIndex()+1;
         int año = Integer.parseInt(cbAño.getSelectedItem().toString());
         String horaSeleccionada = (String) cbHora.getSelectedItem();
@@ -406,8 +416,8 @@ public class MapadeMesas extends javax.swing.JFrame {
         }
         LocalDate fecha = LocalDate.of(año, mes, dia);
         LocalTime hora = LocalTime.parse(horaSeleccionada);
-        mostrarMesasDisponibles(fecha, hora);
-        */
+        mostrarMesasDisponiblesBD(fecha, hora);
+        
     }//GEN-LAST:event_btnBuscarActionPerformed
 
     /**

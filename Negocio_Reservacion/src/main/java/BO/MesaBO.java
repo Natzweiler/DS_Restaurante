@@ -63,6 +63,14 @@ public class MesaBO implements IMesaBO {
         throw new NegocioException("Error al obtener las mesas", e);
     }
 }
+    public boolean actualizarEstadoMesa(int numeroMesa, boolean disponible) throws NegocioException {
+    try {
+        return mesaDAO.actualizarDisponibilidadMesa(numeroMesa, disponible);
+    } catch (PersistenciaException e) {
+        throw new NegocioException("No se pudo actualizar el estado de la mesa", e);
+    }
+}
+
 
 }
 

@@ -16,6 +16,8 @@ public interface IMesaDAO {
         public Mesa obtenerMesaPorNumeroMesa(Integer numeroMesa) throws PersistenciaException ;
         public Mesa registrarMesa(Mesa mesa) throws PersistenciaException ;
         public List<Mesa> obtenerTodasLasMesas() throws PersistenciaException;
+        public boolean actualizarDisponibilidadMesa(int numeroMesa, boolean disponible) throws PersistenciaException;
+        
 
 
 

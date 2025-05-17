@@ -27,7 +27,7 @@ public class Cliente {
     @Column(name = "nombre", nullable = false)
     private String nombre;
 
-    @Column(name = "correo", nullable = false, unique = true)
+    @Column(name = "correo", nullable = false)
     private String correo;
 
     @Column(name = "telefono", nullable = false)

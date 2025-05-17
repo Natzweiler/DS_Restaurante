@@ -75,6 +75,24 @@ public class MesaDAO implements IMesaDAO{
         em.close();
     }
 }
+    public boolean actualizarDisponibilidadMesa(int numeroMesa, boolean disponible) throws PersistenciaException {
+    EntityManager em = Conexion.crearConexion();
+    try {
+        em.getTransaction().begin();
+        Mesa mesa = (Mesa) em.createQuery("SELECT m FROM Mesa m WHERE m.numeroMesa = :numero")
+                              .setParameter("numero", numeroMesa)
+                              .getSingleResult();
+        mesa.setDisponible(disponible);
+        em.merge(mesa);
+        em.getTransaction().commit();
+        return true;
+    } catch (Exception e) {
+        if (em.getTransaction().isActive()) em.getTransaction().rollback();
+        throw new PersistenciaException("Error al actualizar la disponibilidad de la mesa", e);
+    } finally {
+        em.close();
+    }
+}
 
 }
 

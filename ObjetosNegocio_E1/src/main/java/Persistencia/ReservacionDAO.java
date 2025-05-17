@@ -71,7 +71,7 @@ public class ReservacionDAO implements IReservacionDAO {
             em.close();
         }
     }
-    public boolean estadoMesaDisponible(Mesa mesa, LocalDate fecha, LocalTime hora) throws PersistenciaException {
+    /*public boolean estadoMesaDisponible(Mesa mesa, LocalDate fecha, LocalTime hora) throws PersistenciaException {
     EntityManager em = Conexion.crearConexion();
     try {
         String jpql = "SELECT COUNT(r) FROM Reservacion r WHERE r.mesa = :mesa AND r.fecha = :fecha AND r.hora = :hora";
@@ -87,6 +87,27 @@ public class ReservacionDAO implements IReservacionDAO {
             em.close();
         }
     
+}*/
+    public boolean estadoMesaDisponible(Integer numeroMesa, LocalDate fecha, LocalTime hora) throws PersistenciaException {
+    EntityManager em = Conexion.crearConexion();
+    try {
+        String consulta = "SELECT COUNT(r) FROM Reservacion r WHERE r.mesa.id = :idMesa " +
+                      "AND r.fecha = :fecha " +
+                      "AND r.hora BETWEEN :inicio AND :fin";
+
+        Long count = em.createQuery(consulta, Long.class)
+                .setParameter("idMesa", numeroMesa)
+                .setParameter("fecha", fecha)
+                .setParameter("inicio", hora)
+                .setParameter("fin", hora.plusHours(1))
+                .getSingleResult();
+
+        return count == 0;
+    } catch (Exception e) {
+        throw new PersistenciaException("Error al verificar disponibilidad", e);
+    } finally {
+        em.close();
+    }
 }
 
 }

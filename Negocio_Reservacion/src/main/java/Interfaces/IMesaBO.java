@@ -16,6 +16,8 @@ public interface IMesaBO {
     MesaDTO obtenerMesaPorNumeroMesa(Integer numeroMesa) throws NegocioException;
     public int generarMesasIniciales() throws NegocioException;
     public List<MesaDTO> obtenerTodasLasMesas() throws NegocioException;
+    public boolean actualizarEstadoMesa(int numeroMesa, boolean disponible) throws NegocioException;
+
 
 
 }

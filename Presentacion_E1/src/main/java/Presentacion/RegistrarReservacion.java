@@ -4,9 +4,21 @@
  */
 package Presentacion;
 
+import BO.MesaBO;
+import BO.MeseroBO;
+import BO.ReservacionBO;
+import Interfaces.IMesaBO;
+import Interfaces.IMeseroBO;
+import Interfaces.IReservacionBO;
+import Persistencia.MeseroDAO;
+import Persistencia.ReservacionDAO;
 import controlReservacion.GestorReservacion;
+import dtos.ClienteDTO;
 import dtos.MesaDTO;
 import dtos.MeseroDTO;
+import dtos.ReservacionDTO;
+import interfaces.IMeseroDAO;
+import interfaces.IReservacionDAO;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
@@ -21,6 +33,7 @@ import javax.mail.PasswordAuthentication;
 import javax.mail.Transport;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
+import negocio.exception.NegocioException;
 import objetosnegocio.MeseroON;
 
 /**
@@ -65,14 +78,23 @@ public class RegistrarReservacion extends javax.swing.JFrame {
         mapaDeMesas = Coordinador.CoordinadorPantallas.getInstance().getMapaDeMesas();
           
     }
+//cargar meseros desde la bd
+private void cargarMeseros() {
+    try {
+        IMeseroDAO meseroDAO = MeseroDAO.getInstanceDAO();
+        IMeseroBO meseroBO = new MeseroBO(meseroDAO);
+        listaMeseros = meseroBO.obtenerMeserosActivos(); 
 
-    private void cargarMeseros() {
-        listaMeseros = MeseroON.getInstance().obtenerMeseros();
-  
-    for (MeseroDTO mesero : listaMeseros) {
-        comboMesero.addItem(mesero.getNombre()); 
+        comboMesero.removeAllItems(); 
+        for (MeseroDTO mesero : listaMeseros) {
+            comboMesero.addItem(mesero.getNombre());
+        }
+
+    } catch (NegocioException e) {
+        JOptionPane.showMessageDialog(this, "Error al cargar meseros: " + e.getMessage());
     }
 }
+
  public void enviarCorreoConfirmacion(String nombre, String correo, String telefono, int mesa, String fecha, String mesero) {
     String host = "smtp.gmail.com"; 
     final String usuario = "restaurantedisoftware@gmail.com"; 
@@ -289,19 +311,44 @@ public class RegistrarReservacion extends javax.swing.JFrame {
     String nombre = textoNombreCliente.getText().trim();
     String telefono = textoTelefono.getText().trim();
     String correo = textCorreo.getText().trim();
+        if (nombre.isEmpty() || telefono.isEmpty() || correo.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Por favor llena todos los campos del cliente.");
+            return;
+        }
+    
     int indice = comboMesero.getSelectedIndex();
-    if (indice < 0) {
+    if (indice < 0 || listaMeseros == null || listaMeseros.isEmpty()) {
         JOptionPane.showMessageDialog(this, "Selecciona un mesero.");
         return;
     }
+    
     MeseroDTO meseroSeleccionado = listaMeseros.get(indice);
     
-    mesa.setDisponible(false);
+    ClienteDTO clienteDTO = new ClienteDTO();
+    clienteDTO.setNombre(nombre);
+    clienteDTO.setTelefono(telefono);
+    clienteDTO.setCorreo(correo);
     
-    mapaDeMesas.repaint();
+    IMesaBO mesaBO = new MesaBO();
     
-    StringBuilder ticket = new StringBuilder();
-        ticket.append("=============== CONFIRMACIÓN DE RESERVACIÓN ===============\n")
+    
+    ReservacionDTO reservacionDTO = new ReservacionDTO();
+    reservacionDTO.setMesa(mesa);
+    reservacionDTO.setCliente(clienteDTO);
+    reservacionDTO.setMesero(meseroSeleccionado);
+    reservacionDTO.setFecha(fechaSeleccionada);
+    reservacionDTO.setHora(horaSeleccionada);
+    
+    
+      try {
+          IReservacionDAO reservacionDAO = ReservacionDAO.getInstanceDAO();
+          IReservacionBO reservacionBO = new ReservacionBO(reservacionDAO);
+          ReservacionDTO registrada = reservacionBO.registrarReservacion(reservacionDTO);
+          mesaBO.actualizarEstadoMesa(mesa.getNumeroMesa(), false);
+          JOptionPane.showMessageDialog(this, "Reservacion registrada correctamente.");
+          enviarCorreoConfirmacion(nombre, correo, telefono, mesa.getNumeroMesa(), fechaSeleccionada.toString(), meseroSeleccionado.getNombre());
+              StringBuilder ticket = new StringBuilder();
+                 ticket.append("=============== CONFIRMACIÓN DE RESERVACIÓN ===============\n")
                 .append("Estimado/a cliente,\n\n")
                 .append("Le confirmamos que su reservación ha sido registrada exitosamente.\n")
                 .append("A continuación, se detallan los datos correspondientes:\n\n")
@@ -316,12 +363,13 @@ public class RegistrarReservacion extends javax.swing.JFrame {
                 .append("¡Le esperamos pronto!\n")
                 .append("============================================================");
     JOptionPane.showMessageDialog(this, ticket.toString(), "Se envío el ticket de confirmación a su correo.", JOptionPane.INFORMATION_MESSAGE);
-       
-        enviarCorreoConfirmacion(nombre, correo, telefono, mesa.getNumeroMesa(), fechaSeleccionada.toString(), meseroSeleccionado.getNombre());
-    this.dispose();
-    mapaDeMesas.setVisible(true);
-    mapaDeMesas.setLocationRelativeTo(null);
-        
+          this.dispose();
+          Coordinador.CoordinadorPantallas.getInstance().mostrarMenu();
+         
+          
+        } catch (NegocioException e) {
+            JOptionPane.showMessageDialog(this, "Error al registrar la reservacion: " + e.getMessage());
+        }
     }//GEN-LAST:event_btnReservarActionPerformed
 
     private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed

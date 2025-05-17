@@ -104,7 +104,7 @@ public class ReservacionBO implements IReservacionBO {
         }
 
         
-        return reservacionDAO.estadoMesaDisponible(mesa, fecha, hora);
+        return reservacionDAO.estadoMesaDisponible(numeroMesa, fecha, hora);
         
     } catch (PersistenciaException e) {
         throw new NegocioException("Error al verificar disponibilidad de la mesa: " + e.getMessage(), e);
