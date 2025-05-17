@@ -5,6 +5,10 @@
 package GenerarReportes;
 
 
+import BO.ReservacionBO;
+import Entidades.Reservacion;
+import Interfaces.IReservacionBO;
+import Persistencia.ReservacionDAO;
 import com.itextpdf.text.BaseColor;
 
 import java.util.List;
@@ -28,8 +32,14 @@ import java.io.FileOutputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import com.itextpdf.text.Element;
+import dtos.ReservacionDTO;
+import exception.PersistenciaException;
+import interfaces.IReservacionDAO;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import negocio.exception.NegocioException;
 
 /**
  *
@@ -51,8 +61,69 @@ public class ReporteReservaciones extends javax.swing.JFrame {
      */
     public ReporteReservaciones() {
         initComponents();
+        cargarTabla();
+        btnFiltrar.addActionListener(new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                filtrarPorNumeroMesa();
+            }
+        
+        
+        });
        
     }
+    //filtro por numero de mesa
+    private void filtrarPorNumeroMesa() {
+    try {
+        String textoFiltro = txtFiltroMesa.getText().trim();
+        int numeroMesa = Integer.parseInt(textoFiltro);
+
+        ReservacionDAO dao = ReservacionDAO.getInstanceDAO(); 
+        List<Reservacion> reservaciones = dao.listarReservaciones(); 
+
+        DefaultTableModel modelo = (DefaultTableModel) tablaMostrarReservaciones.getModel();
+        modelo.setRowCount(0); // limpiar
+
+        for (Reservacion r : reservaciones) {
+            if (r.getMesa().getNumeroMesa() == numeroMesa) {
+                modelo.addRow(new Object[]{
+                    "Mesa " + r.getMesa().getNumeroMesa(),
+                    r.getCliente().getNombre(),
+                    r.getMesero().getNombre(),
+                    r.getFecha().toString()
+                });
+            }
+        }
+
+    } catch (NumberFormatException e) {
+        JOptionPane.showMessageDialog(this, "Ingresa un número de mesa válido.");
+    } catch (PersistenciaException e) {
+        JOptionPane.showMessageDialog(this, "Error al filtrar reservaciones.");
+    }
+}
+
+    //cargar tabla de reservaciones
+    private void cargarTabla() {
+    try {
+        ReservacionDAO dao = ReservacionDAO.getInstanceDAO(); 
+        List<Reservacion> reservaciones = dao.listarReservaciones(); 
+        
+        DefaultTableModel modelo = (DefaultTableModel) tablaMostrarReservaciones.getModel();
+        modelo.setRowCount(0); // Limpiar tabla antes de cargar
+
+        for (Reservacion r : reservaciones) {
+            modelo.addRow(new Object[]{
+                "Mesa " + r.getMesa().getNumeroMesa(),         
+                r.getCliente().getNombre(),                    
+                r.getMesero().getNombre(),                     
+                r.getFecha().toString()                        
+            });
+        }
+
+    } catch (PersistenciaException e) {
+        JOptionPane.showMessageDialog(this, "Error al cargar las reservaciones.");
+    }
+}
         /**
      * Método que agrega listeners a los campos de texto para realizar la búsqueda en tiempo real.
      */
@@ -68,50 +139,50 @@ public class ReporteReservaciones extends javax.swing.JFrame {
 
         titulo = new javax.swing.JLabel();
         nombreLabel = new javax.swing.JLabel();
-        nombreTextField = new javax.swing.JTextField();
-        visitasLabel = new javax.swing.JLabel();
-        visitasTextField = new javax.swing.JTextField();
+        txtFiltroMesa = new javax.swing.JTextField();
         tabla = new javax.swing.JScrollPane();
-        tablaMostrarClientesFrecuentes = new javax.swing.JTable();
-        botonRegresar = new javax.swing.JButton();
-        botonGenerarPDF = new javax.swing.JButton();
+        tablaMostrarReservaciones = new javax.swing.JTable();
+        btnRegresar = new javax.swing.JButton();
+        btnGenerarPDF = new javax.swing.JButton();
+        btnFiltrar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        titulo.setText("Reporte de Clientes");
+        titulo.setText("Reporte de Reservaciones");
 
-        nombreLabel.setText("Nombre:");
+        nombreLabel.setText("Filtrar por mesa:");
 
-        visitasLabel.setText("Visitas:");
-
-        tablaMostrarClientesFrecuentes.setModel(new javax.swing.table.DefaultTableModel(
+        tablaMostrarReservaciones.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
             },
             new String [] {
-                "Nombre", "Visitas", "Total gastado", "Puntos", "Ultima comanda"
+                "Mesa", "Cliente", "Mesero que atendió", "Fecha de reservacion"
             }
         ));
-        tabla.setViewportView(tablaMostrarClientesFrecuentes);
+        tabla.setViewportView(tablaMostrarReservaciones);
 
-        botonRegresar.setBackground(new java.awt.Color(27, 61, 174));
-        botonRegresar.setForeground(new java.awt.Color(255, 255, 255));
-        botonRegresar.setText("Regresar");
-        botonRegresar.addActionListener(new java.awt.event.ActionListener() {
+        btnRegresar.setText("Regresar");
+        btnRegresar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                botonRegresarActionPerformed(evt);
+                btnRegresarActionPerformed(evt);
             }
         });
 
-        botonGenerarPDF.setBackground(new java.awt.Color(27, 61, 174));
-        botonGenerarPDF.setForeground(new java.awt.Color(255, 255, 255));
-        botonGenerarPDF.setText("Generar PDF");
-        botonGenerarPDF.addActionListener(new java.awt.event.ActionListener() {
+        btnGenerarPDF.setText("Generar PDF");
+        btnGenerarPDF.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                botonGenerarPDFActionPerformed(evt);
+                btnGenerarPDFActionPerformed(evt);
+            }
+        });
+
+        btnFiltrar.setText("Filtrar");
+        btnFiltrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnFiltrarActionPerformed(evt);
             }
         });
 
@@ -120,64 +191,57 @@ public class ReporteReservaciones extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(170, 170, 170)
-                .addComponent(titulo, javax.swing.GroupLayout.DEFAULT_SIZE, 228, Short.MAX_VALUE)
-                .addGap(162, 162, 162))
-            .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(nombreLabel)
-                    .addComponent(nombreTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(visitasTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(visitasLabel))
-                .addContainerGap())
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(tabla)
-                .addContainerGap())
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(botonRegresar, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(botonGenerarPDF, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(nombreLabel)
+                                .addGap(177, 463, Short.MAX_VALUE))
+                            .addComponent(tabla, javax.swing.GroupLayout.DEFAULT_SIZE, 548, Short.MAX_VALUE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(txtFiltroMesa, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(btnFiltrar))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(184, 184, 184)
+                                        .addComponent(titulo)))
+                                .addGap(0, 0, Short.MAX_VALUE)))
+                        .addContainerGap())
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(btnRegresar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnGenerarPDF)
+                        .addGap(21, 21, 21))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(titulo)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(nombreLabel)
-                            .addComponent(visitasLabel))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(nombreTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(23, 23, 23)
-                        .addComponent(visitasTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(tabla, javax.swing.GroupLayout.PREFERRED_SIZE, 231, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0)
+                .addComponent(nombreLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(botonRegresar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(botonGenerarPDF, javax.swing.GroupLayout.DEFAULT_SIZE, 24, Short.MAX_VALUE)))
+                    .addComponent(txtFiltroMesa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnFiltrar))
+                .addGap(6, 6, 6)
+                .addComponent(tabla, javax.swing.GroupLayout.PREFERRED_SIZE, 231, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 30, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnRegresar)
+                    .addComponent(btnGenerarPDF))
+                .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
       /**
-     * Método que maneja el evento del botón "Regresar" para cerrar la ventana y mostrar el menú de reportes.
-     * @param evt Evento del botón "Regresar".
-     */
-    private void botonRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonRegresarActionPerformed
-        
-        this.dispose();
-    }//GEN-LAST:event_botonRegresarActionPerformed
-  
+     * Método que maneja el evento del 
         /**
      * Clase interna que define el numerador de páginas para el reporte en PDF.
      * Extiende `PdfPageEventHelper` para insertar el número de página en el pie de página de cada página del PDF.
@@ -196,60 +260,69 @@ public class ReporteReservaciones extends javax.swing.JFrame {
     }
 }
 
-       /**
-     * Método que maneja el evento del botón "Generar PDF" para generar un reporte en formato PDF con los clientes frecuentes.
-     * @param evt Evento del botón "Generar PDF".
-     */
-    private void botonGenerarPDFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonGenerarPDFActionPerformed
+    private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
         // TODO add your handling code here:
-        Document documento = new Document();
+        Coordinador.CoordinadorPantallas.getInstance().mostrarMenuReportes();
+        this.dispose();
+    }//GEN-LAST:event_btnRegresarActionPerformed
+
+    private void btnGenerarPDFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGenerarPDFActionPerformed
+        // TODO add your handling code here:
+                // TODO add your handling code here:
+            Document documento = new Document();
+    
+    try {
+        String ruta = System.getProperty("user.home");
+        PdfWriter writer = PdfWriter.getInstance(documento, new FileOutputStream(ruta + "/Desktop/ReporteReservaciones.pdf"));
+        writer.setPageEvent(new NumeradorPaginas()); 
+        documento.open();
+
+       
+        Paragraph titulo = new Paragraph("REPORTE DE RESERVACIONES\n\n");
+        titulo.setAlignment(Element.ALIGN_CENTER);
+        documento.add(titulo);
+
         
-        try {
-            //sino les genera el pdf seguramente puede variar por la ruta, asi que cuidado con eso.
-            ///////////////////////////////////////////////////////////////////////////////////////
-            String ruta = System.getProperty("user.home");
-            PdfWriter writer = PdfWriter.getInstance(documento, new FileOutputStream(ruta + "/Desktop/ReporteClientesFrecuentes.pdf"));
-            writer.setPageEvent(new NumeradorPaginas());
-            documento.open();
-            //titulo
-            Paragraph titulo = new Paragraph("REPORTE DE CLIENTES FRECUENTES\n\n");
-            titulo.setAlignment(Element.ALIGN_CENTER);
-            documento.add(titulo);
-            //fecha
-            String fechaActual = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss").format(new Date());
-            Paragraph fecha = new Paragraph("Fecha de generación: " + fechaActual);
-            fecha.setAlignment(Element.ALIGN_RIGHT);
-            documento.add(fecha);
-            documento.add(new Paragraph("\n"));
-            
-            PdfPTable tabla = new PdfPTable(5);
-            tabla.setWidthPercentage(100);
-            tabla.addCell("Nombre");
-            tabla.addCell("Cantidad de Visitas");
-            tabla.addCell("Total gastado");
-            tabla.addCell("Puntos");
-            tabla.addCell("Ultima comanda");
-            for (int i = 0; i< tablaMostrarClientesFrecuentes.getRowCount(); i++) {
-                String nombre = tablaMostrarClientesFrecuentes.getValueAt(i,0).toString();
-                String visitas = tablaMostrarClientesFrecuentes.getValueAt(i, 1).toString();
-                String total = tablaMostrarClientesFrecuentes.getValueAt(i, 2).toString();
-                String puntos = tablaMostrarClientesFrecuentes.getValueAt(i, 3).toString();
-                String ultimaComanda = tablaMostrarClientesFrecuentes.getValueAt(i, 4).toString();
-                tabla.addCell(nombre);
-                tabla.addCell(visitas);
-                tabla.addCell(total);
-                tabla.addCell(puntos);
-                tabla.addCell(ultimaComanda);
-            }
-            documento.add(tabla);
-            documento.close();
-            JOptionPane.showMessageDialog(this, "PDF generado con éxito en el escritorio.");
-           
-        } catch (Exception e) {
-            e.printStackTrace();
-            JOptionPane.showMessageDialog(this, "Error al generar el PDF" + e.getMessage());
+        String fechaActual = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss").format(new Date());
+        Paragraph fecha = new Paragraph("Fecha de generación: " + fechaActual);
+        fecha.setAlignment(Element.ALIGN_RIGHT);
+        documento.add(fecha);
+        documento.add(new Paragraph("\n"));
+
+       
+        PdfPTable tabla = new PdfPTable(4);
+        tabla.setWidthPercentage(100);
+        tabla.addCell("Fecha");
+        tabla.addCell("Mesa");
+        tabla.addCell("Cliente");
+        tabla.addCell("Mesero");
+
+        IReservacionDAO dao = ReservacionDAO.getInstanceDAO();
+        IReservacionBO reservacionBO = new ReservacionBO(dao);
+        List<ReservacionDTO> listaReservaciones = reservacionBO.listarReservaciones();
+
+        for (ReservacionDTO r : listaReservaciones) {
+            tabla.addCell("Mesa " + r.getMesa().getNumeroMesa());
+            tabla.addCell(r.getCliente().getNombre());
+            tabla.addCell(r.getMesero().getNombre());
+            tabla.addCell(r.getFecha().toString());
+
         }
-    }//GEN-LAST:event_botonGenerarPDFActionPerformed
+
+        documento.add(tabla);
+        documento.close();
+        JOptionPane.showMessageDialog(this, "PDF generado con éxito en el escritorio.");
+        
+    } catch (Exception e) {
+        e.printStackTrace();
+        JOptionPane.showMessageDialog(this, "Error al generar el PDF: " + e.getMessage());
+    }
+    }//GEN-LAST:event_btnGenerarPDFActionPerformed
+
+    private void btnFiltrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFiltrarActionPerformed
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_btnFiltrarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -288,14 +361,13 @@ public class ReporteReservaciones extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton botonGenerarPDF;
-    private javax.swing.JButton botonRegresar;
+    private javax.swing.JButton btnFiltrar;
+    private javax.swing.JButton btnGenerarPDF;
+    private javax.swing.JButton btnRegresar;
     private javax.swing.JLabel nombreLabel;
-    private javax.swing.JTextField nombreTextField;
     private javax.swing.JScrollPane tabla;
-    private javax.swing.JTable tablaMostrarClientesFrecuentes;
+    private javax.swing.JTable tablaMostrarReservaciones;
     private javax.swing.JLabel titulo;
-    private javax.swing.JLabel visitasLabel;
-    private javax.swing.JTextField visitasTextField;
+    private javax.swing.JTextField txtFiltroMesa;
     // End of variables declaration//GEN-END:variables
 }

@@ -7,6 +7,8 @@ import Presentacion.PantallaMenu;
 import Presentacion.RegistrarReservacion;
 import Presentacion.PantallaCancelarReservacion;
 import BO.ReservacionBO;
+import GenerarReportes.MenuReportesReservacion;
+import GenerarReportes.ReporteReservaciones;
 import GestionMeseros.PantallaRegistrarMesero;
 import Persistencia.ReservacionDAO;
 import Interfaces.IReservacionBO;
@@ -79,6 +81,18 @@ public class CoordinadorPantallas {
         m.setLocationRelativeTo(null);
         m.setVisible(true);
     
+    }
+    
+    //Pantallas de Reportes
+    public void mostrarMenuReportes(){
+        MenuReportesReservacion rr = new MenuReportesReservacion();
+        rr.setLocationRelativeTo(null);
+        rr.setVisible(true);
+    }
+    public void mostrarReportesReservacion(){
+        ReporteReservaciones rp = new ReporteReservaciones();
+        rp.setLocationRelativeTo(null);
+        rp.setVisible(true);
     }
 
     public void mostrarCancelarReservacion() {

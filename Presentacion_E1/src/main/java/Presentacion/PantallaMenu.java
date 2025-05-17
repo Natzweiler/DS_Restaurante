@@ -141,6 +141,8 @@ public class PantallaMenu extends javax.swing.JFrame {
 
     private void btnReportesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReportesActionPerformed
         // TODO add your handling code here:
+        CoordinadorPantallas.getInstance().mostrarMenuReportes();
+        dispose();
     }//GEN-LAST:event_btnReportesActionPerformed
 
     private void btnCancelarReservacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarReservacionActionPerformed
