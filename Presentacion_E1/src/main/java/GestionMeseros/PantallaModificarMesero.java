@@ -13,10 +13,17 @@ import java.time.DateTimeException;
 import java.time.LocalDate;
 import javax.swing.JOptionPane;
 import negocio.exception.NegocioException;
-
 /**
+ * La clase **PantallaModificarMesero** es una interfaz gráfica de usuario (GUI)
+ * que permite al usuario modificar la información de un mesero existente.
+ * Recibe un objeto {@link MeseroDTO} pre-cargado, muestra sus datos actuales
+ * y permite al usuario actualizarlos.
+ *
+ * Extiende de {@code javax.swing.JFrame} para funcionar como una ventana de aplicación.
+ * Interactúa con la capa de lógica de negocio para persistir los cambios.
  *
  * @author Gael
+ * @version 1.0
  */
 public class PantallaModificarMesero extends javax.swing.JFrame {
 
@@ -24,10 +31,22 @@ public class PantallaModificarMesero extends javax.swing.JFrame {
      * Creates new form PantallaAgregarMesero
      */
     private MeseroDTO mesero;
-    
+        /**
+     * Crea una nueva instancia del formulario `PantallaModificarMesero`.
+     * Este constructor inicializa los componentes de la interfaz de usuario,
+     * pero no carga datos específicos de un mesero, ya que estos se deben
+     * pasar a través del método {@code setMesero}.
+     */   
     public PantallaModificarMesero() {
         initComponents();
     }
+        /**
+     * Establece el objeto {@link MeseroDTO} a ser modificado y precarga los campos
+     * de la interfaz gráfica con los datos de este mesero.
+     * También inicializa los combobox para la selección de fecha de nacimiento.
+     *
+     * @param mesero El {@link MeseroDTO} cuyos datos se cargarán en la pantalla para su edición.
+     */
     public void setMesero(MeseroDTO mesero){
         this.mesero = mesero;
         
@@ -41,6 +60,11 @@ public class PantallaModificarMesero extends javax.swing.JFrame {
         for (int y = 1950; y <= 2010; y++) comboAño.addItem(String.valueOf(y));
         cargarDatosMesero();
     }
+        /**
+     * Carga los datos del objeto {@link MeseroDTO} actual (`this.mesero`)
+     * en los campos de texto y los combobox de fecha de nacimiento de la GUI.
+     * Este método se llama después de que el mesero ha sido establecido con `setMesero()`.
+     */
     private void cargarDatosMesero() {
     txtNombre.setText(mesero.getNombre());
     txtTelefono.setText(mesero.getTelefono());
@@ -204,7 +228,15 @@ public class PantallaModificarMesero extends javax.swing.JFrame {
         Coordinador.CoordinadorPantallas.getInstance().mostrarGestionMeseros();
         dispose();
     }//GEN-LAST:event_btnRegresarActionPerformed
-
+        /**
+     * Maneja el evento de acción del botón "Guardar Cambios".
+     * Recoge los datos ingresados por el usuario, valida que no estén vacíos,
+     * y luego actualiza el objeto {@link MeseroDTO}. Finalmente, llama a la
+     * capa de negocio para persistir los cambios.
+     * Muestra mensajes de éxito o error al usuario.
+     *
+     * @param evt El evento de acción.
+     */
     private void btnGuardarCambiosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarCambiosActionPerformed
         // TODO add your handling code here:
         try {

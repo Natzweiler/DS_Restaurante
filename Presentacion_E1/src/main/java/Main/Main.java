@@ -14,12 +14,8 @@ public class Main {
 
     public static void main(String[] args) {
         
-       Coordinador.CoordinadorPantallas ca = CoordinadorPantallas.getInstance().getInstancia();
+       Coordinador.CoordinadorPantallas ca = CoordinadorPantallas.getInstance();
         ca.mostrarMenuRoles();
-        
-       
-       
-        
     }
 
 }

@@ -42,13 +42,15 @@ import java.util.Date;
 import negocio.exception.NegocioException;
 
 /**
+ * La clase **ReporteReservaciones** representa la interfaz gráfica de usuario (GUI)
+ * para visualizar y generar reportes de las reservaciones existentes en el sistema.
+ * Permite cargar todas las reservaciones en una tabla y filtrar por número de mesa,
+ * además de ofrecer la funcionalidad de generar un reporte en formato PDF.
+ *
+ * Extiende de {@code javax.swing.JFrame}, lo que la convierte en una ventana de aplicación.
  *
  * @author Gael
- */
-/**
- * Clase que representa la ventana para mostrar el reporte de clientes frecuentes.
- * Esta clase extiende `JFrame` y permite realizar búsquedas de clientes frecuentes 
- * mediante filtros de nombre y visitas. Además, permite generar un reporte en formato PDF.
+ * @version 1.0
  */
 public class ReporteReservaciones extends javax.swing.JFrame {
    
@@ -61,31 +63,91 @@ public class ReporteReservaciones extends javax.swing.JFrame {
      */
     public ReporteReservaciones() {
         initComponents();
-        cargarTabla();
-        btnFiltrar.addActionListener(new ActionListener(){
+        cargarTabla(); // Carga los datos iniciales al abrir la ventana
+
+        // Configura el ActionListener para el botón de filtrar por número de mesa
+        // Se asume que 'btnFiltrar' es el nombre del botón en tu diseño GUI
+        btnFiltrar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 filtrarPorNumeroMesa();
             }
-        
-        
         });
-       
+        
+        // Configura el ActionListener para el botón de generar PDF
+        // Se asume que 'btnGenerarPDF' es el nombre del botón en tu diseño GUI
+        btnGenerarPDF.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent evt) {
+                btnGenerarPDFActionPerformed(evt);
+            }
+        });
     }
-    //filtro por numero de mesa
+
+    /**
+     * Filtra las reservaciones mostradas en la tabla basándose en el número de mesa
+     * ingresado por el usuario. Si el campo de filtro está vacío, se asume
+     * que se desea ver todas las reservaciones (aunque este método solo filtra).
+     *
+     * Captura {@link NumberFormatException} si el texto no es un número válido
+     * y {@link PersistenciaException} si hay un error al acceder a los datos.
+     */
     private void filtrarPorNumeroMesa() {
-    try {
-        String textoFiltro = txtFiltroMesa.getText().trim();
-        int numeroMesa = Integer.parseInt(textoFiltro);
+        try {
+            String textoFiltro = txtFiltroMesa.getText().trim();
+            
+            // Si el campo de filtro está vacío, recargar la tabla completa
+            if (textoFiltro.isEmpty()) {
+                cargarTabla();
+                return; 
+            }
 
-        ReservacionDAO dao = ReservacionDAO.getInstanceDAO(); 
-        List<Reservacion> reservaciones = dao.listarReservaciones(); 
+            int numeroMesa = Integer.parseInt(textoFiltro);
 
-        DefaultTableModel modelo = (DefaultTableModel) tablaMostrarReservaciones.getModel();
-        modelo.setRowCount(0); // limpiar
+            // Obtener todas las reservaciones de la capa DAO (o BO para mayor consistencia)
+            List<Reservacion> reservaciones = ReservacionDAO.getInstanceDAO().listarReservaciones();
 
-        for (Reservacion r : reservaciones) {
-            if (r.getMesa().getNumeroMesa() == numeroMesa) {
+            // Limpiar la tabla antes de añadir los resultados filtrados
+            DefaultTableModel modelo = (DefaultTableModel) tablaMostrarReservaciones.getModel();
+            modelo.setRowCount(0); 
+
+            // Iterar y añadir solo las reservaciones que coincidan con el número de mesa
+            for (Reservacion r : reservaciones) {
+                if (r.getMesa().getNumeroMesa() == numeroMesa) {
+                    modelo.addRow(new Object[]{
+                        "Mesa " + r.getMesa().getNumeroMesa(),
+                        r.getCliente().getNombre(),
+                        r.getMesero().getNombre(),
+                        r.getFecha().toString()
+                    });
+                }
+            }
+
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Por favor, ingresa un número de mesa válido.", "Error de Formato", JOptionPane.ERROR_MESSAGE);
+        } catch (PersistenciaException e) {
+            JOptionPane.showMessageDialog(this, "Error al filtrar las reservaciones: " + e.getMessage(), "Error de Persistencia", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    /**
+     * Carga todas las reservaciones desde la capa de persistencia y las muestra
+     * en la tabla de la interfaz gráfica.
+     * Limpia la tabla antes de cargar nuevos datos.
+     *
+     * Captura {@link PersistenciaException} si hay un error al acceder a los datos.
+     */
+    private void cargarTabla() {
+        try {
+            // Se utiliza el DAO directamente para la carga simple de datos.
+            // Para una aplicación más robusta, se podría usar el BO aquí también.
+            List<Reservacion> reservaciones = ReservacionDAO.getInstanceDAO().listarReservaciones(); 
+            
+            DefaultTableModel modelo = (DefaultTableModel) tablaMostrarReservaciones.getModel();
+            modelo.setRowCount(0); // Limpiar la tabla antes de cargar nuevos datos
+
+            // Llenar la tabla con los datos de las reservaciones
+            for (Reservacion r : reservaciones) {
                 modelo.addRow(new Object[]{
                     "Mesa " + r.getMesa().getNumeroMesa(),
                     r.getCliente().getNombre(),
@@ -93,37 +155,11 @@ public class ReporteReservaciones extends javax.swing.JFrame {
                     r.getFecha().toString()
                 });
             }
+
+        } catch (PersistenciaException e) {
+            JOptionPane.showMessageDialog(this, "Error al cargar las reservaciones: " + e.getMessage(), "Error de Carga", JOptionPane.ERROR_MESSAGE);
         }
-
-    } catch (NumberFormatException e) {
-        JOptionPane.showMessageDialog(this, "Ingresa un número de mesa válido.");
-    } catch (PersistenciaException e) {
-        JOptionPane.showMessageDialog(this, "Error al filtrar reservaciones.");
     }
-}
-
-    //cargar tabla de reservaciones
-    private void cargarTabla() {
-    try {
-        ReservacionDAO dao = ReservacionDAO.getInstanceDAO(); 
-        List<Reservacion> reservaciones = dao.listarReservaciones(); 
-        
-        DefaultTableModel modelo = (DefaultTableModel) tablaMostrarReservaciones.getModel();
-        modelo.setRowCount(0); // Limpiar tabla antes de cargar
-
-        for (Reservacion r : reservaciones) {
-            modelo.addRow(new Object[]{
-                "Mesa " + r.getMesa().getNumeroMesa(),         
-                r.getCliente().getNombre(),                    
-                r.getMesero().getNombre(),                     
-                r.getFecha().toString()                        
-            });
-        }
-
-    } catch (PersistenciaException e) {
-        JOptionPane.showMessageDialog(this, "Error al cargar las reservaciones.");
-    }
-}
         /**
      * Método que agrega listeners a los campos de texto para realizar la búsqueda en tiempo real.
      */
@@ -265,7 +301,14 @@ public class ReporteReservaciones extends javax.swing.JFrame {
         Coordinador.CoordinadorPantallas.getInstance().mostrarMenuReportes();
         this.dispose();
     }//GEN-LAST:event_btnRegresarActionPerformed
-
+        /**
+     * Manejador del evento para el botón "Generar PDF".
+     * Crea un documento PDF con la información de todas las reservaciones.
+     * Incluye un título, fecha de generación y una tabla con los detalles de las reservaciones.
+     * La lógica para la numeración de páginas (clase `NumeradorPaginas`) se asume existente.
+     *
+     * @param evt El evento de acción.
+     */
     private void btnGenerarPDFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGenerarPDFActionPerformed
         // TODO add your handling code here:
                 // TODO add your handling code here:

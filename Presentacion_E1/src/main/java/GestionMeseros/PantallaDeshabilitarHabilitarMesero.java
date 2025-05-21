@@ -15,8 +15,15 @@ import javax.swing.JOptionPane;
 import negocio.exception.NegocioException;
 
 /**
+ * La clase **PantallaDeshabilitarHabilitarMesero** es una interfaz gráfica de usuario (GUI)
+ * que permite a los administradores o personal autorizado habilitar o deshabilitar
+ * meseros en el sistema. Proporciona una lista de meseros y botones para cambiar
+ * su estado, interactuando con la capa de lógica de negocio para realizar estas operaciones.
+ *
+ * Extiende de {@code javax.swing.JFrame} para funcionar como una ventana de aplicación.
  *
  * @author Gael
+ * @version 1.0
  */
 public class PantallaDeshabilitarHabilitarMesero extends javax.swing.JFrame {
 
@@ -24,10 +31,21 @@ public class PantallaDeshabilitarHabilitarMesero extends javax.swing.JFrame {
      * Creates new form PantallaAgregarMesero
      */
     private List<MeseroDTO> listaMeseros;
+        /**
+     * Crea una nueva instancia del formulario `PantallaDeshabilitarHabilitarMesero`.
+     * Inicializa los componentes de la interfaz de usuario y carga la lista de meseros
+     * al momento de la creación de la ventana.
+     */
     public PantallaDeshabilitarHabilitarMesero() {
         initComponents();
         cargarMeseros();
     }
+        /**
+     * Carga la lista de todos los meseros disponibles desde la capa de negocio
+     * y los muestra en el componente `JList`.
+     * Cada mesero se presenta con su nombre y su estado (activo/inactivo).
+     * Muestra un mensaje de error si la carga falla.
+     */
     private void cargarMeseros() {
     try {
         IMeseroDAO meseroDAO = MeseroDAO.getInstanceDAO();
@@ -141,7 +159,14 @@ public class PantallaDeshabilitarHabilitarMesero extends javax.swing.JFrame {
         Coordinador.CoordinadorPantallas.getInstance().mostrarGestionMeseros();
         dispose();
     }//GEN-LAST:event_btnRegresarActionPerformed
-
+        /**
+     * Maneja el evento de acción del botón "Habilitar".
+     * Si un mesero está seleccionado y está inactivo, lo habilita a través de la capa de negocio.
+     * Actualiza la lista de meseros después de la operación.
+     * Muestra mensajes de éxito o error al usuario.
+     *
+     * @param evt El evento de acción.
+     */
     private void btnHabilitarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHabilitarActionPerformed
         // TODO add your handling code here:
             int index = listaMeserosJList.getSelectedIndex();
@@ -172,7 +197,14 @@ public class PantallaDeshabilitarHabilitarMesero extends javax.swing.JFrame {
     }
 
     }//GEN-LAST:event_btnHabilitarActionPerformed
-
+        /**
+     * Maneja el evento de acción del botón "Deshabilitar".
+     * Si un mesero está seleccionado y está activo, lo deshabilita a través de la capa de negocio.
+     * Actualiza la lista de meseros después de la operación.
+     * Muestra mensajes de éxito o error al usuario.
+     *
+     * @param evt El evento de acción.
+     */
     private void btnDeshabilitarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeshabilitarActionPerformed
         // TODO add your handling code here:
          int index = listaMeserosJList.getSelectedIndex();

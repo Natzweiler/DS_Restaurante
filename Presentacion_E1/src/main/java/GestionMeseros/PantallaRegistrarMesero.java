@@ -15,13 +15,26 @@ import javax.swing.JOptionPane;
 import negocio.exception.NegocioException;
 
 /**
+ * La clase **PantallaRegistrarMesero** representa la interfaz gráfica de usuario (GUI)
+ * que permite al usuario registrar un nuevo mesero en el sistema.
+ * Solicita información como nombre, teléfono, dirección y fecha de nacimiento,
+ * y se encarga de validar los datos y de interactuar con la capa de lógica de negocio
+ * para guardar el nuevo registro.
+ *
+ * Extiende de {@code javax.swing.JFrame} para funcionar como una ventana de aplicación.
  *
  * @author Gael
+ * @version 1.0
  */
 public class PantallaRegistrarMesero extends javax.swing.JFrame {
 
     /**
      * Creates new form PantallaAgregarMesero
+     */
+       /**
+     * Crea una nueva instancia del formulario `PantallaRegistrarMesero`.
+     * Inicializa los componentes de la interfaz de usuario y precarga los
+     * {@code JComboBox} para la selección de la fecha de nacimiento.
      */
     public PantallaRegistrarMesero() {
         initComponents();
@@ -203,7 +216,16 @@ public class PantallaRegistrarMesero extends javax.swing.JFrame {
     private void txtTelefonoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTelefonoActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtTelefonoActionPerformed
-
+        /**
+     * Maneja el evento de acción del botón "Registrar".
+     * Recoge los datos ingresados por el usuario, realiza validaciones básicas
+     * de campos vacíos y de la fecha, y luego crea un nuevo {@link MeseroDTO}.
+     * Delega la tarea de registrar al mesero a la capa de lógica de negocio.
+     * Muestra mensajes de éxito o error al usuario y limpia los campos del formulario
+     * si el registro es exitoso.
+     *
+     * @param evt El evento de acción.
+     */
     private void btnRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarActionPerformed
         // TODO add your handling code here:
         try {

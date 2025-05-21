@@ -37,26 +37,64 @@ import negocio.exception.NegocioException;
 import objetosnegocio.MeseroON;
 
 /**
+ * La clase **RegistrarReservacion** es una interfaz gráfica de usuario (GUI)
+ * que permite al usuario registrar una nueva reservación.
+ * Esta pantalla recopila la información del cliente, la mesa, el mesero, la fecha y hora
+ * seleccionadas, y delega el registro de la reservación a la capa de lógica de negocio.
+ * Además, incluye la funcionalidad de enviar un correo electrónico de confirmación al cliente
+ * y mostrar un ticket de confirmación.
+ *
+ * Extiende de {@code javax.swing.JFrame} para funcionar como una ventana de aplicación.
  *
  * @author Gael
+ * @version 1.0
  */
 public class RegistrarReservacion extends javax.swing.JFrame {
 
-    /**
-     * Creates new form RegistrarReservacion
+ /**
+     * El objeto {@link MesaDTO} que representa la mesa seleccionada para la reservación.
      */
     private MesaDTO mesa;
+
+    /**
+     * La lista de objetos {@link MeseroDTO} disponibles para ser asignados a la reservación.
+     */
     private List<MeseroDTO> listaMeseros;
+
+    /**
+     * Referencia estática al {@link MapadeMesas} para interactuar con la disponibilidad de mesas.
+     */
     public static MapadeMesas mapaDeMesas;
+
+    /**
+     * La fecha seleccionada para la reservación.
+     */
     private LocalDate fechaSeleccionada;
+
+    /**
+     * La hora seleccionada para la reservación.
+     */
     private LocalTime horaSeleccionada;
    
     
-    
+        
+    /**
+     * Establece la mesa seleccionada para la reservación y actualiza la interfaz
+     * para mostrar los detalles de la mesa.
+     *
+     * @param mesa El {@link MesaDTO} que ha sido seleccionado.
+     */
         public void setMesaSeleccionada(MesaDTO mesa) {
         this.mesa = mesa;
         mostrarDetallesMesa();
     }
+            /**
+     * Establece la fecha y hora seleccionadas para la reservación y actualiza
+     * los {@code JLabel} correspondientes en la interfaz de usuario.
+     *
+     * @param fecha La fecha {@link LocalDate} seleccionada.
+     * @param hora La hora {@link LocalTime} seleccionada.
+     */
         public void setFechaHoraSeleccionada (LocalDate fecha, LocalTime hora){
         this.fechaSeleccionada = fecha;
         this.horaSeleccionada = hora;
@@ -65,6 +103,10 @@ public class RegistrarReservacion extends javax.swing.JFrame {
         
         
         }
+            /**
+     * Muestra el número de la mesa seleccionada en el {@code JLabel} correspondiente.
+     * Muestra un mensaje de error si no hay una mesa seleccionada.
+     */
         private void mostrarDetallesMesa() {
             if (mesa != null) {
                 jLabelNumeroMesa.setText("Mesa " + mesa.getNumeroMesa());
@@ -72,13 +114,22 @@ public class RegistrarReservacion extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Error al mostrar mesa." + JOptionPane.ERROR_MESSAGE);
             }
     }
+            /**
+     * Crea una nueva instancia del formulario `RegistrarReservacion`.
+     * Inicializa los componentes de la interfaz de usuario, carga la lista de meseros
+     * disponibles y obtiene la instancia del mapa de mesas.
+     */
     public RegistrarReservacion() {
         initComponents();
         cargarMeseros();
         mapaDeMesas = Coordinador.CoordinadorPantallas.getInstance().getMapaDeMesas();
           
     }
-//cargar meseros desde la bd
+    /**
+     * Carga la lista de meseros activos desde la capa de negocio y los
+     * añade al {@code JComboBox} de meseros.
+     * Muestra un mensaje de error si la carga falla.
+     */
 private void cargarMeseros() {
     try {
         IMeseroDAO meseroDAO = MeseroDAO.getInstanceDAO();
@@ -94,7 +145,19 @@ private void cargarMeseros() {
         JOptionPane.showMessageDialog(this, "Error al cargar meseros: " + e.getMessage());
     }
 }
-
+    /**
+     * Envía un correo electrónico de confirmación de reservación al cliente.
+     * Configura el servidor SMTP, la autenticación y el contenido del mensaje.
+     * Los detalles del remitente (usuario y contraseña) deben configurarse con precaución
+     * y no directamente en el código de producción.
+     *
+     * @param nombre El nombre completo del cliente.
+     * @param correo La dirección de correo electrónico del cliente.
+     * @param telefono El número de teléfono del cliente.
+     * @param numeroMesa El número de la mesa reservada.
+     * @param fecha La fecha de la reservación en formato de cadena.
+     * @param mesero El nombre del mesero asignado.
+     */
  public void enviarCorreoConfirmacion(String nombre, String correo, String telefono, int mesa, String fecha, String mesero) {
     String host = "smtp.gmail.com"; 
     final String usuario = "restaurantedisoftware@gmail.com"; 
@@ -300,7 +363,15 @@ private void cargarMeseros() {
     private void textoTelefonoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textoTelefonoActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_textoTelefonoActionPerformed
-
+        /**
+     * Maneja el evento de acción del botón "Reservar".
+     * Valida los datos del cliente, la mesa y el mesero seleccionados.
+     * Crea un {@link ReservacionDTO} y lo registra a través de la capa de negocio.
+     * También actualiza el estado de la mesa a ocupada y envía un correo de confirmación.
+     * Muestra un ticket de confirmación y regresa al menú principal.
+     *
+     * @param evt El evento de acción.
+     */
     private void btnReservarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReservarActionPerformed
         // TODO add your handling code here
         if (mesa == null) {

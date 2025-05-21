@@ -10,7 +10,7 @@ import javax.persistence.Persistence;
 
 /**
  *
- * @author maria
+ * @author Gael
  */
 public class Conexion {
 

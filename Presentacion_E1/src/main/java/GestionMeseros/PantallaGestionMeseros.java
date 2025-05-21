@@ -17,9 +17,18 @@ import javax.swing.event.ListSelectionListener;
 import negocio.exception.NegocioException;
 import objetosnegocio.MeseroON;
 
+
 /**
+ * La clase **PantallaGestionMeseros** es una interfaz gráfica de usuario (GUI)
+ * que proporciona una vista general de los meseros activos y permite realizar
+ * operaciones de gestión como agregar, modificar o deshabilitar/habilitar meseros.
+ * Actúa como un centro de control para las operaciones relacionadas con meseros,
+ * delegando la navegación a otras pantallas a través del {@link CoordinadorPantallas}.
+ *
+ * Extiende de {@code javax.swing.JFrame} para funcionar como una ventana de aplicación.
  *
  * @author Gael
+ * @version 1.0
  */
 public class PantallaGestionMeseros extends javax.swing.JFrame {
 
@@ -27,10 +36,20 @@ public class PantallaGestionMeseros extends javax.swing.JFrame {
      * Creates new form PantallaGestionMeseros
      */
     private List<MeseroDTO> listaMeseros;
+        /**
+     * Crea una nueva instancia del formulario `PantallaGestionMeseros`.
+     * Inicializa los componentes de la interfaz de usuario y carga la lista de meseros
+     * activos al momento de la creación de la ventana.
+     */
     public PantallaGestionMeseros() {
         initComponents();
         cargarMeseros();
     }
+        /**
+     * Carga la lista de meseros **activos** desde la capa de negocio
+     * y los muestra en el componente `JList`.
+     * Muestra un mensaje de error si la carga falla.
+     */
     private void cargarMeseros() {
     try {
         IMeseroDAO meseroDAO = MeseroDAO.getInstanceDAO();
@@ -161,26 +180,51 @@ public class PantallaGestionMeseros extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+        /**
+     * Maneja el evento de acción del botón "Regresar".
+     * Navega de vuelta al menú principal a través del {@link CoordinadorPantallas}
+     * y cierra la ventana actual.
+     *
+     * @param evt El evento de acción.
+     */
     private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
         // TODO add your handling code here
         Coordinador.CoordinadorPantallas.getInstance().mostrarMenu();
         dispose();
     }//GEN-LAST:event_btnRegresarActionPerformed
-
+        /**
+     * Maneja el evento de acción del botón "Agregar".
+     * Navega a la pantalla para registrar un nuevo mesero a través del {@link CoordinadorPantallas}
+     * y cierra la ventana actual.
+     *
+     * @param evt El evento de acción.
+     */
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
         // TODO add your handling code here:
         Coordinador.CoordinadorPantallas.getInstance().mostrarAgregarMesero();
         dispose();
     }//GEN-LAST:event_btnAgregarActionPerformed
-
+        /**
+     * Maneja el evento de acción del botón "Eliminar" (o Deshabilitar/Habilitar).
+     * Navega a la pantalla para deshabilitar o habilitar meseros a través del {@link CoordinadorPantallas}
+     * y cierra la ventana actual.
+     *
+     * @param evt El evento de acción.
+     */
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
         // TODO add your handling code here:
 
         Coordinador.CoordinadorPantallas.getInstance().mostrarEliminarMesero();
         dispose();
     }//GEN-LAST:event_btnEliminarActionPerformed
-
+        /**
+     * Maneja el evento de acción del botón "Modificar".
+     * Obtiene el mesero seleccionado de la lista y lo pasa a la pantalla de modificación
+     * a través del {@link CoordinadorPantallas}. Si no hay mesero seleccionado,
+     * muestra un mensaje de advertencia.
+     *
+     * @param evt El evento de acción.
+     */
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
         // TODO add your handling code here:
         MeseroDTO meseroSeleccionado = listadeMeseros.getSelectedValue();

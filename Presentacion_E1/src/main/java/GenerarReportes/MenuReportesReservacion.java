@@ -6,9 +6,18 @@ package GenerarReportes;
 
 
 
+
 /**
+ * La clase **MenuReportesReservacion** representa la interfaz gráfica de usuario (GUI)
+ * que funciona como el menú principal para acceder a los diferentes reportes de reservaciones
+ * disponibles en la aplicación.
  *
- * @author alexnieblas
+ * Extiende de {@code javax.swing.JFrame}, lo que significa que es una ventana de aplicación.
+ * Esta clase se encarga de inicializar sus componentes visuales y de coordinar con la
+ * clase {@link CoordinadorPantallas} para la navegación hacia otras pantallas de reporte.
+ *
+ * @author Gael
+ * @version 1.0
  */
 public class MenuReportesReservacion extends javax.swing.JFrame {
     
